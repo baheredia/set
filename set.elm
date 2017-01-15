@@ -4,6 +4,8 @@ import Html.Events exposing (..)
 import Random.List
 import Random
 
+import Extras exposing (..)
+
 main =
   Html.program
     { init = init
@@ -14,49 +16,30 @@ main =
 
 -- MODEL
 
+type alias Card = List Int
+
+type alias Deck = List Card
+
+type Mode
+    = Start
+    | Game
+    
 type alias Model =
-    {deck : List (List Int)
-    ,table : List (List Int)
-    ,seleccion : List Bool
-    ,cuantos : Int               
-    ,puntuacion : Int
-    ,inicio : Bool
+    {deck : Deck
+    ,table : Deck
+    ,selection : List Bool
+    ,score : Int
+    ,mode : Mode
     }
 
-type Zero = Z
-
-type alias Natural = List Zero
-
-ind : Int -> Natural
-ind n =
-    if n <= 0
-    then []
-    else Z::(ind (n-1))
-
-flatt : List (List a) -> List a
-flatt xs =
-    case xs of
-        [] -> []
-        x::xs ->
-          case x of
-              [] -> flatt xs
-              (y::ys) -> y :: (flatt (ys::xs))
-                 
-triple4 : List (List Int) -> List (List Int)
-triple4 =
-    let newOption xs = [1::xs, 2::xs, 3::xs] in
-    let tripleOnce xs = flatt (List.map newOption xs) in 
-    tripleOnce << tripleOnce << tripleOnce << tripleOnce
-
-
-init_deck : List (List Int)
+init_deck : Deck
 init_deck = triple4 [[]]
 
-init_table : List (List Int)
+init_table : Deck
 init_table = [[],[],[],[],[],[],[],[],[],[],[],[]]
 
-init_seleccion : List Bool
-init_seleccion = [False,False,False,False
+init_selection : List Bool
+init_selection = [False,False,False,False
                  ,False,False,False,False
                  ,False,False,False,False
                  ]
@@ -64,10 +47,9 @@ init_seleccion = [False,False,False,False
 init : (Model, Cmd Msg)
 init =  ({deck = init_deck
          ,table = init_table
-         ,seleccion = init_seleccion
-         ,cuantos = 0
-         ,puntuacion = 0
-         ,inicio = True
+         ,selection = init_selection
+         ,score = 0
+         ,mode = Start
          }
         , Cmd.none)
 
@@ -86,182 +68,69 @@ update msg model =
         Shuffle ->
             ({deck = model.deck
              ,table = model.table
-             ,seleccion = model.seleccion
-             ,cuantos = model.cuantos
-             ,puntuacion = model.puntuacion
-             ,inicio = False}
+             ,selection = model.selection
+             ,score = model.score
+             ,mode = Game}
             ,Random.generate PutDeck (Random.List.shuffle model.deck))
-        PutDeck list ->
-            ({deck = List.drop 12 list
-             ,table = List.take 12 list
-             ,seleccion = model.seleccion
-             ,cuantos = model.cuantos
-             ,puntuacion = model.puntuacion
-             ,inicio = False
+        PutDeck shuffled_deck ->
+            ({deck = List.drop 12 shuffled_deck
+             ,table = List.take 12 shuffled_deck
+             ,selection = model.selection
+             ,score = model.score
+             ,mode = model.mode
              }
             ,Cmd.none)
         Select n ->
-            if List.length (List.filter identity (togleElement n model.seleccion)) <= 3
+            if List.length (List.filter identity (togleElement n model.selection)) <= 3
             then
                 ({deck = model.deck
                  ,table = model.table
-                 ,seleccion = (togleElement n model.seleccion)
-                 ,cuantos = List.length (List.filter identity (togleElement n model.seleccion))
-                 ,puntuacion = model.puntuacion
-                 ,inicio = False
+                 ,selection = (togleElement n model.selection)
+                 ,score = model.score
+                 ,mode = model.mode
                  }
                 ,Cmd.none)
             else
                 (model, Cmd.none)
-
-        Reset -> ({deck = init_deck
-                  ,table = init_table
-                  ,seleccion = init_seleccion
-                  ,cuantos = 0
-                  ,puntuacion = 0
-                  ,inicio = True
-                  }
-                 ,Cmd.none)
         Set ->
-            if faltanCartas (escoje model.seleccion model.table)
+            if faltanCartas (escoje model.selection model.table)
             then
                 (model, Cmd.none)
             else
                 if List.length model.table <= 12
                 then
-                    ({deck = Tuple.first (putMoreCards model.deck (dropSet model.table model.seleccion))
-                     ,table = Tuple.second (putMoreCards model.deck (dropSet model.table model.seleccion))
-                     ,seleccion = init_seleccion
-                     ,cuantos = 0
-                     ,puntuacion = model.puntuacion + 1
-                     ,inicio = False
+                    ({deck = Tuple.first (putMoreCards model.deck (dropSet model.table model.selection))
+                     ,table = Tuple.second (putMoreCards model.deck (dropSet model.table model.selection))
+                     ,selection = init_selection
+                     ,score = model.score + 1
+                     ,mode = model.mode
                      }                         
                     , Cmd.none)
                 else
                     ({deck = model.deck
-                     ,table = escoje (List.map not model.seleccion) model.table
-                     ,seleccion = escoje (List.map not model.seleccion) model.seleccion
-                     ,cuantos = 0
-                     ,puntuacion = model.puntuacion + 1
-                     ,inicio = False
+                     ,table = escoje (List.map not model.selection) model.table
+                     ,selection = escoje (List.map not model.selection) model.selection
+                     ,score = model.score + 1
+                     ,mode = model.mode
                      }
                     , Cmd.none)
         ExtraCard ->
             ({deck = Tuple.first (putMoreCards model.deck (model.table ++ [[],[],[]]))
              ,table = Tuple.second (putMoreCards model.deck (model.table ++ [[],[],[]]))
-             ,seleccion = model.seleccion ++ [False,False,False]
-             ,cuantos = model.cuantos
-             ,puntuacion = model.puntuacion
-             ,inicio = False
+             ,selection = model.selection ++ [False,False,False]
+             ,score = model.score
+             ,mode = model.mode
              }
             , Cmd.none
             )
+        Reset -> ({deck = init_deck
+                  ,table = init_table
+                  ,selection = init_selection
+                  ,score = 0
+                  ,mode = Start
+                  }
+                 ,Cmd.none)
 
-faltanCartas : List (List Int) -> Bool
-faltanCartas ls =
-    case ls of
-        [] -> False
-        (x::xs) -> case x of
-                       [] -> True
-                       _ -> faltanCartas xs
-
-dropSet : List (List Int) -> List Bool -> List (List Int)
-dropSet cards bs =
-    case cards of
-        [] -> []
-        (x::xs) ->
-            case bs of
-                [] -> cards
-                (b::bbs) ->
-                    case b of
-                        True -> []::(dropSet xs bbs)
-                        False -> x::(dropSet xs bbs)
-
-putMoreCards : List (List Int) -> List (List Int) -> (List (List Int), List (List Int))
-putMoreCards ondeck ontable =
-    case ondeck of
-        [] -> ([], ontable)
-        (c::cs) ->
-            case ontable of
-                [] -> (ondeck, [])
-                (t::ts) ->
-                    case t of
-                        [] -> (Tuple.first (putMoreCards cs ts)
-                              ,c::(Tuple.second (putMoreCards cs ts))
-                              )
-                        _ -> (Tuple.first (putMoreCards ondeck ts)
-                             ,t::(Tuple.second (putMoreCards ondeck ts))
-                             )
-                           
-               
-togleElement : Natural -> List Bool -> List Bool
-togleElement n bs =
-    case bs of
-        [] -> []
-        (x::xs) ->
-            case n of
-                [] -> (not x)::xs
-                (z::zs) -> x::(togleElement zs xs)
-
-allEquals : List Int -> Bool
-allEquals xs =
-    case xs of
-        [] -> True
-        (y::ys) ->
-            case ys of
-                [] -> True
-                (z::zs) -> if y == z
-                           then allEquals ys
-                           else False
-
-allDifferent : List Int -> Bool
-allDifferent xs =
-    case xs of
-        [] -> True
-        (y::ys) ->
-            case ys of
-                [] -> True
-                (z::zs) -> if y == z
-                           then False
-                           else (allDifferent (y::zs)) && (allDifferent (z::zs))
-
-isSet : List Int -> List Int -> List Int -> Bool
-isSet x1s x2s x3s =
-    case x1s of
-        [] -> True
-        (y1::y1s) ->
-            case x2s of
-                [] -> False
-                (y2::y2s) ->
-                    case x3s of
-                        [] -> False
-                        (y3::y3s) ->
-                            if (allEquals [y1,y2,y3] || allDifferent [y1,y2,y3])
-                            then isSet y1s y2s y3s
-                            else False
-
-isListSet : List (List Int) -> Bool
-isListSet w1 =
-    case w1 of
-        [] -> False
-        (w::w2) ->
-            case w2 of
-                [] -> False
-                (q::w3) ->
-                    case w3 of
-                        [] -> False
-                        (r::w4) -> isSet w q r
-
-escoje : List Bool -> List a -> List a
-escoje bls xs =
-    case bls of
-        [] -> []
-        (b::bs) ->
-            case xs of
-                [] -> []
-                (y::ys) -> if b
-                           then (y::(escoje bs ys))
-                           else escoje bs ys
 
 -- SUBSCRIPTIONS
 
@@ -274,18 +143,18 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
-    case model.inicio of
-        True ->
+    case model.mode of
+        Start ->
             div []
                 [h1 [] [text "Bienvenido a Set, ¿Listo para jugar?"]
                 ,button [onClick Shuffle] [text "¡Empieza!"]
                 ]
-        False ->
+        Game ->
             div []
                 [putCard 0 model, putCard 1 model, putCard 2 model, putCard 3 model
                 ,extraCard 0 model
                 ,extraCard 3 model
-                ,haySet (isListSet (escoje model.seleccion model.table))
+                ,haySet (isListSet (escoje model.selection model.table))
                 ,div [style [("background-color", "pink")
                             ,("display", "inline-flex")
                             ,("width","100px")
@@ -296,7 +165,7 @@ view model =
                             ,("top","-9px")
                             ,("left","40px")]
                      ]
-                     [text ("Llevas " ++ toString model.puntuacion ++ " sets")]
+                     [text ("Llevas " ++ toString model.score ++ " sets")]
                 ,br [] []
                 ,putCard 4 model, putCard 5 model, putCard 6 model, putCard 7 model
                 ,extraCard 1 model
@@ -308,6 +177,22 @@ view model =
                 ,extraCard 5 model
                 ,button [onClick Reset] [text "Reset"]
                 ]
+
+
+putCard : Int -> Model -> Html Msg
+putCard x model =
+    let ancho = 170 in
+    img [src (direccion (takeElementInPosition (ind x) model.table))
+        , width ancho
+        , style [("border", queBorde (takeElementInPosition (ind x) model.selection))]
+        , onClick (Select (ind x))
+        ] []
+
+extraCard : Int -> Model -> Html Msg
+extraCard n model =
+    if List.length model.table > 12
+    then putCard (12+n) model
+    else span [] []
 
 addMoreCards : List (List Int) -> Html Msg
 addMoreCards lst =
@@ -327,11 +212,6 @@ addMoreCards lst =
              ,sty
              ] [text "Más cartas"]
 
-extraCard : Int -> Model -> Html Msg
-extraCard n model =
-    if List.length model.table > 12
-    then putCard (12+n) model
-    else span [] []
       
 haySet : Bool -> Html Msg
 haySet b =
@@ -351,42 +231,3 @@ haySet b =
                     ] [text "¡Set!"]
         False -> div [sty "grey" "default"
                      ] [text "¡Busca!"]
-      
-direccion : Maybe (List Int)-> String
-direccion wd =
-    case wd of
-        Nothing -> ""
-        Just w -> let toNombre xs =
-                          case xs of
-                              [] -> ""
-                              (x::xs) -> (toString x) ++ (toNombre xs)
-                  in
-                      "img/c" ++ (toNombre w) ++ ".png"
-      
-putCard : Int -> Model -> Html Msg
-putCard x model =
-    let ancho = 170 in
-    img [src (direccion (takeElementInPosition (ind x) model.table))
-        , width ancho
-        , style [("border", queBorde (takeElementInPosition (ind x) model.seleccion))]
-        , onClick (Select (ind x))
-        ] []
-
-queBorde : Maybe Bool -> String
-queBorde b =
-    case b of
-        Nothing -> "hidden"
-        Just b2 -> case b2 of
-                       True -> "dashed"
-                       False -> "hidden"
-
-takeElementInPosition : Natural -> List a -> Maybe a
-takeElementInPosition n xs =
-    case n of
-        [] -> case xs of
-                 [] -> Nothing
-                 (x::xs) -> Just x
-        (n::ns) -> case xs of
-                     [] -> Nothing
-                     (x::xs) -> takeElementInPosition ns xs
-
