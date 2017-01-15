@@ -1,0 +1,15 @@
+\documentclass[]{amsart}
+
+\usepackage{setdeck}
+
+\begin{document}
+
+\setcard{1}{1}{1}{1}
+
+\end{document}
+
+
+%%% Local's Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
