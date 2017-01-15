@@ -29,8 +29,8 @@ init_selection = [False,False,False,False
                  ]
 
 init : (Model, Cmd Msg)
-init =  ({ --deck = init_deck
-          deck = List.drop 75 init_deck   --This is for testing
+init =  ({deck = init_deck
+          --deck = List.drop 75 init_deck   --This is for testing
          ,table = init_table
          ,selection = init_selection
          ,score = 0
