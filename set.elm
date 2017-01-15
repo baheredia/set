@@ -149,53 +149,70 @@ view model =
     case model.mode of
         Start ->
             div []
-                [h1 [] [text "Bienvenido a Set, ¿Listo para jugar?"]
-                ,button [onClick Shuffle] [text "¡Empieza!"]
+                [ h1 [] [text "Bienvenido a Set, ¿Listo para jugar?"]
+                , button [onClick Shuffle] [text "¡Empieza!"]
                 ]
         Game ->
             div []
-                [putCard 0 model, putCard 1 model, putCard 2 model, putCard 3 model
-                ,extraCard 0 model
-                ,extraCard 3 model
-                ,haySet (isListSet (escoje model.selection model.table))
-                ,div [style [("background-color", "pink")
-                            ,("display", "inline-flex")
-                            ,("width","100px")
-                            ,("height","100px")
-                            ,("align-items","center")
-                            ,("justify-content","center")
-                            ,("position","relative")
-                            ,("top","-9px")
-                            ,("left","40px")]
-                     ]
-                     [text ("Llevas " ++ toString model.score ++ " sets")]
-                ,br [] []
-                ,putCard 4 model, putCard 5 model, putCard 6 model, putCard 7 model
-                ,extraCard 1 model
-                ,extraCard 4 model
-                ,addMoreCards model.table model.deck
-                ,br [] []
-                ,putCard 8 model, putCard 9 model, putCard 10 model, putCard 11 model
-                ,extraCard 2 model
-                ,extraCard 5 model
-                ,button [onClick Reset] [text "Reset"]
+                [ putCard 0 model
+                , putCard 1 model
+                , putCard 2 model
+                , putCard 3 model
+                , extraCard 0 model
+                , extraCard 3 model
+                , haySet (isListSet (escoje model.selection model.table))
+                , div [style [("background-color", "pink")
+                             ,("display", "inline-flex")
+                             ,("width","100px")
+                             ,("height","100px")
+                             ,("align-items","center")
+                             ,("justify-content","center")
+                             ,("position","relative")
+                             ,("top","-9px")
+                             ,("left","40px")]
+                      ]
+                      [text ("Llevas " ++ toString model.score ++ " sets")]
+                , br [] []
+                , putCard 4 model
+                , putCard 5 model
+                , putCard 6 model
+                , putCard 7 model
+                , extraCard 1 model
+                , extraCard 4 model
+                , addMoreCards model.table model.deck
+                , br [] []
+                , putCard 8 model
+                , putCard 9 model
+                , putCard 10 model
+                , putCard 11 model
+                , extraCard 2 model
+                , extraCard 5 model
+                , button [onClick Reset] [text "Reset"]
                 ]
 
 
 putCard : Int -> Model -> Html Msg
 putCard x model =
     let ancho = 170 in
-    img [src (direccion (takeElementInPosition (ind x) model.table))
+    img [ src <| direccion
+              <| takeElementInPosition (ind x) model.table
         , width ancho
-        , style [("border", queBorde (takeElementInPosition (ind x) model.selection))]
+        , style [ ("border"
+                  , queBorde
+                       <| takeElementInPosition (ind x) model.selection
+                  )
+                ]
         , onClick (Select (ind x))
         ] []
 
 extraCard : Int -> Model -> Html Msg
 extraCard n model =
-    if List.length model.table > 12
+    if (List.length model.table > 15)
     then putCard (12+n) model
-    else span [] []
+    else
+        if (n <= 2) && (List.length model.table > 12)
+        then putCard (12+n) model
+        else span [] []
 
 addMoreCards : List (List Int) -> Deck -> Html Msg
 addMoreCards lst deck =

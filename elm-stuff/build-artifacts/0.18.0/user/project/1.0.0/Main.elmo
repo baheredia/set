@@ -313,10 +313,12 @@ var _user$project$Main$extraCard = F2(
 	function (n, model) {
 		return (_elm_lang$core$Native_Utils.cmp(
 			_elm_lang$core$List$length(model.table),
-			12) > 0) ? A2(_user$project$Main$putCard, 12 + n, model) : A2(
+			15) > 0) ? A2(_user$project$Main$putCard, 12 + n, model) : (((_elm_lang$core$Native_Utils.cmp(n, 2) < 1) && (_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(model.table),
+			12) > 0)) ? A2(_user$project$Main$putCard, 12 + n, model) : A2(
 			_elm_lang$html$Html$span,
 			{ctor: '[]'},
-			{ctor: '[]'});
+			{ctor: '[]'}));
 	});
 var _user$project$Main$PutDeck = function (a) {
 	return {ctor: 'PutDeck', _0: a};
