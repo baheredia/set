@@ -16,9 +16,6 @@ main =
 
 -- MODEL
 
-init_deck : Deck
-init_deck = initialDeck
-
 init_table : Table
 init_table = [Nothing, Nothing, Nothing, Nothing
              ,Nothing, Nothing, Nothing, Nothing
@@ -31,7 +28,7 @@ init_selection = [False,False,False,False
                  ]
 
 init : (Model, Cmd Msg)
-init =  ({deck = init_deck
+init =  ({deck = []
           --deck = List.drop 75 init_deck   --This is for testing
          ,table = init_table
          ,selection = init_selection
@@ -45,9 +42,9 @@ init =  ({deck = init_deck
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = 
     case msg of
-        Shuffle ->
+        Shuffle deck ->
             ({ model | mode = Game }
-            ,Random.generate PutDeck (Random.List.shuffle model.deck))
+            ,Random.generate PutDeck (Random.List.shuffle deck))
 
         PutDeck shuffled_deck ->
             ({ model |
@@ -106,7 +103,7 @@ update msg model =
              }
             , Cmd.none
             )
-        Reset -> ({deck = init_deck
+        Reset -> ({deck = []
                   ,table = init_table
                   ,selection = init_selection
                   ,score = 0
@@ -130,7 +127,10 @@ view model =
         Start ->
             div []
                 [ h1 [] [text "Bienvenido a Set, ¿Listo para jugar?"]
-                , button [onClick Shuffle] [text "¡Empieza!"]
+                , button [onClick (Shuffle (initialDeck False))]
+                    [text "¡Empieza!"]
+                , button [onClick (Shuffle (initialDeck True))]
+                    [text "Sólo quiero un color"]
                 ]
         Game ->
             div []

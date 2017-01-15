@@ -20,7 +20,9 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$html$Html$button,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Events$onClick(_user$project$Extras$Shuffle),
+							_0: _elm_lang$html$Html_Events$onClick(
+								_user$project$Extras$Shuffle(
+									_user$project$Extras$initialDeck(false))),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -28,7 +30,24 @@ var _user$project$Main$view = function (model) {
 							_0: _elm_lang$html$Html$text('¡Empieza!'),
 							_1: {ctor: '[]'}
 						}),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$button,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(
+									_user$project$Extras$Shuffle(
+										_user$project$Extras$initialDeck(true))),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Sólo quiero un color'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
 				}
 			});
 	} else {
@@ -302,10 +321,15 @@ var _user$project$Main$init_table = {
 		}
 	}
 };
-var _user$project$Main$init_deck = _user$project$Extras$initialDeck;
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: {deck: _user$project$Main$init_deck, table: _user$project$Main$init_table, selection: _user$project$Main$init_selection, score: 0, mode: _user$project$Extras$Start},
+	_0: {
+		deck: {ctor: '[]'},
+		table: _user$project$Main$init_table,
+		selection: _user$project$Main$init_selection,
+		score: 0,
+		mode: _user$project$Extras$Start
+	},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _user$project$Main$update = F2(
@@ -321,7 +345,7 @@ var _user$project$Main$update = F2(
 					_1: A2(
 						_elm_lang$core$Random$generate,
 						_user$project$Extras$PutDeck,
-						_elm_community$random_extra$Random_List$shuffle(model.deck))
+						_elm_community$random_extra$Random_List$shuffle(_p1._0))
 				};
 			case 'PutDeck':
 				var _p2 = _p1._0;
@@ -459,7 +483,13 @@ var _user$project$Main$update = F2(
 			default:
 				return {
 					ctor: '_Tuple2',
-					_0: {deck: _user$project$Main$init_deck, table: _user$project$Main$init_table, selection: _user$project$Main$init_selection, score: 0, mode: _user$project$Extras$Start},
+					_0: {
+						deck: {ctor: '[]'},
+						table: _user$project$Main$init_table,
+						selection: _user$project$Main$init_selection,
+						score: 0,
+						mode: _user$project$Extras$Start
+					},
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}

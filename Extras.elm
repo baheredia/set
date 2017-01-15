@@ -29,7 +29,7 @@ type alias Model =
 
 -- Types for messaging
 
-type Msg = Shuffle
+type Msg = Shuffle Deck
     | PutDeck Deck
     | Select Natural
     | Set
@@ -103,10 +103,8 @@ howManyTrue = List.length << (List.filter identity)
 -- NOW FUNCTIONS USEFULL JUST FOR THE UPDATE
 
 -- 1. Putting cards on the table
--- this is to generate the Deck
-
-initialDeck : Deck
-initialDeck =
+initialDeck : Bool -> Deck
+initialDeck b =
     let
         produceOptions xs =
             let st e = [(1,e),(2,e),(3,e)] in
@@ -114,8 +112,21 @@ initialDeck =
     in
         let arrangeParenthesis (n1,(n2,(n3,n4))) = (n1,n2,n3,n4)
         in
-            List.map arrangeParenthesis
-            <| produceOptions <| produceOptions <| produceOptions [1,2,3]
+            case b of
+                True ->
+                    let twist (n1,n2,n3,n4) = (n1,n2,n4,n3)
+                    in
+                        List.map (twist << arrangeParenthesis)
+                            <| produceOptions
+                            <| produceOptions
+                            <| produceOptions [1]
+                False ->
+                    List.map arrangeParenthesis
+                        <| produceOptions
+                        <| produceOptions
+                        <| produceOptions [1,2,3]
+
+
 
 -- this is in normal circustances to take a set from the table
 takeSetOut : Table -> List Bool -> Table

@@ -420,7 +420,7 @@ var _user$project$Extras$flatten = function (xs) {
 		}
 	}
 };
-var _user$project$Extras$initialDeck = function () {
+var _user$project$Extras$initialDeck = function (b) {
 	var produceOptions = function (xs) {
 		var st = function (e) {
 			return {
@@ -444,26 +444,48 @@ var _user$project$Extras$initialDeck = function () {
 		var _p57 = _p56;
 		return {ctor: '_Tuple4', _0: _p57._0, _1: _p57._1._0, _2: _p57._1._1._0, _3: _p57._1._1._1};
 	};
-	return A2(
-		_elm_lang$core$List$map,
-		arrangeParenthesis,
-		produceOptions(
+	var _p58 = b;
+	if (_p58 === true) {
+		var twist = function (_p59) {
+			var _p60 = _p59;
+			return {ctor: '_Tuple4', _0: _p60._0, _1: _p60._1, _2: _p60._3, _3: _p60._2};
+		};
+		return A2(
+			_elm_lang$core$List$map,
+			function (_p61) {
+				return twist(
+					arrangeParenthesis(_p61));
+			},
 			produceOptions(
 				produceOptions(
-					{
-						ctor: '::',
-						_0: 1,
-						_1: {
+					produceOptions(
+						{
 							ctor: '::',
-							_0: 2,
+							_0: 1,
+							_1: {ctor: '[]'}
+						}))));
+	} else {
+		return A2(
+			_elm_lang$core$List$map,
+			arrangeParenthesis,
+			produceOptions(
+				produceOptions(
+					produceOptions(
+						{
+							ctor: '::',
+							_0: 1,
 							_1: {
 								ctor: '::',
-								_0: 3,
-								_1: {ctor: '[]'}
+								_0: 2,
+								_1: {
+									ctor: '::',
+									_0: 3,
+									_1: {ctor: '[]'}
+								}
 							}
-						}
-					}))));
-}();
+						}))));
+	}
+};
 var _user$project$Extras$Model = F5(
 	function (a, b, c, d, e) {
 		return {deck: a, table: b, selection: c, score: d, mode: e};
@@ -588,8 +610,8 @@ var _user$project$Extras$setButton = function (b) {
 					}
 				});
 		});
-	var _p58 = b;
-	if (_p58 === true) {
+	var _p62 = b;
+	if (_p62 === true) {
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -627,7 +649,9 @@ var _user$project$Extras$Select = function (a) {
 var _user$project$Extras$PutDeck = function (a) {
 	return {ctor: 'PutDeck', _0: a};
 };
-var _user$project$Extras$Shuffle = {ctor: 'Shuffle'};
+var _user$project$Extras$Shuffle = function (a) {
+	return {ctor: 'Shuffle', _0: a};
+};
 var _user$project$Extras$Z = {ctor: 'Z'};
 var _user$project$Extras$conversion = function (n) {
 	return (_elm_lang$core$Native_Utils.cmp(n, 0) < 1) ? {ctor: '[]'} : {
