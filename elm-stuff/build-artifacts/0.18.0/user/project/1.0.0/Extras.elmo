@@ -319,49 +319,31 @@ var _user$project$Extras$dropSet = F2(
 			}
 		}
 	});
-var _user$project$Extras$faltanCartas = function (ls) {
-	faltanCartas:
+var _user$project$Extras$flatten = function (xs) {
+	flatten:
 	while (true) {
-		var _p47 = ls;
+		var _p47 = xs;
 		if (_p47.ctor === '[]') {
-			return false;
-		} else {
-			var _p48 = _p47._0;
-			if (_p48.ctor === '[]') {
-				return true;
-			} else {
-				var _v37 = _p47._1;
-				ls = _v37;
-				continue faltanCartas;
-			}
-		}
-	}
-};
-var _user$project$Extras$flatt = function (xs) {
-	flatt:
-	while (true) {
-		var _p49 = xs;
-		if (_p49.ctor === '[]') {
 			return {ctor: '[]'};
 		} else {
-			var _p51 = _p49._1;
-			var _p50 = _p49._0;
-			if (_p50.ctor === '[]') {
-				var _v40 = _p51;
-				xs = _v40;
-				continue flatt;
+			var _p49 = _p47._1;
+			var _p48 = _p47._0;
+			if (_p48.ctor === '[]') {
+				var _v37 = _p49;
+				xs = _v37;
+				continue flatten;
 			} else {
 				return {
 					ctor: '::',
-					_0: _p50._0,
-					_1: _user$project$Extras$flatt(
-						{ctor: '::', _0: _p50._1, _1: _p51})
+					_0: _p48._0,
+					_1: _user$project$Extras$flatten(
+						{ctor: '::', _0: _p48._1, _1: _p49})
 				};
 			}
 		}
 	}
 };
-var _user$project$Extras$triple4 = function () {
+var _user$project$Extras$initialDeck = function () {
 	var newOption = function (xs) {
 		return {
 			ctor: '::',
@@ -378,21 +360,232 @@ var _user$project$Extras$triple4 = function () {
 		};
 	};
 	var tripleOnce = function (xs) {
-		return _user$project$Extras$flatt(
+		return _user$project$Extras$flatten(
 			A2(_elm_lang$core$List$map, newOption, xs));
 	};
-	return function (_p52) {
-		return tripleOnce(
+	return tripleOnce(
+		tripleOnce(
 			tripleOnce(
 				tripleOnce(
-					tripleOnce(_p52))));
-	};
+					{
+						ctor: '::',
+						_0: {ctor: '[]'},
+						_1: {ctor: '[]'}
+					}))));
 }();
+var _user$project$Extras$Model = F5(
+	function (a, b, c, d, e) {
+		return {deck: a, table: b, selection: c, score: d, mode: e};
+	});
+var _user$project$Extras$Game = {ctor: 'Game'};
+var _user$project$Extras$Start = {ctor: 'Start'};
+var _user$project$Extras$ExtraCard = {ctor: 'ExtraCard'};
+var _user$project$Extras$addMoreCards = F2(
+	function (lst, deck) {
+		var sty = _elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'yellow'},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+		return ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(lst),
+			15) > 0) || _elm_lang$core$List$isEmpty(deck)) ? A2(
+			_elm_lang$html$Html$span,
+			{ctor: '[]'},
+			{ctor: '[]'}) : A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(_user$project$Extras$ExtraCard),
+				_1: {
+					ctor: '::',
+					_0: sty,
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Más cartas'),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Extras$Reset = {ctor: 'Reset'};
+var _user$project$Extras$Set = {ctor: 'Set'};
+var _user$project$Extras$haySet = function (b) {
+	var sty = F2(
+		function (op1, op2) {
+			return _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'background-color', _1: op1},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'cursor', _1: op2},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		});
+	var _p50 = b;
+	if (_p50 === true) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(_user$project$Extras$Set),
+				_1: {
+					ctor: '::',
+					_0: A2(sty, 'red', 'pointer'),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('¡Set!'),
+				_1: {ctor: '[]'}
+			});
+	} else {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: A2(sty, 'grey', 'default'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('¡Busca!'),
+				_1: {ctor: '[]'}
+			});
+	}
+};
+var _user$project$Extras$Select = function (a) {
+	return {ctor: 'Select', _0: a};
+};
+var _user$project$Extras$PutDeck = function (a) {
+	return {ctor: 'PutDeck', _0: a};
+};
+var _user$project$Extras$Shuffle = {ctor: 'Shuffle'};
 var _user$project$Extras$Z = {ctor: 'Z'};
-var _user$project$Extras$ind = function (n) {
+var _user$project$Extras$conversion = function (n) {
 	return (_elm_lang$core$Native_Utils.cmp(n, 0) < 1) ? {ctor: '[]'} : {
 		ctor: '::',
 		_0: _user$project$Extras$Z,
-		_1: _user$project$Extras$ind(n - 1)
+		_1: _user$project$Extras$conversion(n - 1)
 	};
 };
+var _user$project$Extras$putCard = F2(
+	function (x, model) {
+		var ancho = 170;
+		return A2(
+			_elm_lang$html$Html$img,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$src(
+					_user$project$Extras$direccion(
+						A2(
+							_user$project$Extras$takeElementInPosition,
+							_user$project$Extras$conversion(x),
+							model.table))),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$width(ancho),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$style(
+							{
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'border',
+									_1: _user$project$Extras$queBorde(
+										A2(
+											_user$project$Extras$takeElementInPosition,
+											_user$project$Extras$conversion(x),
+											model.selection))
+								},
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onClick(
+								_user$project$Extras$Select(
+									_user$project$Extras$conversion(x))),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{ctor: '[]'});
+	});
+var _user$project$Extras$extraCard = F2(
+	function (n, model) {
+		return (_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(model.table),
+			15) > 0) ? A2(_user$project$Extras$putCard, 12 + n, model) : (((_elm_lang$core$Native_Utils.cmp(n, 2) < 1) && (_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(model.table),
+			12) > 0)) ? A2(_user$project$Extras$putCard, 12 + n, model) : A2(
+			_elm_lang$html$Html$span,
+			{ctor: '[]'},
+			{ctor: '[]'}));
+	});

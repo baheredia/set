@@ -16,24 +16,8 @@ main =
 
 -- MODEL
 
-type alias Card = List Int
-
-type alias Deck = List Card
-
-type Mode
-    = Start
-    | Game
-    
-type alias Model =
-    {deck : Deck
-    ,table : Deck
-    ,selection : List Bool
-    ,score : Int
-    ,mode : Mode
-    }
-
 init_deck : Deck
-init_deck = triple4 [[]]
+init_deck = initialDeck
 
 init_table : Deck
 init_table = [[],[],[],[],[],[],[],[],[],[],[],[]]
@@ -56,13 +40,6 @@ init =  ({ --deck = init_deck
 
 -- UPDATE
 
-type Msg = Shuffle
-    | PutDeck (List (List Int))
-    | Select Natural
-    | Set
-    | Reset
-    | ExtraCard
-     
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = 
     case msg of
@@ -190,64 +167,3 @@ view model =
                 , button [onClick Reset] [text "Reset"]
                 ]
 
-
-putCard : Int -> Model -> Html Msg
-putCard x model =
-    let ancho = 170 in
-    img [ src <| direccion
-              <| takeElementInPosition (ind x) model.table
-        , width ancho
-        , style [ ("border"
-                  , queBorde
-                       <| takeElementInPosition (ind x) model.selection
-                  )
-                ]
-        , onClick (Select (ind x))
-        ] []
-
-extraCard : Int -> Model -> Html Msg
-extraCard n model =
-    if (List.length model.table > 15)
-    then putCard (12+n) model
-    else
-        if (n <= 2) && (List.length model.table > 12)
-        then putCard (12+n) model
-        else span [] []
-
-addMoreCards : List (List Int) -> Deck -> Html Msg
-addMoreCards lst deck =
-    let sty = style [("background-color", "yellow")
-                    ,("cursor","pointer")
-                    ,("width","100px")
-                    ,("height","100px")
-                    ,("display","inline-flex")
-                    ,("position","relative")
-                    ,("left","20px")
-                    ,("align-items","center")
-                    ,("justify-content","center")
-                    ] in
-    if (List.length lst > 15) || (List.isEmpty deck)
-    then span [] []
-    else div [onClick ExtraCard
-             ,sty
-             ] [text "Más cartas"]
-
-      
-haySet : Bool -> Html Msg
-haySet b =
-    let sty op1 op2 = style [("background-color", op1)
-                            ,("cursor", op2)
-                            ,("width","100px")
-                            ,("height","100px")
-                            ,("display","inline-flex")
-                            ,("position","relative")
-                            ,("left","20px")
-                            ,("align-items","center")
-                            ,("justify-content","center")
-                            ] in
-    case b of
-        True -> div [onClick Set
-                    , sty "red" "pointer"
-                    ] [text "¡Set!"]
-        False -> div [sty "grey" "default"
-                     ] [text "¡Busca!"]

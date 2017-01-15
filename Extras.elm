@@ -1,37 +1,68 @@
 module Extras exposing (..)
 
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (..)
+
+
+-- Types for the model
+
+type alias Card = List Int
+
+type alias Deck = List Card
+
+type Mode
+    = Start
+    | Game
+    
+type alias Model =
+    {deck : Deck
+    ,table : Deck
+    ,selection : List Bool
+    ,score : Int
+    ,mode : Mode
+    }
+
+-- Types for messaging
+
+type Msg = Shuffle
+    | PutDeck Deck
+    | Select Natural
+    | Set
+    | Reset
+    | ExtraCard
+     
+
+-- This types are just because I like them
 type Zero = Z
 
 type alias Natural = List Zero
 
-ind : Int -> Natural
-ind n =
+-- conversion from Int -> Natural
+conversion : Int -> Natural
+conversion n =
     if n <= 0
     then []
-    else Z::(ind (n-1))
+    else Z::(conversion (n-1))
 
-flatt : List (List a) -> List a
-flatt xs =
+-- to flatten Lists
+flatten : List (List a) -> List a
+flatten xs =
     case xs of
         [] -> []
         x::xs ->
           case x of
-              [] -> flatt xs
-              (y::ys) -> y :: (flatt (ys::xs))
-                 
-triple4 : List (List Int) -> List (List Int)
-triple4 =
+              [] -> flatten xs
+              (y::ys) -> y :: (flatten (ys::xs))
+-- this is to generate the Deck            
+initialDeck : Deck
+initialDeck =
     let newOption xs = [1::xs, 2::xs, 3::xs] in
-    let tripleOnce xs = flatt (List.map newOption xs) in 
-    tripleOnce << tripleOnce << tripleOnce << tripleOnce
-
-faltanCartas : List (List Int) -> Bool
-faltanCartas ls =
-    case ls of
-        [] -> False
-        (x::xs) -> case x of
-                       [] -> True
-                       _ -> faltanCartas xs
+    let
+        tripleOnce xs = flatten
+                        <| List.map newOption xs
+    in 
+    tripleOnce <| tripleOnce <| tripleOnce <| tripleOnce [[]]
 
 dropSet : List (List Int) -> List Bool -> List (List Int)
 dropSet cards bs =
@@ -168,3 +199,66 @@ takeElementInPosition n xs =
 
 howManyTrue : List Bool -> Int
 howManyTrue = List.length << (List.filter identity)
+
+
+putCard : Int -> Model -> Html Msg
+putCard x model =
+    let ancho = 170 in
+    img [ src <| direccion
+              <| takeElementInPosition (conversion x) model.table
+        , width ancho
+        , style [ ("border"
+                  , queBorde
+                       <| takeElementInPosition (conversion x) model.selection
+                  )
+                ]
+        , onClick (Select (conversion x))
+        ] []
+
+extraCard : Int -> Model -> Html Msg
+extraCard n model =
+    if (List.length model.table > 15)
+    then putCard (12+n) model
+    else
+        if (n <= 2) && (List.length model.table > 12)
+        then putCard (12+n) model
+        else span [] []
+
+addMoreCards : Deck -> Deck -> Html Msg
+addMoreCards lst deck =
+    let sty = style [("background-color", "yellow")
+                    ,("cursor","pointer")
+                    ,("width","100px")
+                    ,("height","100px")
+                    ,("display","inline-flex")
+                    ,("position","relative")
+                    ,("left","20px")
+                    ,("align-items","center")
+                    ,("justify-content","center")
+                    ] in
+    if (List.length lst > 15) || (List.isEmpty deck)
+    then span [] []
+    else div [onClick ExtraCard
+             ,sty
+             ] [text "Más cartas"]
+
+      
+haySet : Bool -> Html Msg
+haySet b =
+    let sty op1 op2 = style [("background-color", op1)
+                            ,("cursor", op2)
+                            ,("width","100px")
+                            ,("height","100px")
+                            ,("display","inline-flex")
+                            ,("position","relative")
+                            ,("left","20px")
+                            ,("align-items","center")
+                            ,("justify-content","center")
+                            ] in
+    case b of
+        True -> div [onClick Set
+                    , sty "red" "pointer"
+                    ] [text "¡Set!"]
+        False -> div [sty "grey" "default"
+                     ] [text "¡Busca!"]
+              
