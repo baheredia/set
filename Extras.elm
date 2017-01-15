@@ -166,3 +166,5 @@ takeElementInPosition n xs =
                      (x::xs) -> takeElementInPosition ns xs
 
 
+howManyTrue : List Bool -> Int
+howManyTrue = List.length << (List.filter identity)

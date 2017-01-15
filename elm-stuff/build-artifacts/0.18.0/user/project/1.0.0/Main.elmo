@@ -351,11 +351,8 @@ var _user$project$Main$update = F2(
 			case 'Select':
 				var _p3 = _p1._0;
 				return (_elm_lang$core$Native_Utils.cmp(
-					_elm_lang$core$List$length(
-						A2(
-							_elm_lang$core$List$filter,
-							_elm_lang$core$Basics$identity,
-							A2(_user$project$Extras$togleElement, _p3, model.selection))),
+					_user$project$Extras$howManyTrue(
+						A2(_user$project$Extras$togleElement, _p3, model.selection)),
 					3) < 1) ? {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -370,37 +367,39 @@ var _user$project$Main$update = F2(
 					_elm_lang$core$List$length(model.table),
 					12) < 1) ? {
 					ctor: '_Tuple2',
-					_0: {
-						deck: _elm_lang$core$Tuple$first(
-							A2(
-								_user$project$Extras$putMoreCards,
-								model.deck,
-								A2(_user$project$Extras$dropSet, model.table, model.selection))),
-						table: _elm_lang$core$Tuple$second(
-							A2(
-								_user$project$Extras$putMoreCards,
-								model.deck,
-								A2(_user$project$Extras$dropSet, model.table, model.selection))),
-						selection: _user$project$Main$init_selection,
-						score: model.score + 1,
-						mode: model.mode
-					},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							deck: _elm_lang$core$Tuple$first(
+								A2(
+									_user$project$Extras$putMoreCards,
+									model.deck,
+									A2(_user$project$Extras$dropSet, model.table, model.selection))),
+							table: _elm_lang$core$Tuple$second(
+								A2(
+									_user$project$Extras$putMoreCards,
+									model.deck,
+									A2(_user$project$Extras$dropSet, model.table, model.selection))),
+							selection: _user$project$Main$init_selection,
+							score: model.score + 1
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				} : {
 					ctor: '_Tuple2',
-					_0: {
-						deck: model.deck,
-						table: A2(
-							_user$project$Extras$escoje,
-							A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, model.selection),
-							model.table),
-						selection: A2(
-							_user$project$Extras$escoje,
-							A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, model.selection),
-							model.selection),
-						score: model.score + 1,
-						mode: model.mode
-					},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							deck: model.deck,
+							table: A2(
+								_user$project$Extras$escoje,
+								A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, model.selection),
+								model.table),
+							selection: A2(
+								_user$project$Extras$escoje,
+								A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, model.selection),
+								model.selection),
+							score: model.score + 1
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ExtraCard':

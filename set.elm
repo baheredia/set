@@ -76,7 +76,7 @@ update msg model =
                    ,table = List.take 12 shuffled_deck}
             ,Cmd.none)
         Select n ->
-            if List.length (List.filter identity (togleElement n model.selection)) <= 3
+            if (howManyTrue (togleElement n model.selection)) <= 3
             then
                 ({ model |
                        selection = (togleElement n model.selection)
@@ -87,25 +87,41 @@ update msg model =
         Set ->
             if List.length model.table <= 12
             then
-                ({deck = Tuple.first (putMoreCards model.deck (dropSet model.table model.selection))
-                 ,table = Tuple.second (putMoreCards model.deck (dropSet model.table model.selection))
-                 ,selection = init_selection
-                 ,score = model.score + 1
-                 ,mode = model.mode
+                ({ model |
+                       deck =
+                           Tuple.first
+                               <| putMoreCards model.deck
+                               <| dropSet model.table model.selection
+                       ,table =
+                           Tuple.second
+                               <| putMoreCards model.deck
+                               <| dropSet model.table model.selection
+                       ,selection = init_selection
+                       ,score = model.score + 1
                  }                         
                 , Cmd.none)
             else
-                ({deck = model.deck
-                 ,table = escoje (List.map not model.selection) model.table
-                 ,selection = escoje (List.map not model.selection) model.selection
-                 ,score = model.score + 1
-                 ,mode = model.mode
+                ({ model |
+                       deck = model.deck
+                       ,table =
+                           escoje (List.map not model.selection)
+                               <| model.table
+                       ,selection =
+                           escoje (List.map not model.selection)
+                               <| model.selection
+                       ,score = model.score + 1
                  }
                 , Cmd.none)
         ExtraCard ->
             ({ model |
-                   deck = Tuple.first (putMoreCards model.deck (model.table ++ [[],[],[]]))
-                   ,table = Tuple.second (putMoreCards model.deck (model.table ++ [[],[],[]]))
+                   deck =
+                       Tuple.first
+                           <| putMoreCards model.deck
+                           <| model.table ++ [[],[],[]]
+                   ,table =
+                       Tuple.second
+                           <| putMoreCards model.deck
+                           <| model.table ++ [[],[],[]]
                    ,selection = model.selection ++ [False,False,False]
              }
             , Cmd.none
