@@ -7,9 +7,13 @@ import Html.Events exposing (..)
 
 -- Types for the model
 
-type alias Card = List Int
+type alias Card = (Int, Int, Int, Int)
+
+type alias CardInTable = Maybe Card
 
 type alias Deck = List Card
+
+type alias Table = List CardInTable
 
 type Mode
     = Start
@@ -17,7 +21,7 @@ type Mode
     
 type alias Model =
     {deck : Deck
-    ,table : Deck
+    ,table : Table
     ,selection : List Bool
     ,score : Int
     ,mode : Mode
@@ -31,7 +35,8 @@ type Msg = Shuffle
     | Set
     | Reset
     | ExtraCard
-     
+
+-------------------------------------------------
 -- THIS PARTS IS ABOUT GENERIC FUNCTIONS
 -- This types are just because I like them
 type One = Z
@@ -94,21 +99,26 @@ takeElementInPosition n xs =
 howManyTrue : List Bool -> Int
 howManyTrue = List.length << (List.filter identity)
 
+--------------------------------------------
 -- NOW FUNCTIONS USEFULL JUST FOR THE UPDATE
 
 -- 1. Putting cards on the table
--- this is to generate the Deck            
+-- this is to generate the Deck
+
 initialDeck : Deck
 initialDeck =
-    let newOption xs = [1::xs, 2::xs, 3::xs] in
     let
-        tripleOnce xs = flatten
-                        <| List.map newOption xs
-    in 
-    tripleOnce <| tripleOnce <| tripleOnce <| tripleOnce [[]]
+        produceOptions xs =
+            let st e = [(1,e),(2,e),(3,e)] in
+            flatten (List.map st xs)
+    in
+        let arrangeParenthesis (n1,(n2,(n3,n4))) = (n1,n2,n3,n4)
+        in
+            List.map arrangeParenthesis
+            <| produceOptions <| produceOptions <| produceOptions [1,2,3]
 
 -- this is in normal circustances to take a set from the table
-takeSetOut : Deck -> List Bool -> Deck
+takeSetOut : Table -> List Bool -> Table
 takeSetOut cards bs =
     case cards of
         [] -> []
@@ -117,11 +127,11 @@ takeSetOut cards bs =
                 [] -> cards
                 (b::bbs) ->
                     case b of
-                        True -> []::(takeSetOut xs bbs)
+                        True -> Nothing :: (takeSetOut xs bbs)
                         False -> x::(takeSetOut xs bbs)
 
 -- this is for dealing new cards to the table
-dealCards : Deck -> Deck -> (Deck, Deck)
+dealCards : Deck -> Table -> (Deck, Table)
 dealCards ondeck ontable =
     case ondeck of
         [] -> ([], ontable)
@@ -130,8 +140,9 @@ dealCards ondeck ontable =
                 [] -> (ondeck, [])
                 (t::ts) ->
                     case t of
-                        [] -> (Tuple.first (dealCards cs ts)
-                              ,c::(Tuple.second (dealCards cs ts))
+                        Nothing ->
+                            ( Tuple.first (dealCards cs ts)
+                            , (Just c)::(Tuple.second (dealCards cs ts))
                               )
                         _ -> (Tuple.first (dealCards ondeck ts)
                              ,t::(Tuple.second (dealCards ondeck ts))
@@ -163,26 +174,24 @@ allDifferent xs =
                            else (allDifferent (y::zs)) && (allDifferent (z::zs))
 
 -- this takes three cards and says if it is a set
-isSet : Card -> Card -> Card -> Bool
-isSet x1s x2s x3s =
-    case x1s of
-        [] -> True
-        (y1::y1s) ->
-            case x2s of
-                [] -> False
-                (y2::y2s) ->
-                    case x3s of
-                        [] -> False
-                        (y3::y3s) ->
-                            if
-                                (allEquals [y1,y2,y3]
-                                || allDifferent [y1,y2,y3])
-                            then isSet y1s y2s y3s
-                            else False
+isSet : CardInTable -> CardInTable -> CardInTable -> Bool
+isSet cardx cardy cardz =
+    case cardx of
+        Nothing -> False
+        Just (x1,x2,x3,x4) ->
+            case cardy of
+                Nothing -> False
+                Just (y1,y2,y3,y4) ->
+                    case cardz of
+                        Nothing -> False
+                        Just (z1,z2,z3,z4) ->
+                            (allEquals [x1,y1,z1] || allDifferent [x1,y1,z1])
+                            && (allEquals [x2,y2,z2] || allDifferent [x2,y2,z2])
+                            && (allEquals [x3,y3,z3] || allDifferent [x3,y3,z3])
+                            && (allEquals [x4,y4,z4] || allDifferent [x4,y4,z4])
 
 -- this just takes a deck and see if the three first cards forma a set,
--- with this you avoid the case where some cards are empty (it was a problem)
-isListSet : Deck -> Bool
+isListSet : Table -> Bool
 isListSet w1 =
     case w1 of
         [] -> False
@@ -192,25 +201,24 @@ isListSet w1 =
                 (q::w3) ->
                     case w3 of
                         [] -> False
-                        (r::w4) ->
-                            if
-                                (List.isEmpty w)
-                                || (List.isEmpty q)
-                                || (List.isEmpty r)
-                            then False
-                            else isSet w q r
+                        (r::_) -> isSet w q r
 
+-----------------------------------------------
 -- This part is for displaying things on the web
 
 -- This takes a Maybe Card and give back the file with its image
-source : Maybe Card -> String
+source : Maybe CardInTable -> String
 source wd =
     case wd of
         Nothing -> ""
         Just w -> let toNombre xs =
                           case xs of
-                              [] -> ""
-                              (x::xs) -> (toString x) ++ (toNombre xs)
+                              Nothing -> ""
+                              Just (x1,x2,x3,x4) ->
+                                  (toString x1)
+                                  ++ (toString x2)
+                                  ++ (toString x3)
+                                  ++ (toString x4)
                   in
                       "img/c" ++ (toNombre w) ++ ".png"
       
@@ -226,7 +234,7 @@ whichBorder b =
 
 -- This takes a position from 0 .. 17 and puts a displays a card in that
 -- position (with the border, that is why it needs the list of selected cards)
-putCard : Int -> Deck -> List Bool -> Html Msg
+putCard : Int -> Table -> List Bool -> Html Msg
 putCard x table selection =
     let ancho = 140 in
     img [ src
@@ -242,7 +250,7 @@ putCard x table selection =
         ] []
 
 -- This is for the cases in which you have extra cards
-extraCard : Int -> Deck -> List Bool -> Html Msg
+extraCard : Int -> Table -> List Bool -> Html Msg
 extraCard n table selection =
     if (List.length table > 15)
     then putCard (12+n) table selection
@@ -252,8 +260,8 @@ extraCard n table selection =
         else span [] []
 
 -- This is the button to add cards
-addMoreCards : Deck -> Deck -> Html Msg
-addMoreCards lst deck =
+addMoreCards : Table -> Deck -> Html Msg
+addMoreCards table deck =
     let sty op1 op2 =
             style [("background-color", op1)
                   ,("cursor",op2)
@@ -265,7 +273,7 @@ addMoreCards lst deck =
                   ,("align-items","center")
                   ,("justify-content","center")
                   ] in
-    if (List.length lst > 15) || (List.isEmpty deck)
+    if (List.length table > 15) || (List.isEmpty deck)
     then div [sty "grey" "default"] [text "."]
     else div [onClick ExtraCard
              ,sty "yellow" "pointer"

@@ -7,8 +7,6 @@ This is the game Set. See:
 
 List of things I want to do with it, in no particular order:
 
-* Change the type of Cards, to (Int,Int,Int,Int), or actually something more
-precise.
 * Put everything with relative size so that it can always be seen on any
 screen.
 * Automate the AddMoreCards button (it should detect if there is a Set in the table and if not add automatically)
@@ -22,3 +20,9 @@ I think that is all.
 
 This is not in the code but I will also like to:
 * Change the card gifs so that the colors are more similar (I don't like the current ones)
+
+
+THINGS DONE
+
+* Change the type of Cards, to (Int,Int,Int,Int), or actually something more
+precise.

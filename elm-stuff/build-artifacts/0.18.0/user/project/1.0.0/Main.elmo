@@ -255,40 +255,40 @@ var _user$project$Main$init_selection = {
 };
 var _user$project$Main$init_table = {
 	ctor: '::',
-	_0: {ctor: '[]'},
+	_0: _elm_lang$core$Maybe$Nothing,
 	_1: {
 		ctor: '::',
-		_0: {ctor: '[]'},
+		_0: _elm_lang$core$Maybe$Nothing,
 		_1: {
 			ctor: '::',
-			_0: {ctor: '[]'},
+			_0: _elm_lang$core$Maybe$Nothing,
 			_1: {
 				ctor: '::',
-				_0: {ctor: '[]'},
+				_0: _elm_lang$core$Maybe$Nothing,
 				_1: {
 					ctor: '::',
-					_0: {ctor: '[]'},
+					_0: _elm_lang$core$Maybe$Nothing,
 					_1: {
 						ctor: '::',
-						_0: {ctor: '[]'},
+						_0: _elm_lang$core$Maybe$Nothing,
 						_1: {
 							ctor: '::',
-							_0: {ctor: '[]'},
+							_0: _elm_lang$core$Maybe$Nothing,
 							_1: {
 								ctor: '::',
-								_0: {ctor: '[]'},
+								_0: _elm_lang$core$Maybe$Nothing,
 								_1: {
 									ctor: '::',
-									_0: {ctor: '[]'},
+									_0: _elm_lang$core$Maybe$Nothing,
 									_1: {
 										ctor: '::',
-										_0: {ctor: '[]'},
+										_0: _elm_lang$core$Maybe$Nothing,
 										_1: {
 											ctor: '::',
-											_0: {ctor: '[]'},
+											_0: _elm_lang$core$Maybe$Nothing,
 											_1: {
 												ctor: '::',
-												_0: {ctor: '[]'},
+												_0: _elm_lang$core$Maybe$Nothing,
 												_1: {ctor: '[]'}
 											}
 										}
@@ -330,8 +330,10 @@ var _user$project$Main$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							deck: A2(_elm_lang$core$List$drop, 12, _p2),
-							table: A2(_elm_lang$core$List$take, 12, _p2)
+							deck: _elm_lang$core$Tuple$first(
+								A2(_user$project$Extras$dealCards, _p2, model.table)),
+							table: _elm_lang$core$Tuple$second(
+								A2(_user$project$Extras$dealCards, _p2, model.table))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -404,13 +406,13 @@ var _user$project$Main$update = F2(
 										model.table,
 										{
 											ctor: '::',
-											_0: {ctor: '[]'},
+											_0: _elm_lang$core$Maybe$Nothing,
 											_1: {
 												ctor: '::',
-												_0: {ctor: '[]'},
+												_0: _elm_lang$core$Maybe$Nothing,
 												_1: {
 													ctor: '::',
-													_0: {ctor: '[]'},
+													_0: _elm_lang$core$Maybe$Nothing,
 													_1: {ctor: '[]'}
 												}
 											}
@@ -424,13 +426,13 @@ var _user$project$Main$update = F2(
 										model.table,
 										{
 											ctor: '::',
-											_0: {ctor: '[]'},
+											_0: _elm_lang$core$Maybe$Nothing,
 											_1: {
 												ctor: '::',
-												_0: {ctor: '[]'},
+												_0: _elm_lang$core$Maybe$Nothing,
 												_1: {
 													ctor: '::',
-													_0: {ctor: '[]'},
+													_0: _elm_lang$core$Maybe$Nothing,
 													_1: {ctor: '[]'}
 												}
 											}

@@ -19,8 +19,10 @@ main =
 init_deck : Deck
 init_deck = initialDeck
 
-init_table : Deck
-init_table = [[],[],[],[],[],[],[],[],[],[],[],[]]
+init_table : Table
+init_table = [Nothing, Nothing, Nothing, Nothing
+             ,Nothing, Nothing, Nothing, Nothing
+             ,Nothing, Nothing, Nothing, Nothing]
 
 init_selection : List Bool
 init_selection = [False,False,False,False
@@ -49,8 +51,9 @@ update msg model =
 
         PutDeck shuffled_deck ->
             ({ model |
-                   deck = List.drop 12 shuffled_deck
-                   ,table = List.take 12 shuffled_deck}
+                   deck = Tuple.first <| dealCards shuffled_deck model.table
+                   ,table = Tuple.second <| dealCards shuffled_deck model.table
+             }
             ,Cmd.none)
         Select n ->
             if (howManyTrue (switchElement n model.selection)) <= 3
@@ -94,11 +97,11 @@ update msg model =
                    deck =
                        Tuple.first
                            <| dealCards model.deck
-                           <| model.table ++ [[],[],[]]
+                           <| model.table ++ [Nothing,Nothing,Nothing]
                    ,table =
                        Tuple.second
                            <| dealCards model.deck
-                           <| model.table ++ [[],[],[]]
+                           <| model.table ++ [Nothing,Nothing,Nothing]
                    ,selection = model.selection ++ [False,False,False]
              }
             , Cmd.none
