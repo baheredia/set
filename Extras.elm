@@ -228,7 +228,7 @@ whichBorder b =
 -- position (with the border, that is why it needs the list of selected cards)
 putCard : Int -> Deck -> List Bool -> Html Msg
 putCard x table selection =
-    let ancho = 170 in
+    let ancho = 140 in
     img [ src
           <| source
           <| takeElementInPosition (conversion x) table
@@ -257,8 +257,8 @@ addMoreCards lst deck =
     let sty op1 op2 =
             style [("background-color", op1)
                   ,("cursor",op2)
-                  ,("width","100px")
-                  ,("height","100px")
+                  ,("width","80px")
+                  ,("height","40px")
                   ,("display","inline-flex")
                   ,("position","relative")
                   ,("left","20px")
@@ -269,15 +269,15 @@ addMoreCards lst deck =
     then div [sty "grey" "default"] [text "."]
     else div [onClick ExtraCard
              ,sty "yellow" "pointer"
-             ] [text "Más cartas"]
+             ] [text "Más"]
 
 -- This is for the Set button
 setButton : Bool -> Html Msg
 setButton b =
     let sty op1 op2 = style [("background-color", op1)
                             ,("cursor", op2)
-                            ,("width","100px")
-                            ,("height","100px")
+                            ,("width","80px")
+                            ,("height","40px")
                             ,("display","inline-flex")
                             ,("position","relative")
                             ,("left","20px")

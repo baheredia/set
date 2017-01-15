@@ -140,14 +140,14 @@ view model =
                 , setButton (isListSet (filteredBy model.selection model.table))
                 , div [style [("background-color", "pink")
                              ,("display", "inline-flex")
-                             ,("width","100px")
-                             ,("height","100px")
+                             ,("width","80px")
+                             ,("height","40px")
                              ,("align-items","center")
                              ,("justify-content","center")
                              ,("position","relative")
                              ,("left","40px")]
                       ]
-                      [text ("Puntuacion:\n " ++ toString model.score)]
+                      [text ("Puntos:\n " ++ toString model.score)]
                 , br [] []
                 , putCard 4 model.table model.selection
                 , putCard 5 model.table model.selection

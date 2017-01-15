@@ -393,10 +393,10 @@ var _user$project$Extras$addMoreCards = F2(
 							_0: {ctor: '_Tuple2', _0: 'cursor', _1: op2},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
+								_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
 								_1: {
 									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
+									_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
 									_1: {
 										ctor: '::',
 										_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
@@ -449,7 +449,7 @@ var _user$project$Extras$addMoreCards = F2(
 			},
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html$text('Más cartas'),
+				_0: _elm_lang$html$Html$text('Más'),
 				_1: {ctor: '[]'}
 			});
 	});
@@ -467,10 +467,10 @@ var _user$project$Extras$setButton = function (b) {
 						_0: {ctor: '_Tuple2', _0: 'cursor', _1: op2},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
+							_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
+								_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
 								_1: {
 									ctor: '::',
 									_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
@@ -547,7 +547,7 @@ var _user$project$Extras$conversion = function (n) {
 };
 var _user$project$Extras$putCard = F3(
 	function (x, table, selection) {
-		var ancho = 170;
+		var ancho = 140;
 		return A2(
 			_elm_lang$html$Html$img,
 			{

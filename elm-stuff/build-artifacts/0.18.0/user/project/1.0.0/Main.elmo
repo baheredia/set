@@ -73,10 +73,10 @@ var _user$project$Main$view = function (model) {
 																_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
 																_1: {
 																	ctor: '::',
-																	_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
+																	_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
 																	_1: {
 																		ctor: '::',
-																		_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
+																		_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
 																		_1: {
 																			ctor: '::',
 																			_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
@@ -105,7 +105,7 @@ var _user$project$Main$view = function (model) {
 													_0: _elm_lang$html$Html$text(
 														A2(
 															_elm_lang$core$Basics_ops['++'],
-															'Puntuacion:\n ',
+															'Puntos:\n ',
 															_elm_lang$core$Basics$toString(model.score))),
 													_1: {ctor: '[]'}
 												}),
