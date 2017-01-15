@@ -17,12 +17,10 @@ screen.
 
 I think that is all.
 
-This is not in the code but I will also like to:
-* Change the card gifs so that the colors are more similar (I don't like the current ones)
-
 
 THINGS DONE
 
 * Change the type of Cards, to (Int,Int,Int,Int), or actually something more
 precise.
 * Put an easy version (with only one color for colorblinds and/or children)
+* Change the card gifs so that the colors are more similar (I don't like the current ones)
