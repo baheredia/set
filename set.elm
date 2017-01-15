@@ -45,7 +45,8 @@ init_selection = [False,False,False,False
                  ]
 
 init : (Model, Cmd Msg)
-init =  ({deck = init_deck
+init =  ({ --deck = init_deck
+          deck = List.drop 75 init_deck   --This is for testing
          ,table = init_table
          ,selection = init_selection
          ,score = 0
@@ -66,60 +67,46 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = 
     case msg of
         Shuffle ->
-            ({deck = model.deck
-             ,table = model.table
-             ,selection = model.selection
-             ,score = model.score
-             ,mode = Game}
+            ({ model | mode = Game }
             ,Random.generate PutDeck (Random.List.shuffle model.deck))
+
         PutDeck shuffled_deck ->
-            ({deck = List.drop 12 shuffled_deck
-             ,table = List.take 12 shuffled_deck
-             ,selection = model.selection
-             ,score = model.score
-             ,mode = model.mode
-             }
+            ({ model |
+                   deck = List.drop 12 shuffled_deck
+                   ,table = List.take 12 shuffled_deck}
             ,Cmd.none)
         Select n ->
             if List.length (List.filter identity (togleElement n model.selection)) <= 3
             then
-                ({deck = model.deck
-                 ,table = model.table
-                 ,selection = (togleElement n model.selection)
-                 ,score = model.score
-                 ,mode = model.mode
+                ({ model |
+                       selection = (togleElement n model.selection)
                  }
                 ,Cmd.none)
             else
                 (model, Cmd.none)
         Set ->
-            if faltanCartas (escoje model.selection model.table)
+            if List.length model.table <= 12
             then
-                (model, Cmd.none)
+                ({deck = Tuple.first (putMoreCards model.deck (dropSet model.table model.selection))
+                 ,table = Tuple.second (putMoreCards model.deck (dropSet model.table model.selection))
+                 ,selection = init_selection
+                 ,score = model.score + 1
+                 ,mode = model.mode
+                 }                         
+                , Cmd.none)
             else
-                if List.length model.table <= 12
-                then
-                    ({deck = Tuple.first (putMoreCards model.deck (dropSet model.table model.selection))
-                     ,table = Tuple.second (putMoreCards model.deck (dropSet model.table model.selection))
-                     ,selection = init_selection
-                     ,score = model.score + 1
-                     ,mode = model.mode
-                     }                         
-                    , Cmd.none)
-                else
-                    ({deck = model.deck
-                     ,table = escoje (List.map not model.selection) model.table
-                     ,selection = escoje (List.map not model.selection) model.selection
-                     ,score = model.score + 1
-                     ,mode = model.mode
-                     }
-                    , Cmd.none)
+                ({deck = model.deck
+                 ,table = escoje (List.map not model.selection) model.table
+                 ,selection = escoje (List.map not model.selection) model.selection
+                 ,score = model.score + 1
+                 ,mode = model.mode
+                 }
+                , Cmd.none)
         ExtraCard ->
-            ({deck = Tuple.first (putMoreCards model.deck (model.table ++ [[],[],[]]))
-             ,table = Tuple.second (putMoreCards model.deck (model.table ++ [[],[],[]]))
-             ,selection = model.selection ++ [False,False,False]
-             ,score = model.score
-             ,mode = model.mode
+            ({ model |
+                   deck = Tuple.first (putMoreCards model.deck (model.table ++ [[],[],[]]))
+                   ,table = Tuple.second (putMoreCards model.deck (model.table ++ [[],[],[]]))
+                   ,selection = model.selection ++ [False,False,False]
              }
             , Cmd.none
             )
@@ -170,7 +157,7 @@ view model =
                 ,putCard 4 model, putCard 5 model, putCard 6 model, putCard 7 model
                 ,extraCard 1 model
                 ,extraCard 4 model
-                ,addMoreCards model.table
+                ,addMoreCards model.table model.deck
                 ,br [] []
                 ,putCard 8 model, putCard 9 model, putCard 10 model, putCard 11 model
                 ,extraCard 2 model
@@ -194,8 +181,8 @@ extraCard n model =
     then putCard (12+n) model
     else span [] []
 
-addMoreCards : List (List Int) -> Html Msg
-addMoreCards lst =
+addMoreCards : List (List Int) -> Deck -> Html Msg
+addMoreCards lst deck =
     let sty = style [("background-color", "yellow")
                     ,("cursor","pointer")
                     ,("width","100px")
@@ -206,7 +193,7 @@ addMoreCards lst =
                     ,("align-items","center")
                     ,("justify-content","center")
                     ] in
-    if List.length lst > 15
+    if (List.length lst > 15) || (List.isEmpty deck)
     then span [] []
     else div [onClick ExtraCard
              ,sty

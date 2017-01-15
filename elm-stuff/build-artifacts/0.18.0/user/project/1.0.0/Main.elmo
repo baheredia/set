@@ -113,40 +113,48 @@ var _user$project$Main$Game = {ctor: 'Game'};
 var _user$project$Main$Start = {ctor: 'Start'};
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: {deck: _user$project$Main$init_deck, table: _user$project$Main$init_table, selection: _user$project$Main$init_selection, score: 0, mode: _user$project$Main$Start},
+	_0: {
+		deck: A2(_elm_lang$core$List$drop, 75, _user$project$Main$init_deck),
+		table: _user$project$Main$init_table,
+		selection: _user$project$Main$init_selection,
+		score: 0,
+		mode: _user$project$Main$Start
+	},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _user$project$Main$ExtraCard = {ctor: 'ExtraCard'};
-var _user$project$Main$addMoreCards = function (lst) {
-	var sty = _elm_lang$html$Html_Attributes$style(
-		{
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'yellow'},
-			_1: {
+var _user$project$Main$addMoreCards = F2(
+	function (lst, deck) {
+		var sty = _elm_lang$html$Html_Attributes$style(
+			{
 				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
+				_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'yellow'},
 				_1: {
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
+					_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
+						_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+							_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+								_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
 								_1: {
 									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
+									_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+										_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
 										_1: {
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
-											_1: {ctor: '[]'}
+											_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -154,30 +162,29 @@ var _user$project$Main$addMoreCards = function (lst) {
 						}
 					}
 				}
-			}
-		});
-	return (_elm_lang$core$Native_Utils.cmp(
-		_elm_lang$core$List$length(lst),
-		15) > 0) ? A2(
-		_elm_lang$html$Html$span,
-		{ctor: '[]'},
-		{ctor: '[]'}) : A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$ExtraCard),
-			_1: {
+			});
+		return ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(lst),
+			15) > 0) || _elm_lang$core$List$isEmpty(deck)) ? A2(
+			_elm_lang$html$Html$span,
+			{ctor: '[]'},
+			{ctor: '[]'}) : A2(
+			_elm_lang$html$Html$div,
+			{
 				ctor: '::',
-				_0: sty,
+				_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$ExtraCard),
+				_1: {
+					ctor: '::',
+					_0: sty,
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Más cartas'),
 				_1: {ctor: '[]'}
-			}
-		},
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html$text('Más cartas'),
-			_1: {ctor: '[]'}
-		});
-};
+			});
+	});
 var _user$project$Main$Reset = {ctor: 'Reset'};
 var _user$project$Main$Set = {ctor: 'Set'};
 var _user$project$Main$haySet = function (b) {
@@ -321,7 +328,9 @@ var _user$project$Main$update = F2(
 			case 'Shuffle':
 				return {
 					ctor: '_Tuple2',
-					_0: {deck: model.deck, table: model.table, selection: model.selection, score: model.score, mode: _user$project$Main$Game},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{mode: _user$project$Main$Game}),
 					_1: A2(
 						_elm_lang$core$Random$generate,
 						_user$project$Main$PutDeck,
@@ -331,13 +340,12 @@ var _user$project$Main$update = F2(
 				var _p2 = _p1._0;
 				return {
 					ctor: '_Tuple2',
-					_0: {
-						deck: A2(_elm_lang$core$List$drop, 12, _p2),
-						table: A2(_elm_lang$core$List$take, 12, _p2),
-						selection: model.selection,
-						score: model.score,
-						mode: model.mode
-					},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							deck: A2(_elm_lang$core$List$drop, 12, _p2),
+							table: A2(_elm_lang$core$List$take, 12, _p2)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Select':
@@ -350,18 +358,15 @@ var _user$project$Main$update = F2(
 							A2(_user$project$Extras$togleElement, _p3, model.selection))),
 					3) < 1) ? {
 					ctor: '_Tuple2',
-					_0: {
-						deck: model.deck,
-						table: model.table,
-						selection: A2(_user$project$Extras$togleElement, _p3, model.selection),
-						score: model.score,
-						mode: model.mode
-					},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							selection: A2(_user$project$Extras$togleElement, _p3, model.selection)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				} : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'Set':
-				return _user$project$Extras$faltanCartas(
-					A2(_user$project$Extras$escoje, model.selection, model.table)) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : ((_elm_lang$core$Native_Utils.cmp(
+				return (_elm_lang$core$Native_Utils.cmp(
 					_elm_lang$core$List$length(model.table),
 					12) < 1) ? {
 					ctor: '_Tuple2',
@@ -397,70 +402,70 @@ var _user$project$Main$update = F2(
 						mode: model.mode
 					},
 					_1: _elm_lang$core$Platform_Cmd$none
-				});
+				};
 			case 'ExtraCard':
 				return {
 					ctor: '_Tuple2',
-					_0: {
-						deck: _elm_lang$core$Tuple$first(
-							A2(
-								_user$project$Extras$putMoreCards,
-								model.deck,
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							deck: _elm_lang$core$Tuple$first(
 								A2(
-									_elm_lang$core$Basics_ops['++'],
-									model.table,
-									{
-										ctor: '::',
-										_0: {ctor: '[]'},
-										_1: {
+									_user$project$Extras$putMoreCards,
+									model.deck,
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										model.table,
+										{
 											ctor: '::',
 											_0: {ctor: '[]'},
 											_1: {
 												ctor: '::',
 												_0: {ctor: '[]'},
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: {ctor: '[]'},
+													_1: {ctor: '[]'}
+												}
 											}
-										}
-									}))),
-						table: _elm_lang$core$Tuple$second(
-							A2(
-								_user$project$Extras$putMoreCards,
-								model.deck,
+										}))),
+							table: _elm_lang$core$Tuple$second(
 								A2(
-									_elm_lang$core$Basics_ops['++'],
-									model.table,
-									{
-										ctor: '::',
-										_0: {ctor: '[]'},
-										_1: {
+									_user$project$Extras$putMoreCards,
+									model.deck,
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										model.table,
+										{
 											ctor: '::',
 											_0: {ctor: '[]'},
 											_1: {
 												ctor: '::',
 												_0: {ctor: '[]'},
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: {ctor: '[]'},
+													_1: {ctor: '[]'}
+												}
 											}
-										}
-									}))),
-						selection: A2(
-							_elm_lang$core$Basics_ops['++'],
-							model.selection,
-							{
-								ctor: '::',
-								_0: false,
-								_1: {
+										}))),
+							selection: A2(
+								_elm_lang$core$Basics_ops['++'],
+								model.selection,
+								{
 									ctor: '::',
 									_0: false,
 									_1: {
 										ctor: '::',
 										_0: false,
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: false,
+											_1: {ctor: '[]'}
+										}
 									}
-								}
-							}),
-						score: model.score,
-						mode: model.mode
-					},
+								})
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
@@ -616,7 +621,7 @@ var _user$project$Main$view = function (model) {
 																		_0: A2(_user$project$Main$extraCard, 4, model),
 																		_1: {
 																			ctor: '::',
-																			_0: _user$project$Main$addMoreCards(model.table),
+																			_0: A2(_user$project$Main$addMoreCards, model.table, model.deck),
 																			_1: {
 																				ctor: '::',
 																				_0: A2(
