@@ -145,10 +145,9 @@ view model =
                              ,("align-items","center")
                              ,("justify-content","center")
                              ,("position","relative")
-                             ,("top","-9px")
                              ,("left","40px")]
                       ]
-                      [text ("Llevas " ++ toString model.score ++ " sets")]
+                      [text ("Puntuacion:\n " ++ toString model.score)]
                 , br [] []
                 , putCard 4 model.table model.selection
                 , putCard 5 model.table model.selection
