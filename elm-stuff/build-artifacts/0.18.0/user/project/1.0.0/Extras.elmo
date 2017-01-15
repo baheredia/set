@@ -1,60 +1,30 @@
-var _user$project$Extras$howManyTrue = function (_p0) {
-	return _elm_lang$core$List$length(
-		A2(_elm_lang$core$List$filter, _elm_lang$core$Basics$identity, _p0));
-};
-var _user$project$Extras$takeElementInPosition = F2(
-	function (n, xs) {
-		takeElementInPosition:
-		while (true) {
-			var _p1 = n;
-			if (_p1.ctor === '[]') {
-				var _p2 = xs;
-				if (_p2.ctor === '[]') {
-					return _elm_lang$core$Maybe$Nothing;
-				} else {
-					return _elm_lang$core$Maybe$Just(_p2._0);
-				}
-			} else {
-				var _p3 = xs;
-				if (_p3.ctor === '[]') {
-					return _elm_lang$core$Maybe$Nothing;
-				} else {
-					var _v3 = _p1._1,
-						_v4 = _p3._1;
-					n = _v3;
-					xs = _v4;
-					continue takeElementInPosition;
-				}
-			}
-		}
-	});
-var _user$project$Extras$queBorde = function (b) {
-	var _p4 = b;
-	if (_p4.ctor === 'Nothing') {
-		return 'hidden';
+var _user$project$Extras$whichBorder = function (b) {
+	var _p0 = b;
+	if (_p0.ctor === 'Nothing') {
+		return 'none';
 	} else {
-		var _p5 = _p4._0;
-		if (_p5 === true) {
+		var _p1 = _p0._0;
+		if (_p1 === true) {
 			return 'dashed';
 		} else {
-			return 'hidden';
+			return 'solid white';
 		}
 	}
 };
-var _user$project$Extras$direccion = function (wd) {
-	var _p6 = wd;
-	if (_p6.ctor === 'Nothing') {
+var _user$project$Extras$source = function (wd) {
+	var _p2 = wd;
+	if (_p2.ctor === 'Nothing') {
 		return '';
 	} else {
 		var toNombre = function (xs) {
-			var _p7 = xs;
-			if (_p7.ctor === '[]') {
+			var _p3 = xs;
+			if (_p3.ctor === '[]') {
 				return '';
 			} else {
 				return A2(
 					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Basics$toString(_p7._0),
-					toNombre(_p7._1));
+					_elm_lang$core$Basics$toString(_p3._0),
+					toNombre(_p3._1));
 			}
 		};
 		return A2(
@@ -62,74 +32,43 @@ var _user$project$Extras$direccion = function (wd) {
 			'img/c',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				toNombre(_p6._0),
+				toNombre(_p2._0),
 				'.png'));
 	}
 };
-var _user$project$Extras$escoje = F2(
-	function (bls, xs) {
-		escoje:
-		while (true) {
-			var _p8 = bls;
-			if (_p8.ctor === '[]') {
-				return {ctor: '[]'};
-			} else {
-				var _p11 = _p8._1;
-				var _p9 = xs;
-				if (_p9.ctor === '[]') {
-					return {ctor: '[]'};
-				} else {
-					var _p10 = _p9._1;
-					if (_p8._0) {
-						return {
-							ctor: '::',
-							_0: _p9._0,
-							_1: A2(_user$project$Extras$escoje, _p11, _p10)
-						};
-					} else {
-						var _v11 = _p11,
-							_v12 = _p10;
-						bls = _v11;
-						xs = _v12;
-						continue escoje;
-					}
-				}
-			}
-		}
-	});
 var _user$project$Extras$allDifferent = function (xs) {
-	var _p12 = xs;
-	if (_p12.ctor === '[]') {
+	var _p4 = xs;
+	if (_p4.ctor === '[]') {
 		return true;
 	} else {
-		var _p16 = _p12._0;
-		var _p13 = _p12._1;
-		if (_p13.ctor === '[]') {
+		var _p8 = _p4._0;
+		var _p5 = _p4._1;
+		if (_p5.ctor === '[]') {
 			return true;
 		} else {
-			var _p15 = _p13._1;
-			var _p14 = _p13._0;
-			return _elm_lang$core$Native_Utils.eq(_p16, _p14) ? false : (_user$project$Extras$allDifferent(
-				{ctor: '::', _0: _p16, _1: _p15}) && _user$project$Extras$allDifferent(
-				{ctor: '::', _0: _p14, _1: _p15}));
+			var _p7 = _p5._1;
+			var _p6 = _p5._0;
+			return _elm_lang$core$Native_Utils.eq(_p8, _p6) ? false : (_user$project$Extras$allDifferent(
+				{ctor: '::', _0: _p8, _1: _p7}) && _user$project$Extras$allDifferent(
+				{ctor: '::', _0: _p6, _1: _p7}));
 		}
 	}
 };
 var _user$project$Extras$allEquals = function (xs) {
 	allEquals:
 	while (true) {
-		var _p17 = xs;
-		if (_p17.ctor === '[]') {
+		var _p9 = xs;
+		if (_p9.ctor === '[]') {
 			return true;
 		} else {
-			var _p19 = _p17._1;
-			var _p18 = _p19;
-			if (_p18.ctor === '[]') {
+			var _p11 = _p9._1;
+			var _p10 = _p11;
+			if (_p10.ctor === '[]') {
 				return true;
 			} else {
-				if (_elm_lang$core$Native_Utils.eq(_p17._0, _p18._0)) {
-					var _v17 = _p19;
-					xs = _v17;
+				if (_elm_lang$core$Native_Utils.eq(_p9._0, _p10._0)) {
+					var _v8 = _p11;
+					xs = _v8;
 					continue allEquals;
 				} else {
 					return false;
@@ -142,54 +81,54 @@ var _user$project$Extras$isSet = F3(
 	function (x1s, x2s, x3s) {
 		isSet:
 		while (true) {
-			var _p20 = x1s;
-			if (_p20.ctor === '[]') {
+			var _p12 = x1s;
+			if (_p12.ctor === '[]') {
 				return true;
 			} else {
-				var _p25 = _p20._0;
-				var _p21 = x2s;
-				if (_p21.ctor === '[]') {
+				var _p17 = _p12._0;
+				var _p13 = x2s;
+				if (_p13.ctor === '[]') {
 					return false;
 				} else {
-					var _p24 = _p21._0;
-					var _p22 = x3s;
-					if (_p22.ctor === '[]') {
+					var _p16 = _p13._0;
+					var _p14 = x3s;
+					if (_p14.ctor === '[]') {
 						return false;
 					} else {
-						var _p23 = _p22._0;
+						var _p15 = _p14._0;
 						if (_user$project$Extras$allEquals(
 							{
 								ctor: '::',
-								_0: _p25,
+								_0: _p17,
 								_1: {
 									ctor: '::',
-									_0: _p24,
+									_0: _p16,
 									_1: {
 										ctor: '::',
-										_0: _p23,
+										_0: _p15,
 										_1: {ctor: '[]'}
 									}
 								}
 							}) || _user$project$Extras$allDifferent(
 							{
 								ctor: '::',
-								_0: _p25,
+								_0: _p17,
 								_1: {
 									ctor: '::',
-									_0: _p24,
+									_0: _p16,
 									_1: {
 										ctor: '::',
-										_0: _p23,
+										_0: _p15,
 										_1: {ctor: '[]'}
 									}
 								}
 							})) {
-							var _v21 = _p20._1,
-								_v22 = _p21._1,
-								_v23 = _p22._1;
-							x1s = _v21;
-							x2s = _v22;
-							x3s = _v23;
+							var _v12 = _p12._1,
+								_v13 = _p13._1,
+								_v14 = _p14._1;
+							x1s = _v12;
+							x2s = _v13;
+							x3s = _v14;
 							continue isSet;
 						} else {
 							return false;
@@ -200,122 +139,183 @@ var _user$project$Extras$isSet = F3(
 		}
 	});
 var _user$project$Extras$isListSet = function (w1) {
-	var _p26 = w1;
-	if (_p26.ctor === '[]') {
+	var _p18 = w1;
+	if (_p18.ctor === '[]') {
 		return false;
 	} else {
-		var _p31 = _p26._0;
-		var _p27 = _p26._1;
-		if (_p27.ctor === '[]') {
+		var _p23 = _p18._0;
+		var _p19 = _p18._1;
+		if (_p19.ctor === '[]') {
 			return false;
 		} else {
-			var _p30 = _p27._0;
-			var _p28 = _p27._1;
-			if (_p28.ctor === '[]') {
+			var _p22 = _p19._0;
+			var _p20 = _p19._1;
+			if (_p20.ctor === '[]') {
 				return false;
 			} else {
-				var _p29 = _p28._0;
-				return (_elm_lang$core$List$isEmpty(_p31) || (_elm_lang$core$List$isEmpty(_p30) || _elm_lang$core$List$isEmpty(_p29))) ? false : A3(_user$project$Extras$isSet, _p31, _p30, _p29);
+				var _p21 = _p20._0;
+				return (_elm_lang$core$List$isEmpty(_p23) || (_elm_lang$core$List$isEmpty(_p22) || _elm_lang$core$List$isEmpty(_p21))) ? false : A3(_user$project$Extras$isSet, _p23, _p22, _p21);
 			}
 		}
 	}
 };
-var _user$project$Extras$togleElement = F2(
-	function (n, bs) {
-		var _p32 = bs;
-		if (_p32.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			var _p35 = _p32._1;
-			var _p34 = _p32._0;
-			var _p33 = n;
-			if (_p33.ctor === '[]') {
-				return {ctor: '::', _0: !_p34, _1: _p35};
-			} else {
-				return {
-					ctor: '::',
-					_0: _p34,
-					_1: A2(_user$project$Extras$togleElement, _p33._1, _p35)
-				};
-			}
-		}
-	});
-var _user$project$Extras$putMoreCards = F2(
+var _user$project$Extras$dealCards = F2(
 	function (ondeck, ontable) {
-		var _p36 = ondeck;
-		if (_p36.ctor === '[]') {
+		var _p24 = ondeck;
+		if (_p24.ctor === '[]') {
 			return {
 				ctor: '_Tuple2',
 				_0: {ctor: '[]'},
 				_1: ontable
 			};
 		} else {
-			var _p41 = _p36._1;
-			var _p37 = ontable;
-			if (_p37.ctor === '[]') {
+			var _p29 = _p24._1;
+			var _p25 = ontable;
+			if (_p25.ctor === '[]') {
 				return {
 					ctor: '_Tuple2',
 					_0: ondeck,
 					_1: {ctor: '[]'}
 				};
 			} else {
-				var _p40 = _p37._1;
-				var _p39 = _p37._0;
-				var _p38 = _p39;
-				if (_p38.ctor === '[]') {
+				var _p28 = _p25._1;
+				var _p27 = _p25._0;
+				var _p26 = _p27;
+				if (_p26.ctor === '[]') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Tuple$first(
-							A2(_user$project$Extras$putMoreCards, _p41, _p40)),
+							A2(_user$project$Extras$dealCards, _p29, _p28)),
 						_1: {
 							ctor: '::',
-							_0: _p36._0,
+							_0: _p24._0,
 							_1: _elm_lang$core$Tuple$second(
-								A2(_user$project$Extras$putMoreCards, _p41, _p40))
+								A2(_user$project$Extras$dealCards, _p29, _p28))
 						}
 					};
 				} else {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Tuple$first(
-							A2(_user$project$Extras$putMoreCards, ondeck, _p40)),
+							A2(_user$project$Extras$dealCards, ondeck, _p28)),
 						_1: {
 							ctor: '::',
-							_0: _p39,
+							_0: _p27,
 							_1: _elm_lang$core$Tuple$second(
-								A2(_user$project$Extras$putMoreCards, ondeck, _p40))
+								A2(_user$project$Extras$dealCards, ondeck, _p28))
 						}
 					};
 				}
 			}
 		}
 	});
-var _user$project$Extras$dropSet = F2(
+var _user$project$Extras$takeSetOut = F2(
 	function (cards, bs) {
-		var _p42 = cards;
-		if (_p42.ctor === '[]') {
+		var _p30 = cards;
+		if (_p30.ctor === '[]') {
 			return {ctor: '[]'};
 		} else {
-			var _p46 = _p42._1;
-			var _p43 = bs;
-			if (_p43.ctor === '[]') {
+			var _p34 = _p30._1;
+			var _p31 = bs;
+			if (_p31.ctor === '[]') {
 				return cards;
 			} else {
-				var _p45 = _p43._1;
-				var _p44 = _p43._0;
-				if (_p44 === true) {
+				var _p33 = _p31._1;
+				var _p32 = _p31._0;
+				if (_p32 === true) {
 					return {
 						ctor: '::',
 						_0: {ctor: '[]'},
-						_1: A2(_user$project$Extras$dropSet, _p46, _p45)
+						_1: A2(_user$project$Extras$takeSetOut, _p34, _p33)
 					};
 				} else {
 					return {
 						ctor: '::',
-						_0: _p42._0,
-						_1: A2(_user$project$Extras$dropSet, _p46, _p45)
+						_0: _p30._0,
+						_1: A2(_user$project$Extras$takeSetOut, _p34, _p33)
 					};
 				}
+			}
+		}
+	});
+var _user$project$Extras$howManyTrue = function (_p35) {
+	return _elm_lang$core$List$length(
+		A2(_elm_lang$core$List$filter, _elm_lang$core$Basics$identity, _p35));
+};
+var _user$project$Extras$takeElementInPosition = F2(
+	function (n, xs) {
+		takeElementInPosition:
+		while (true) {
+			var _p36 = n;
+			if (_p36.ctor === '[]') {
+				var _p37 = xs;
+				if (_p37.ctor === '[]') {
+					return _elm_lang$core$Maybe$Nothing;
+				} else {
+					return _elm_lang$core$Maybe$Just(_p37._0);
+				}
+			} else {
+				var _p38 = xs;
+				if (_p38.ctor === '[]') {
+					return _elm_lang$core$Maybe$Nothing;
+				} else {
+					var _v27 = _p36._1,
+						_v28 = _p38._1;
+					n = _v27;
+					xs = _v28;
+					continue takeElementInPosition;
+				}
+			}
+		}
+	});
+var _user$project$Extras$filteredBy = F2(
+	function (bls, xs) {
+		filteredBy:
+		while (true) {
+			var _p39 = bls;
+			if (_p39.ctor === '[]') {
+				return {ctor: '[]'};
+			} else {
+				var _p42 = _p39._1;
+				var _p40 = xs;
+				if (_p40.ctor === '[]') {
+					return {ctor: '[]'};
+				} else {
+					var _p41 = _p40._1;
+					if (_p39._0) {
+						return {
+							ctor: '::',
+							_0: _p40._0,
+							_1: A2(_user$project$Extras$filteredBy, _p42, _p41)
+						};
+					} else {
+						var _v31 = _p42,
+							_v32 = _p41;
+						bls = _v31;
+						xs = _v32;
+						continue filteredBy;
+					}
+				}
+			}
+		}
+	});
+var _user$project$Extras$switchElement = F2(
+	function (n, bs) {
+		var _p43 = bs;
+		if (_p43.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			var _p46 = _p43._1;
+			var _p45 = _p43._0;
+			var _p44 = n;
+			if (_p44.ctor === '[]') {
+				return {ctor: '::', _0: !_p45, _1: _p46};
+			} else {
+				return {
+					ctor: '::',
+					_0: _p45,
+					_1: A2(_user$project$Extras$switchElement, _p44._1, _p46)
+				};
 			}
 		}
 	});
@@ -382,57 +382,68 @@ var _user$project$Extras$Start = {ctor: 'Start'};
 var _user$project$Extras$ExtraCard = {ctor: 'ExtraCard'};
 var _user$project$Extras$addMoreCards = F2(
 	function (lst, deck) {
-		var sty = _elm_lang$html$Html_Attributes$style(
-			{
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'yellow'},
-				_1: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
-					_1: {
+		var sty = F2(
+			function (op1, op2) {
+				return _elm_lang$html$Html_Attributes$style(
+					{
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
+						_0: {ctor: '_Tuple2', _0: 'background-color', _1: op1},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
+							_0: {ctor: '_Tuple2', _0: 'cursor', _1: op2},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+								_0: {ctor: '_Tuple2', _0: 'width', _1: '100px'},
 								_1: {
 									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+									_0: {ctor: '_Tuple2', _0: 'height', _1: '100px'},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
+										_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
 										_1: {
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+											_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
 											_1: {
 												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
-												_1: {ctor: '[]'}
+												_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+													_1: {
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+														_1: {ctor: '[]'}
+													}
+												}
 											}
 										}
 									}
 								}
 							}
 						}
-					}
-				}
+					});
 			});
 		return ((_elm_lang$core$Native_Utils.cmp(
 			_elm_lang$core$List$length(lst),
 			15) > 0) || _elm_lang$core$List$isEmpty(deck)) ? A2(
-			_elm_lang$html$Html$span,
-			{ctor: '[]'},
-			{ctor: '[]'}) : A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: A2(sty, 'grey', 'default'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('.'),
+				_1: {ctor: '[]'}
+			}) : A2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
 				_0: _elm_lang$html$Html_Events$onClick(_user$project$Extras$ExtraCard),
 				_1: {
 					ctor: '::',
-					_0: sty,
+					_0: A2(sty, 'yellow', 'pointer'),
 					_1: {ctor: '[]'}
 				}
 			},
@@ -444,7 +455,7 @@ var _user$project$Extras$addMoreCards = F2(
 	});
 var _user$project$Extras$Reset = {ctor: 'Reset'};
 var _user$project$Extras$Set = {ctor: 'Set'};
-var _user$project$Extras$haySet = function (b) {
+var _user$project$Extras$setButton = function (b) {
 	var sty = F2(
 		function (op1, op2) {
 			return _elm_lang$html$Html_Attributes$style(
@@ -534,19 +545,19 @@ var _user$project$Extras$conversion = function (n) {
 		_1: _user$project$Extras$conversion(n - 1)
 	};
 };
-var _user$project$Extras$putCard = F2(
-	function (x, model) {
+var _user$project$Extras$putCard = F3(
+	function (x, table, selection) {
 		var ancho = 170;
 		return A2(
 			_elm_lang$html$Html$img,
 			{
 				ctor: '::',
 				_0: _elm_lang$html$Html_Attributes$src(
-					_user$project$Extras$direccion(
+					_user$project$Extras$source(
 						A2(
 							_user$project$Extras$takeElementInPosition,
 							_user$project$Extras$conversion(x),
-							model.table))),
+							table))),
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$width(ancho),
@@ -558,11 +569,11 @@ var _user$project$Extras$putCard = F2(
 								_0: {
 									ctor: '_Tuple2',
 									_0: 'border',
-									_1: _user$project$Extras$queBorde(
+									_1: _user$project$Extras$whichBorder(
 										A2(
 											_user$project$Extras$takeElementInPosition,
 											_user$project$Extras$conversion(x),
-											model.selection))
+											selection))
 								},
 								_1: {ctor: '[]'}
 							}),
@@ -578,13 +589,13 @@ var _user$project$Extras$putCard = F2(
 			},
 			{ctor: '[]'});
 	});
-var _user$project$Extras$extraCard = F2(
-	function (n, model) {
+var _user$project$Extras$extraCard = F3(
+	function (n, table, selection) {
 		return (_elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$List$length(model.table),
-			15) > 0) ? A2(_user$project$Extras$putCard, 12 + n, model) : (((_elm_lang$core$Native_Utils.cmp(n, 2) < 1) && (_elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$List$length(model.table),
-			12) > 0)) ? A2(_user$project$Extras$putCard, 12 + n, model) : A2(
+			_elm_lang$core$List$length(table),
+			15) > 0) ? A3(_user$project$Extras$putCard, 12 + n, table, selection) : (((_elm_lang$core$Native_Utils.cmp(n, 2) < 1) && (_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(table),
+			12) > 0)) ? A3(_user$project$Extras$putCard, 12 + n, table, selection) : A2(
 			_elm_lang$html$Html$span,
 			{ctor: '[]'},
 			{ctor: '[]'}));

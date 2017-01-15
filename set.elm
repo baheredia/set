@@ -53,10 +53,10 @@ update msg model =
                    ,table = List.take 12 shuffled_deck}
             ,Cmd.none)
         Select n ->
-            if (howManyTrue (togleElement n model.selection)) <= 3
+            if (howManyTrue (switchElement n model.selection)) <= 3
             then
                 ({ model |
-                       selection = (togleElement n model.selection)
+                       selection = (switchElement n model.selection)
                  }
                 ,Cmd.none)
             else
@@ -67,12 +67,12 @@ update msg model =
                 ({ model |
                        deck =
                            Tuple.first
-                               <| putMoreCards model.deck
-                               <| dropSet model.table model.selection
+                               <| dealCards model.deck
+                               <| takeSetOut model.table model.selection
                        ,table =
                            Tuple.second
-                               <| putMoreCards model.deck
-                               <| dropSet model.table model.selection
+                               <| dealCards model.deck
+                               <| takeSetOut model.table model.selection
                        ,selection = init_selection
                        ,score = model.score + 1
                  }                         
@@ -81,10 +81,10 @@ update msg model =
                 ({ model |
                        deck = model.deck
                        ,table =
-                           escoje (List.map not model.selection)
+                           filteredBy (List.map not model.selection)
                                <| model.table
                        ,selection =
-                           escoje (List.map not model.selection)
+                           filteredBy (List.map not model.selection)
                                <| model.selection
                        ,score = model.score + 1
                  }
@@ -93,11 +93,11 @@ update msg model =
             ({ model |
                    deck =
                        Tuple.first
-                           <| putMoreCards model.deck
+                           <| dealCards model.deck
                            <| model.table ++ [[],[],[]]
                    ,table =
                        Tuple.second
-                           <| putMoreCards model.deck
+                           <| dealCards model.deck
                            <| model.table ++ [[],[],[]]
                    ,selection = model.selection ++ [False,False,False]
              }
@@ -131,13 +131,13 @@ view model =
                 ]
         Game ->
             div []
-                [ putCard 0 model
-                , putCard 1 model
-                , putCard 2 model
-                , putCard 3 model
-                , extraCard 0 model
-                , extraCard 3 model
-                , haySet (isListSet (escoje model.selection model.table))
+                [ putCard 0 model.table model.selection
+                , putCard 1 model.table model.selection
+                , putCard 2 model.table model.selection
+                , putCard 3 model.table model.selection
+                , extraCard 0 model.table model.selection
+                , extraCard 3 model.table model.selection
+                , setButton (isListSet (filteredBy model.selection model.table))
                 , div [style [("background-color", "pink")
                              ,("display", "inline-flex")
                              ,("width","100px")
@@ -150,20 +150,20 @@ view model =
                       ]
                       [text ("Llevas " ++ toString model.score ++ " sets")]
                 , br [] []
-                , putCard 4 model
-                , putCard 5 model
-                , putCard 6 model
-                , putCard 7 model
-                , extraCard 1 model
-                , extraCard 4 model
+                , putCard 4 model.table model.selection
+                , putCard 5 model.table model.selection
+                , putCard 6 model.table model.selection
+                , putCard 7 model.table model.selection
+                , extraCard 1 model.table model.selection
+                , extraCard 4 model.table model.selection
                 , addMoreCards model.table model.deck
                 , br [] []
-                , putCard 8 model
-                , putCard 9 model
-                , putCard 10 model
-                , putCard 11 model
-                , extraCard 2 model
-                , extraCard 5 model
+                , putCard 8 model.table model.selection
+                , putCard 9 model.table model.selection
+                , putCard 10 model.table model.selection
+                , putCard 11 model.table model.selection
+                , extraCard 2 model.table model.selection
+                , extraCard 5 model.table model.selection
                 , button [onClick Reset] [text "Reset"]
                 ]
 
