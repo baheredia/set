@@ -7,8 +7,6 @@ This is the game Set. See:
 
 List of things I want to do with it, in no particular order:
 
-* Put everything with relative size so that it can always be seen on any
-screen.
 * Automate the AddMoreCards button (it should detect if there is a Set in the table and if not add automatically)
 * Automate Set button (so that with the third selection takes the set, or gives you a message of error)
 * Create a Hint button (with a Set detected in the table highlights some card)
@@ -24,3 +22,5 @@ THINGS DONE
 precise.
 * Put an easy version (with only one color for colorblinds and/or children)
 * Change the card gifs so that the colors are more similar (I don't like the current ones)
+* Put everything with relative size so that it can always be seen on any
+screen. (Now there is an option for choosing the size)

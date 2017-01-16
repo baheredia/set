@@ -486,12 +486,16 @@ var _user$project$Extras$initialDeck = function (b) {
 						}))));
 	}
 };
-var _user$project$Extras$Model = F5(
-	function (a, b, c, d, e) {
-		return {deck: a, table: b, selection: c, score: d, mode: e};
+var _user$project$Extras$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {deck: a, table: b, selection: c, score: d, mode: e, size: f};
 	});
 var _user$project$Extras$Game = {ctor: 'Game'};
 var _user$project$Extras$Start = {ctor: 'Start'};
+var _user$project$Extras$Reset = {ctor: 'Reset'};
+var _user$project$Extras$Resize = function (a) {
+	return {ctor: 'Resize', _0: a};
+};
 var _user$project$Extras$ExtraCard = {ctor: 'ExtraCard'};
 var _user$project$Extras$addMoreCards = F2(
 	function (table, deck) {
@@ -566,7 +570,6 @@ var _user$project$Extras$addMoreCards = F2(
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Extras$Reset = {ctor: 'Reset'};
 var _user$project$Extras$Set = {ctor: 'Set'};
 var _user$project$Extras$setButton = function (b) {
 	var sty = F2(
@@ -660,9 +663,9 @@ var _user$project$Extras$conversion = function (n) {
 		_1: _user$project$Extras$conversion(n - 1)
 	};
 };
-var _user$project$Extras$putCard = F3(
-	function (x, table, selection) {
-		var ancho = 140;
+var _user$project$Extras$putCard = F4(
+	function (size, x, table, selection) {
+		var ancho = size;
 		return A2(
 			_elm_lang$html$Html$img,
 			{
@@ -704,13 +707,13 @@ var _user$project$Extras$putCard = F3(
 			},
 			{ctor: '[]'});
 	});
-var _user$project$Extras$extraCard = F3(
-	function (n, table, selection) {
+var _user$project$Extras$extraCard = F4(
+	function (size, n, table, selection) {
 		return (_elm_lang$core$Native_Utils.cmp(
 			_elm_lang$core$List$length(table),
-			15) > 0) ? A3(_user$project$Extras$putCard, 12 + n, table, selection) : (((_elm_lang$core$Native_Utils.cmp(n, 2) < 1) && (_elm_lang$core$Native_Utils.cmp(
+			15) > 0) ? A4(_user$project$Extras$putCard, size, 12 + n, table, selection) : (((_elm_lang$core$Native_Utils.cmp(n, 2) < 1) && (_elm_lang$core$Native_Utils.cmp(
 			_elm_lang$core$List$length(table),
-			12) > 0)) ? A3(_user$project$Extras$putCard, 12 + n, table, selection) : A2(
+			12) > 0)) ? A4(_user$project$Extras$putCard, size, 12 + n, table, selection) : A2(
 			_elm_lang$html$Html$span,
 			{ctor: '[]'},
 			{ctor: '[]'}));

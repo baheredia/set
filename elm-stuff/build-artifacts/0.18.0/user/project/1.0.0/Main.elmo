@@ -1,4 +1,5 @@
 var _user$project$Main$view = function (model) {
+	var size = model.size;
 	var _p0 = model.mode;
 	if (_p0.ctor === 'Start') {
 		return A2(
@@ -56,22 +57,22 @@ var _user$project$Main$view = function (model) {
 			{ctor: '[]'},
 			{
 				ctor: '::',
-				_0: A3(_user$project$Extras$putCard, 0, model.table, model.selection),
+				_0: A4(_user$project$Extras$putCard, size, 0, model.table, model.selection),
 				_1: {
 					ctor: '::',
-					_0: A3(_user$project$Extras$putCard, 1, model.table, model.selection),
+					_0: A4(_user$project$Extras$putCard, size, 1, model.table, model.selection),
 					_1: {
 						ctor: '::',
-						_0: A3(_user$project$Extras$putCard, 2, model.table, model.selection),
+						_0: A4(_user$project$Extras$putCard, size, 2, model.table, model.selection),
 						_1: {
 							ctor: '::',
-							_0: A3(_user$project$Extras$putCard, 3, model.table, model.selection),
+							_0: A4(_user$project$Extras$putCard, size, 3, model.table, model.selection),
 							_1: {
 								ctor: '::',
-								_0: A3(_user$project$Extras$extraCard, 0, model.table, model.selection),
+								_0: A4(_user$project$Extras$extraCard, size, 0, model.table, model.selection),
 								_1: {
 									ctor: '::',
-									_0: A3(_user$project$Extras$extraCard, 3, model.table, model.selection),
+									_0: A4(_user$project$Extras$extraCard, size, 3, model.table, model.selection),
 									_1: {
 										ctor: '::',
 										_0: _user$project$Extras$setButton(
@@ -136,22 +137,22 @@ var _user$project$Main$view = function (model) {
 													{ctor: '[]'}),
 												_1: {
 													ctor: '::',
-													_0: A3(_user$project$Extras$putCard, 4, model.table, model.selection),
+													_0: A4(_user$project$Extras$putCard, size, 4, model.table, model.selection),
 													_1: {
 														ctor: '::',
-														_0: A3(_user$project$Extras$putCard, 5, model.table, model.selection),
+														_0: A4(_user$project$Extras$putCard, size, 5, model.table, model.selection),
 														_1: {
 															ctor: '::',
-															_0: A3(_user$project$Extras$putCard, 6, model.table, model.selection),
+															_0: A4(_user$project$Extras$putCard, size, 6, model.table, model.selection),
 															_1: {
 																ctor: '::',
-																_0: A3(_user$project$Extras$putCard, 7, model.table, model.selection),
+																_0: A4(_user$project$Extras$putCard, size, 7, model.table, model.selection),
 																_1: {
 																	ctor: '::',
-																	_0: A3(_user$project$Extras$extraCard, 1, model.table, model.selection),
+																	_0: A4(_user$project$Extras$extraCard, size, 1, model.table, model.selection),
 																	_1: {
 																		ctor: '::',
-																		_0: A3(_user$project$Extras$extraCard, 4, model.table, model.selection),
+																		_0: A4(_user$project$Extras$extraCard, size, 4, model.table, model.selection),
 																		_1: {
 																			ctor: '::',
 																			_0: A2(_user$project$Extras$addMoreCards, model.table, model.deck),
@@ -163,37 +164,110 @@ var _user$project$Main$view = function (model) {
 																					{ctor: '[]'}),
 																				_1: {
 																					ctor: '::',
-																					_0: A3(_user$project$Extras$putCard, 8, model.table, model.selection),
+																					_0: A4(_user$project$Extras$putCard, size, 8, model.table, model.selection),
 																					_1: {
 																						ctor: '::',
-																						_0: A3(_user$project$Extras$putCard, 9, model.table, model.selection),
+																						_0: A4(_user$project$Extras$putCard, size, 9, model.table, model.selection),
 																						_1: {
 																							ctor: '::',
-																							_0: A3(_user$project$Extras$putCard, 10, model.table, model.selection),
+																							_0: A4(_user$project$Extras$putCard, size, 10, model.table, model.selection),
 																							_1: {
 																								ctor: '::',
-																								_0: A3(_user$project$Extras$putCard, 11, model.table, model.selection),
+																								_0: A4(_user$project$Extras$putCard, size, 11, model.table, model.selection),
 																								_1: {
 																									ctor: '::',
-																									_0: A3(_user$project$Extras$extraCard, 2, model.table, model.selection),
+																									_0: A4(_user$project$Extras$extraCard, size, 2, model.table, model.selection),
 																									_1: {
 																										ctor: '::',
-																										_0: A3(_user$project$Extras$extraCard, 5, model.table, model.selection),
+																										_0: A4(_user$project$Extras$extraCard, size, 5, model.table, model.selection),
 																										_1: {
 																											ctor: '::',
 																											_0: A2(
-																												_elm_lang$html$Html$button,
-																												{
+																												_elm_lang$html$Html$br,
+																												{ctor: '[]'},
+																												{ctor: '[]'}),
+																											_1: {
+																												ctor: '::',
+																												_0: A2(
+																													_elm_lang$html$Html$h3,
+																													{ctor: '[]'},
+																													{
+																														ctor: '::',
+																														_0: _elm_lang$html$Html$text('Tamaño'),
+																														_1: {ctor: '[]'}
+																													}),
+																												_1: {
 																													ctor: '::',
-																													_0: _elm_lang$html$Html_Events$onClick(_user$project$Extras$Reset),
-																													_1: {ctor: '[]'}
-																												},
-																												{
-																													ctor: '::',
-																													_0: _elm_lang$html$Html$text('Reset'),
-																													_1: {ctor: '[]'}
-																												}),
-																											_1: {ctor: '[]'}
+																													_0: A2(
+																														_elm_lang$html$Html$select,
+																														{ctor: '[]'},
+																														{
+																															ctor: '::',
+																															_0: A2(
+																																_elm_lang$html$Html$option,
+																																{
+																																	ctor: '::',
+																																	_0: _elm_lang$html$Html_Events$onClick(
+																																		_user$project$Extras$Resize(140)),
+																																	_1: {ctor: '[]'}
+																																},
+																																{
+																																	ctor: '::',
+																																	_0: _elm_lang$html$Html$text('pequeño'),
+																																	_1: {ctor: '[]'}
+																																}),
+																															_1: {
+																																ctor: '::',
+																																_0: A2(
+																																	_elm_lang$html$Html$option,
+																																	{
+																																		ctor: '::',
+																																		_0: _elm_lang$html$Html_Events$onClick(
+																																			_user$project$Extras$Resize(170)),
+																																		_1: {ctor: '[]'}
+																																	},
+																																	{
+																																		ctor: '::',
+																																		_0: _elm_lang$html$Html$text('normal'),
+																																		_1: {ctor: '[]'}
+																																	}),
+																																_1: {
+																																	ctor: '::',
+																																	_0: A2(
+																																		_elm_lang$html$Html$option,
+																																		{
+																																			ctor: '::',
+																																			_0: _elm_lang$html$Html_Events$onClick(
+																																				_user$project$Extras$Resize(200)),
+																																			_1: {ctor: '[]'}
+																																		},
+																																		{
+																																			ctor: '::',
+																																			_0: _elm_lang$html$Html$text('grande'),
+																																			_1: {ctor: '[]'}
+																																		}),
+																																	_1: {ctor: '[]'}
+																																}
+																															}
+																														}),
+																													_1: {
+																														ctor: '::',
+																														_0: A2(
+																															_elm_lang$html$Html$button,
+																															{
+																																ctor: '::',
+																																_0: _elm_lang$html$Html_Events$onClick(_user$project$Extras$Reset),
+																																_1: {ctor: '[]'}
+																															},
+																															{
+																																ctor: '::',
+																																_0: _elm_lang$html$Html$text('Reset'),
+																																_1: {ctor: '[]'}
+																															}),
+																														_1: {ctor: '[]'}
+																													}
+																												}
+																											}
 																										}
 																									}
 																								}
@@ -328,7 +402,8 @@ var _user$project$Main$init = {
 		table: _user$project$Main$init_table,
 		selection: _user$project$Main$init_selection,
 		score: 0,
-		mode: _user$project$Extras$Start
+		mode: _user$project$Extras$Start,
+		size: 140
 	},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
@@ -480,6 +555,14 @@ var _user$project$Main$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'Resize':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{size: _p1._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			default:
 				return {
 					ctor: '_Tuple2',
@@ -488,7 +571,8 @@ var _user$project$Main$update = F2(
 						table: _user$project$Main$init_table,
 						selection: _user$project$Main$init_selection,
 						score: 0,
-						mode: _user$project$Extras$Start
+						mode: _user$project$Extras$Start,
+						size: model.size
 					},
 					_1: _elm_lang$core$Platform_Cmd$none
 				};

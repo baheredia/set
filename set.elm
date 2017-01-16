@@ -28,12 +28,13 @@ init_selection = [False,False,False,False
                  ]
 
 init : (Model, Cmd Msg)
-init =  ({deck = []
+init =  ({ deck = []
           --deck = List.drop 75 init_deck   --This is for testing
-         ,table = init_table
-         ,selection = init_selection
-         ,score = 0
-         ,mode = Start
+         , table = init_table
+         , selection = init_selection
+         , score = 0
+         , mode = Start
+         , size = 140
          }
         , Cmd.none)
 
@@ -52,6 +53,7 @@ update msg model =
                    ,table = Tuple.second <| dealCards shuffled_deck model.table
              }
             ,Cmd.none)
+            
         Select n ->
             if (howManyTrue (switchElement n model.selection)) <= 3
             then
@@ -61,6 +63,7 @@ update msg model =
                 ,Cmd.none)
             else
                 (model, Cmd.none)
+                    
         Set ->
             if List.length model.table <= 12
             then
@@ -89,6 +92,7 @@ update msg model =
                        ,score = model.score + 1
                  }
                 , Cmd.none)
+                
         ExtraCard ->
             ({ model |
                    deck =
@@ -103,11 +107,16 @@ update msg model =
              }
             , Cmd.none
             )
+
+        Resize n ->
+            ({ model | size = n}, Cmd.none)
+                
         Reset -> ({deck = []
                   ,table = init_table
                   ,selection = init_selection
                   ,score = 0
                   ,mode = Start
+                  ,size = model.size
                   }
                  ,Cmd.none)
 
@@ -123,6 +132,7 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
+    let size = model.size in
     case model.mode of
         Start ->
             div []
@@ -134,12 +144,12 @@ view model =
                 ]
         Game ->
             div []
-                [ putCard 0 model.table model.selection
-                , putCard 1 model.table model.selection
-                , putCard 2 model.table model.selection
-                , putCard 3 model.table model.selection
-                , extraCard 0 model.table model.selection
-                , extraCard 3 model.table model.selection
+                [ putCard size 0 model.table model.selection
+                , putCard size 1 model.table model.selection
+                , putCard size 2 model.table model.selection
+                , putCard size 3 model.table model.selection
+                , extraCard size 0 model.table model.selection
+                , extraCard size 3 model.table model.selection
                 , setButton (isListSet (filteredBy model.selection model.table))
                 , div [style [("background-color", "pink")
                              ,("display", "inline-flex")
@@ -152,20 +162,27 @@ view model =
                       ]
                       [text ("Puntos:\n " ++ toString model.score)]
                 , br [] []
-                , putCard 4 model.table model.selection
-                , putCard 5 model.table model.selection
-                , putCard 6 model.table model.selection
-                , putCard 7 model.table model.selection
-                , extraCard 1 model.table model.selection
-                , extraCard 4 model.table model.selection
+                , putCard size 4 model.table model.selection
+                , putCard size 5 model.table model.selection
+                , putCard size 6 model.table model.selection
+                , putCard size 7 model.table model.selection
+                , extraCard size 1 model.table model.selection
+                , extraCard size 4 model.table model.selection
                 , addMoreCards model.table model.deck
                 , br [] []
-                , putCard 8 model.table model.selection
-                , putCard 9 model.table model.selection
-                , putCard 10 model.table model.selection
-                , putCard 11 model.table model.selection
-                , extraCard 2 model.table model.selection
-                , extraCard 5 model.table model.selection
+                , putCard size 8 model.table model.selection
+                , putCard size 9 model.table model.selection
+                , putCard size 10 model.table model.selection
+                , putCard size 11 model.table model.selection
+                , extraCard size 2 model.table model.selection
+                , extraCard size 5 model.table model.selection
+                , br [] []
+                , h3 [] [text "Tamaño"]
+                , select []
+                    [ option [onClick (Resize 140)] [text "pequeño"]
+                    , option [onClick (Resize 170)] [text "normal"]
+                    , option [onClick (Resize 200)] [text "grande"]
+                    ]
                 , button [onClick Reset] [text "Reset"]
                 ]
 

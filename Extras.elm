@@ -25,6 +25,7 @@ type alias Model =
     ,selection : List Bool
     ,score : Int
     ,mode : Mode
+    ,size : Int
     }
 
 -- Types for messaging
@@ -33,9 +34,10 @@ type Msg = Shuffle Deck
     | PutDeck Deck
     | Select Natural
     | Set
-    | Reset
     | ExtraCard
-
+    | Resize Int
+    | Reset
+      
 -------------------------------------------------
 -- THIS PARTS IS ABOUT GENERIC FUNCTIONS
 -- This types are just because I like them
@@ -245,9 +247,9 @@ whichBorder b =
 
 -- This takes a position from 0 .. 17 and puts a displays a card in that
 -- position (with the border, that is why it needs the list of selected cards)
-putCard : Int -> Table -> List Bool -> Html Msg
-putCard x table selection =
-    let ancho = 140 in
+putCard : Int -> Int -> Table -> List Bool -> Html Msg
+putCard size x table selection =
+    let ancho = size in
     img [ src
           <| source
           <| takeElementInPosition (conversion x) table
@@ -261,13 +263,13 @@ putCard x table selection =
         ] []
 
 -- This is for the cases in which you have extra cards
-extraCard : Int -> Table -> List Bool -> Html Msg
-extraCard n table selection =
+extraCard : Int -> Int -> Table -> List Bool -> Html Msg
+extraCard size n table selection =
     if (List.length table > 15)
-    then putCard (12+n) table selection
+    then putCard size (12+n) table selection
     else
         if (n <= 2) && (List.length table > 12)
-        then putCard (12+n) table selection
+        then putCard size (12+n) table selection
         else span [] []
 
 -- This is the button to add cards
