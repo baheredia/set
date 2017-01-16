@@ -154,15 +154,6 @@ view model =
                 , putCard size 3 model.table model.selection
                 , extraCard size 0 model.table model.selection
                 , extraCard size 3 model.table model.selection
-                ,  div [style [("background-color", "grey")
-                    ,("width","80px")
-                    ,("height","40px")
-                    ,("display","inline-flex")
-                    ,("position","relative")
-                    ,("left","20px")
-                    ,("align-items","center")
-                    ,("justify-content","center")
-                    ]] [text "¡Busca!"]
                 , div [style [("background-color", "pink")
                              ,("display", "inline-flex")
                              ,("width","80px")
