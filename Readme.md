@@ -15,7 +15,7 @@ List of things I want to do with it, in no particular order:
 I think that is all.
 
 
-THINGS DONE
+## Things done ##
 
 * Change the type of Cards, to (Int,Int,Int,Int), or actually something more
 precise.
