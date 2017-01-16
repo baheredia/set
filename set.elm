@@ -55,44 +55,48 @@ update msg model =
             ,Cmd.none)
             
         Select n ->
-            if (howManyTrue (switchElement n model.selection)) <= 3
+            let switchedSelection = switchElement n model.selection in
+            if howManyTrue switchedSelection <= 3
             then
-                ({ model |
-                       selection = (switchElement n model.selection)
-                 }
-                ,Cmd.none)
+                if
+                    howManyTrue switchedSelection == 3
+                    && (isListSet <| filteredBy switchedSelection model.table)
+                then
+                    if List.length model.table <= 12
+                    then
+                        ({ model |
+                               deck =
+                               Tuple.first
+                                   <| dealCards model.deck
+                                   <| takeSetOut model.table switchedSelection
+                         ,table =
+                             Tuple.second
+                                 <| dealCards model.deck
+                                 <| takeSetOut model.table switchedSelection
+                         ,selection = init_selection
+                         ,score = model.score + 1
+                         }                         
+                        , Cmd.none)
+                    else
+                        ({ model |
+                               deck = model.deck
+                               ,table =
+                                   filteredBy (List.map not switchedSelection)
+                                       <| model.table
+                               ,selection =
+                                   filteredBy (List.map not switchedSelection)
+                                       <| switchedSelection
+                               ,score = model.score + 1
+                         }
+                        , Cmd.none)
+                else
+                    ({ model |
+                           selection = switchedSelection
+                     }
+                    ,Cmd.none)
             else
                 (model, Cmd.none)
                     
-        Set ->
-            if List.length model.table <= 12
-            then
-                ({ model |
-                       deck =
-                           Tuple.first
-                               <| dealCards model.deck
-                               <| takeSetOut model.table model.selection
-                       ,table =
-                           Tuple.second
-                               <| dealCards model.deck
-                               <| takeSetOut model.table model.selection
-                       ,selection = init_selection
-                       ,score = model.score + 1
-                 }                         
-                , Cmd.none)
-            else
-                ({ model |
-                       deck = model.deck
-                       ,table =
-                           filteredBy (List.map not model.selection)
-                               <| model.table
-                       ,selection =
-                           filteredBy (List.map not model.selection)
-                               <| model.selection
-                       ,score = model.score + 1
-                 }
-                , Cmd.none)
-                
         ExtraCard ->
             ({ model |
                    deck =
@@ -150,7 +154,15 @@ view model =
                 , putCard size 3 model.table model.selection
                 , extraCard size 0 model.table model.selection
                 , extraCard size 3 model.table model.selection
-                , setButton (isListSet (filteredBy model.selection model.table))
+                ,  div [style [("background-color", "grey")
+                    ,("width","80px")
+                    ,("height","40px")
+                    ,("display","inline-flex")
+                    ,("position","relative")
+                    ,("left","20px")
+                    ,("align-items","center")
+                    ,("justify-content","center")
+                    ]] [text "¡Busca!"]
                 , div [style [("background-color", "pink")
                              ,("display", "inline-flex")
                              ,("width","80px")

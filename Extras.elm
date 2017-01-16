@@ -33,7 +33,6 @@ type alias Model =
 type Msg = Shuffle Deck
     | PutDeck Deck
     | Select Natural
-    | Set
     | ExtraCard
     | Resize Int
     | Reset
@@ -292,23 +291,6 @@ addMoreCards table deck =
              ,sty "yellow" "pointer"
              ] [text "Más"]
 
--- This is for the Set button
-setButton : Bool -> Html Msg
-setButton b =
-    let sty op1 op2 = style [("background-color", op1)
-                            ,("cursor", op2)
-                            ,("width","80px")
-                            ,("height","40px")
-                            ,("display","inline-flex")
-                            ,("position","relative")
-                            ,("left","20px")
-                            ,("align-items","center")
-                            ,("justify-content","center")
-                            ] in
-    case b of
-        True -> div [onClick Set
-                    , sty "red" "pointer"
-                    ] [text "¡Set!"]
-        False -> div [sty "grey" "default"
-                     ] [text "¡Busca!"]
+
+    
               

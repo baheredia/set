@@ -75,9 +75,51 @@ var _user$project$Main$view = function (model) {
 									_0: A4(_user$project$Extras$extraCard, size, 3, model.table, model.selection),
 									_1: {
 										ctor: '::',
-										_0: _user$project$Extras$setButton(
-											_user$project$Extras$isListSet(
-												A2(_user$project$Extras$filteredBy, model.selection, model.table))),
+										_0: A2(
+											_elm_lang$html$Html$div,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$style(
+													{
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'grey'},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+																					_1: {ctor: '[]'}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('¡Busca!'),
+												_1: {ctor: '[]'}
+											}),
 										_1: {
 											ctor: '::',
 											_0: A2(
@@ -437,21 +479,13 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Select':
-				var _p3 = _p1._0;
+				var switchedSelection = A2(_user$project$Extras$switchElement, _p1._0, model.selection);
 				return (_elm_lang$core$Native_Utils.cmp(
-					_user$project$Extras$howManyTrue(
-						A2(_user$project$Extras$switchElement, _p3, model.selection)),
-					3) < 1) ? {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							selection: A2(_user$project$Extras$switchElement, _p3, model.selection)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				} : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			case 'Set':
-				return (_elm_lang$core$Native_Utils.cmp(
+					_user$project$Extras$howManyTrue(switchedSelection),
+					3) < 1) ? ((_elm_lang$core$Native_Utils.eq(
+					_user$project$Extras$howManyTrue(switchedSelection),
+					3) && _user$project$Extras$isListSet(
+					A2(_user$project$Extras$filteredBy, switchedSelection, model.table))) ? ((_elm_lang$core$Native_Utils.cmp(
 					_elm_lang$core$List$length(model.table),
 					12) < 1) ? {
 					ctor: '_Tuple2',
@@ -462,12 +496,12 @@ var _user$project$Main$update = F2(
 								A2(
 									_user$project$Extras$dealCards,
 									model.deck,
-									A2(_user$project$Extras$takeSetOut, model.table, model.selection))),
+									A2(_user$project$Extras$takeSetOut, model.table, switchedSelection))),
 							table: _elm_lang$core$Tuple$second(
 								A2(
 									_user$project$Extras$dealCards,
 									model.deck,
-									A2(_user$project$Extras$takeSetOut, model.table, model.selection))),
+									A2(_user$project$Extras$takeSetOut, model.table, switchedSelection))),
 							selection: _user$project$Main$init_selection,
 							score: model.score + 1
 						}),
@@ -480,16 +514,22 @@ var _user$project$Main$update = F2(
 							deck: model.deck,
 							table: A2(
 								_user$project$Extras$filteredBy,
-								A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, model.selection),
+								A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, switchedSelection),
 								model.table),
 							selection: A2(
 								_user$project$Extras$filteredBy,
-								A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, model.selection),
-								model.selection),
+								A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, switchedSelection),
+								switchedSelection),
 							score: model.score + 1
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
-				};
+				}) : {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{selection: switchedSelection}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				}) : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'ExtraCard':
 				return {
 					ctor: '_Tuple2',
