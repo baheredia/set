@@ -100,6 +100,16 @@ takeElementInPosition n xs =
 howManyTrue : List Bool -> Int
 howManyTrue = List.length << (List.filter identity)
 
+isInList : a -> List a -> Bool
+isInList x xs =
+    case xs of
+        [] ->
+            False
+        y::ys ->
+            if y == x
+            then True
+            else isInList x xs
+
 --------------------------------------------
 -- NOW FUNCTIONS USEFULL JUST FOR THE UPDATE
 
@@ -291,6 +301,42 @@ addMoreCards table deck =
              ,sty "yellow" "pointer"
              ] [text "Más"]
 
+-- Here I am going to put some things to automate the button for adding cards
+-- First a function that reads two cards and returns the one that is needed
+-- to forma  set (it is unique)
+lastCardForSet : Card -> Card -> Card
+lastCardForSet (x1,x2,x3,x4) (y1,y2,y3,y4) =
+    let third n m =
+            if n == m
+            then n
+            else 6 - n - m
+    in
+        (third x1 y1, third x2 y2, third x3 y3, third x4 y4)
 
-    
-              
+
+isThereASetWithCards : Card -> Card -> Table -> Bool
+isThereASetWithCards card1 card2 table =
+    isInList (Just (lastCardForSet card1 card2)) table
+
+isThereASetStartingWith : Card -> Table -> Bool
+isThereASetStartingWith card table =
+    case table of
+        [] ->
+            False
+        card2::rest ->
+            case card2 of
+                Nothing -> False
+                Just c ->
+                    isThereASetWithCards card c rest
+                    || isThereASetStartingWith card rest
+
+isThereASetInTable : Table -> Bool
+isThereASetInTable table =
+    case table of
+        [] -> False
+        card::rest ->
+            case card of
+                Nothing -> False
+                Just c ->                    
+                    isThereASetStartingWith c rest
+                    || isThereASetInTable rest
