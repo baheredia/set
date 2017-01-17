@@ -7,15 +7,18 @@ This is the game Set. See:
 
 List of things I want to do with it, in no particular order:
 
-* Automate the AddMoreCards button (it should detect if there is a Set in the table and if not add automatically)
-* Create a Hint button (with a Set detected in the table highlights some card)
 * Put an Against the clock (it will have a clock, and you should do it in the less time possible, maybe Time/nSets (since you can have short hands or long hands)
-* Put an Against the machine (with difficulty) (it will give you a fixed amount of time to find a set before the point is taken for the machine)
+* Put an Against the machine (with difficulty) (it will give you a fixed amount of time to find a set before the point is taken for the machine). I will need to think how to do this.
 * The code needs more cleaning: separate into different modules.
 * Put the rules of the game in the start page.
 * The options for size don't work on mobile phones (at least in mine)
 
 I think that is all.
+
+
+This is going to prove difficult, since the time requiring for the algorithm I thoght is too big
+* Create a Hint button (with a Set detected in the table highlights some card)
+* Automate the AddMoreCards button (it should detect if there is a Set in the table and if not add automatically)
 
 
 ## Things done ##
