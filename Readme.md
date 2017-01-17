@@ -11,6 +11,7 @@ List of things I want to do with it, in no particular order:
 * Create a Hint button (with a Set detected in the table highlights some card)
 * Put an Against the clock (it will have a clock, and you should do it in the less time possible, maybe Time/nSets (since you can have short hands or long hands)
 * Put an Against the machine (with difficulty) (it will give you a fixed amount of time to find a set before the point is taken for the machine)
+* The code needs more cleaning: separate into different modules.
 
 I think that is all.
 
