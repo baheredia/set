@@ -30,8 +30,7 @@ init =  ({ deck = []
          , size = 140
          , time = 0
          , timeToAddCards = time_to_pass
-         , timeAtStart = 0
-         , timeAt23 = 0
+         , bestTime = 0
          }
         , Cmd.none)
 
@@ -40,9 +39,32 @@ init =  ({ deck = []
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = 
     case msg of
-        Shuffle deck ->
-            ({ model | mode = Game }
-            ,Random.generate PutDeck (Random.List.shuffle deck))
+        Shuffle mode ->
+            case mode of
+                Start -> (model, Cmd.none)
+                         
+                Game -> 
+                    ({ model | mode = Game }
+                    ,Random.generate PutDeck
+                        <| Random.List.shuffle (initialDeck False)
+                    )
+                    
+                Training ->
+                    ({ model | mode = Training }
+                    ,Random.generate PutDeck
+                        <| Random.List.shuffle (initialDeck False)
+                    )
+                    
+                OneColorGame ->
+                    ({ model | mode = OneColorGame }
+                    ,Random.generate PutDeck
+                        <| Random.List.shuffle (initialDeck True)
+                    )
+                OneColorTraining ->
+                    ({ model | mode = OneColorTraining }
+                    ,Random.generate PutDeck
+                        <| Random.List.shuffle (initialDeck True)
+                    )
 
         PutDeck shuffled_deck ->
             ({ model |
@@ -56,21 +78,9 @@ update msg model =
         Select n ->
             (makeSelection n model, Cmd.none)
                     
-{-        ExtraCard ->
-            ({ model |
-                   deck =
-                       Tuple.first
-                           <| dealCards model.deck
-                           <| model.table ++ [Nothing,Nothing,Nothing]
-                   ,table =
-                       Tuple.second
-                           <| dealCards model.deck
-                           <| model.table ++ [Nothing,Nothing,Nothing]
-                   ,selection = model.selection ++ [False,False,False]
-             }
-            , Cmd.none
-            )
--}
+        ExtraCard ->
+            (addExtraCards model, Cmd.none)
+
         Resize n ->
             ({ model | size = n}, Cmd.none)
 
@@ -104,4 +114,10 @@ view model =
         Start ->
             initialPage
         Game ->
+            gamePage model
+        Training ->
+            gamePage model
+        OneColorTraining ->
+            gamePage model
+        OneColorGame ->
             gamePage model

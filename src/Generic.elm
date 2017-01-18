@@ -17,9 +17,9 @@ type alias Table = List CardInTable
 type Mode
     = Start
     | Game
---    | Training
---    | OneColorTraining
---    | OneColorGame
+    | Training
+    | OneColorTraining
+    | OneColorGame
     
 type alias Model =
     {deck : Deck
@@ -28,19 +28,17 @@ type alias Model =
     ,score : Int
     ,mode : Mode
     ,size : Int
-    ,time : Time
+    ,time : Int
     ,timeToAddCards : Int
-    ,timeAtStart : Time
-    ,timeAt23 : Time
+    ,bestTime : Int
     }
 
 -- Types for messaging
 
-type Msg = Shuffle Deck
+type Msg = Shuffle Mode
     | PutDeck Deck
-    --| Select Natural
     | Select Int
-    --| ExtraCard
+    | ExtraCard
     | Resize Int
     | Tick Time
     | Reset
@@ -61,7 +59,7 @@ flatten xs =
 -- This switch the in position n of a boolean list
 switchElement : Int -> List Bool -> List Bool
 switchElement n bs =
-    let end = List.drop (n-1) bs in
+    let end = List.drop n bs in
     let listMaybe l =
             case l of
                 Nothing -> []
@@ -73,7 +71,7 @@ switchElement n bs =
                     Nothing -> False
                     Just b -> not b
         in
-            List.take (n-1) bs
+            List.take n bs
             ++ (notMaybe <| List.head end) :: (listMaybe <| List.tail end)
 
 
@@ -94,4 +92,4 @@ filteredBy bls xs =
 
 takeElementInPosition : Int -> List a -> Maybe a
 takeElementInPosition n xs =
-    List.head <| List.drop (n-1) xs
+    List.head <| List.drop n xs

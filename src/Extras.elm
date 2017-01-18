@@ -69,36 +69,60 @@ extraCard size n table selection =
         else span [] []
 
 -- This is the button to add cards
-{-addMoreCards : Table -> Deck -> Html Msg
-addMoreCards table deck =
-    let sty op1 op2 =
-            style [("background-color", op1)
-                  ,("cursor",op2)
-                  ,("width","80px")
-                  ,("height","40px")
-                  ,("display","inline-flex")
-                  ,("position","relative")
-                  ,("left","20px")
-                  ,("align-items","center")
-                  ,("justify-content","center")
-                  ] in
-    if (List.length table > 15) || (List.isEmpty deck)
-    then div [sty "grey" "default"] [text "."]
-    else div [onClick ExtraCard
-             ,sty "yellow" "pointer"
-             ] [text "Más"]
--}
+addMoreCards : Mode -> Table -> Deck -> Html Msg
+addMoreCards mode table deck =
+    let button = 
+            let sty op1 op2 =
+                    style [("background-color", op1)
+                          ,("cursor",op2)
+                          ,("width","80px")
+                          ,("height","40px")
+                          ,("display","inline-flex")
+                          ,("position","relative")
+                          ,("left","20px")
+                          ,("align-items","center")
+                          ,("justify-content","center")
+                          ] in
+            if (List.length table > 15) || (List.isEmpty deck)
+            then div [sty "grey" "default"] [text "."]
+            else div [onClick ExtraCard
+                     ,sty "yellow" "pointer"
+                     ] [text "Más"]
+    in
+        case mode of
+            Start ->
+                div [] []
+            Game ->
+                div [] []
+            Training ->
+                button
+            OneColorGame ->
+                div [] []
+            OneColorTraining ->
+                button
 
     
 initialPage : Html Msg              
 initialPage =
     div []
         [ h1 [] [text "Bienvenido a Set, ¿Listo para jugar?"]
+        , h2 [] [text "Para jugar con reloj (que para con 24 puntos)"]
         , button
-              [onClick (Shuffle (initialDeck False))]
+              [onClick (Shuffle Game)]
               [text "¡Empieza!"]
+        , h2 [] [text "Para entrenar sin reloj y sin presiones"]
         , button
-              [onClick (Shuffle (initialDeck True))]
+              [onClick (Shuffle Training)]
+              [text "Entrenamiento"]
+        , h2 []
+            [text "Para jugar con reloj (hasta 9 puntos) pero un solo color"]
+        , button
+              [onClick (Shuffle OneColorGame)]
+              [text "Un solo color"]
+        , h2 []
+            [text "Para entrenar con un único color sin presiones"]
+        , button
+              [onClick (Shuffle OneColorTraining)]
               [text "Sólo quiero un color"]
         ]
 
@@ -123,18 +147,7 @@ gamePage model =
                      ]
               ]
               [text ("Puntos:\n " ++ toString model.score)]
-        , div [style [("background-color", "blue")
-                     ,("display", "inline-flex")
-                     ,("width","80px")
-                     ,("height","40px")
-                     ,("align-items","center")
-                     ,("justify-content","center")
-                     ,("position","relative")
-                     ,("left","40px")
-                     ,("color","white")
-                     ]
-              ]
-              [text (toString model.time)]
+        , clock model.mode model.time
         , br [] []
         , putCard size 4 model.table model.selection
         , putCard size 5 model.table model.selection
@@ -142,7 +155,7 @@ gamePage model =
         , putCard size 7 model.table model.selection
         , extraCard size 1 model.table model.selection
         , extraCard size 4 model.table model.selection
-        --, addMoreCards model.table model.deck
+        , addMoreCards model.mode model.table model.deck
         , br [] []
         , putCard size 8 model.table model.selection
         , putCard size 9 model.table model.selection
@@ -160,3 +173,27 @@ gamePage model =
         , button [onClick Reset] [text "Reset"]
         ]
 
+clock : Mode -> Int -> Html Msg
+clock mode time =
+    let sty = style [("background-color", "blue")
+                    ,("display", "inline-flex")
+                    ,("width","80px")
+                    ,("height","40px")
+                    ,("align-items","center")
+                    ,("justify-content","center")
+                    ,("position","relative")
+                    ,("left","40px")
+                    ,("color","white")
+                     ]
+    in
+        case mode of
+            Start ->
+                div [] []
+            Game ->
+                div [sty] [text (toString time)]
+            Training ->
+                div [] []
+            OneColorGame ->
+                div [sty] [text (toString time)]
+            OneColorTraining ->
+                div [] []

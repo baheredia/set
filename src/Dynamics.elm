@@ -134,6 +134,7 @@ isListSet w1 =
                         (r::_) -> isSet w q r
 
 -- Functions appearing in the UPDATE
+-- This is how things change when you select a card
 makeSelection : Int -> Model -> Model
 makeSelection n model =
     let switchedSelection = switchElement n model.selection in
@@ -193,20 +194,28 @@ takeOutSet model selectedPosition =
 -- This updates the clock and all that
 tick : Model -> Model
 tick model =
-    if model.score >= 24
-    then model
-    else
-        if  -- it is time to add cards, and there is space in the table,
-            -- and cards in the deck
-            model.timeToAddCards == 1
-            && List.length model.table <= 15
-            && not (List.isEmpty model.deck)
-        then --add three extra cards
-            addExtraCards model
-        else -- Just make the time pass
-            { model | time = model.time + 1
-            , timeToAddCards = model.timeToAddCards - 1
-            }
+    let scoreToStop mode =
+            case mode of
+                Start -> 0
+                Game -> 24
+                Training -> 0
+                OneColorGame -> 9
+                OneColorTraining -> 0
+    in
+        if model.score >= scoreToStop model.mode
+        then model
+        else
+            if  -- it is time to add cards, and there is space in the table,
+                -- and cards in the deck
+                model.timeToAddCards == 1
+                && List.length model.table <= 15
+                && not (List.isEmpty model.deck)
+            then --add three extra cards
+                addExtraCards model
+            else -- Just make the time pass
+                { model | time = model.time + 1
+                , timeToAddCards = model.timeToAddCards - 1
+                }
 
 -- This puts three extra cards in the table
 addExtraCards : Model -> Model

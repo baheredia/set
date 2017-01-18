@@ -1,3 +1,90 @@
+var _user$project$Extras$clock = F2(
+	function (mode, time) {
+		var sty = _elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'blue'},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'left', _1: '40px'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'color', _1: 'white'},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+		var _p0 = mode;
+		switch (_p0.ctor) {
+			case 'Start':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			case 'Game':
+				return A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: sty,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(time)),
+						_1: {ctor: '[]'}
+					});
+			case 'Training':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			case 'OneColorGame':
+				return A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: sty,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(time)),
+						_1: {ctor: '[]'}
+					});
+			default:
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+		}
+	});
 var _user$project$Extras$initialPage = A2(
 	_elm_lang$html$Html$div,
 	{ctor: '[]'},
@@ -14,17 +101,11 @@ var _user$project$Extras$initialPage = A2(
 		_1: {
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$button,
+				_elm_lang$html$Html$h2,
+				{ctor: '[]'},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Events$onClick(
-						_user$project$Generic$Shuffle(
-							_user$project$Dynamics$initialDeck(false))),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('¡Empieza!'),
+					_0: _elm_lang$html$Html$text('Para jugar con reloj (que para con 24 puntos)'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {
@@ -34,26 +115,203 @@ var _user$project$Extras$initialPage = A2(
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html_Events$onClick(
-							_user$project$Generic$Shuffle(
-								_user$project$Dynamics$initialDeck(true))),
+							_user$project$Generic$Shuffle(_user$project$Generic$Game)),
 						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('Sólo quiero un color'),
+						_0: _elm_lang$html$Html$text('¡Empieza!'),
 						_1: {ctor: '[]'}
 					}),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$h2,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Para entrenar sin reloj y sin presiones'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$button,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(
+									_user$project$Generic$Shuffle(_user$project$Generic$Training)),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Entrenamiento'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$h2,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Para jugar con reloj (hasta 9 puntos) pero un solo color'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$Generic$Shuffle(_user$project$Generic$OneColorGame)),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Un solo color'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$h2,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Para entrenar con un único color sin presiones'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$button,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onClick(
+													_user$project$Generic$Shuffle(_user$project$Generic$OneColorTraining)),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Sólo quiero un color'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	});
+var _user$project$Extras$addMoreCards = F3(
+	function (mode, table, deck) {
+		var button = function () {
+			var sty = F2(
+				function (op1, op2) {
+					return _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'background-color', _1: op1},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'cursor', _1: op2},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
+													_1: {
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						});
+				});
+			return ((_elm_lang$core$Native_Utils.cmp(
+				_elm_lang$core$List$length(table),
+				15) > 0) || _elm_lang$core$List$isEmpty(deck)) ? A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: A2(sty, 'grey', 'default'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('.'),
+					_1: {ctor: '[]'}
+				}) : A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(_user$project$Generic$ExtraCard),
+					_1: {
+						ctor: '::',
+						_0: A2(sty, 'yellow', 'pointer'),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Más'),
+					_1: {ctor: '[]'}
+				});
+		}();
+		var _p1 = mode;
+		switch (_p1.ctor) {
+			case 'Start':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			case 'Game':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			case 'Training':
+				return button;
+			case 'OneColorGame':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			default:
+				return button;
+		}
+	});
 var _user$project$Extras$whichBorder = function (b) {
-	var _p0 = b;
-	if (_p0.ctor === 'Nothing') {
+	var _p2 = b;
+	if (_p2.ctor === 'Nothing') {
 		return 'none';
 	} else {
-		var _p1 = _p0._0;
-		if (_p1 === true) {
+		var _p3 = _p2._0;
+		if (_p3 === true) {
 			return 'dashed';
 		} else {
 			return 'solid white';
@@ -61,25 +319,25 @@ var _user$project$Extras$whichBorder = function (b) {
 	}
 };
 var _user$project$Extras$source = function (wd) {
-	var _p2 = wd;
-	if (_p2.ctor === 'Nothing') {
+	var _p4 = wd;
+	if (_p4.ctor === 'Nothing') {
 		return '';
 	} else {
 		var toNombre = function (xs) {
-			var _p3 = xs;
-			if (_p3.ctor === 'Nothing') {
+			var _p5 = xs;
+			if (_p5.ctor === 'Nothing') {
 				return '';
 			} else {
 				return A2(
 					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Basics$toString(_p3._0._0),
+					_elm_lang$core$Basics$toString(_p5._0._0),
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						_elm_lang$core$Basics$toString(_p3._0._1),
+						_elm_lang$core$Basics$toString(_p5._0._1),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Basics$toString(_p3._0._2),
-							_elm_lang$core$Basics$toString(_p3._0._3))));
+							_elm_lang$core$Basics$toString(_p5._0._2),
+							_elm_lang$core$Basics$toString(_p5._0._3))));
 			}
 		};
 		return A2(
@@ -87,7 +345,7 @@ var _user$project$Extras$source = function (wd) {
 			'img/c',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				toNombre(_p2._0),
+				toNombre(_p4._0),
 				'.png'));
 	}
 };
@@ -215,56 +473,7 @@ var _user$project$Extras$gamePage = function (model) {
 										}),
 									_1: {
 										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$div,
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$style(
-													{
-														ctor: '::',
-														_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'blue'},
-														_1: {
-															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
-															_1: {
-																ctor: '::',
-																_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
-																_1: {
-																	ctor: '::',
-																	_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
-																	_1: {
-																		ctor: '::',
-																		_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
-																		_1: {
-																			ctor: '::',
-																			_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
-																			_1: {
-																				ctor: '::',
-																				_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
-																				_1: {
-																					ctor: '::',
-																					_0: {ctor: '_Tuple2', _0: 'left', _1: '40px'},
-																					_1: {
-																						ctor: '::',
-																						_0: {ctor: '_Tuple2', _0: 'color', _1: 'white'},
-																						_1: {ctor: '[]'}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}),
-												_1: {ctor: '[]'}
-											},
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html$text(
-													_elm_lang$core$Basics$toString(model.time)),
-												_1: {ctor: '[]'}
-											}),
+										_0: A2(_user$project$Extras$clock, model.mode, model.time),
 										_1: {
 											ctor: '::',
 											_0: A2(
@@ -291,77 +500,65 @@ var _user$project$Extras$gamePage = function (model) {
 																	_0: A4(_user$project$Extras$extraCard, size, 4, model.table, model.selection),
 																	_1: {
 																		ctor: '::',
-																		_0: A2(
-																			_elm_lang$html$Html$br,
-																			{ctor: '[]'},
-																			{ctor: '[]'}),
+																		_0: A3(_user$project$Extras$addMoreCards, model.mode, model.table, model.deck),
 																		_1: {
 																			ctor: '::',
-																			_0: A4(_user$project$Extras$putCard, size, 8, model.table, model.selection),
+																			_0: A2(
+																				_elm_lang$html$Html$br,
+																				{ctor: '[]'},
+																				{ctor: '[]'}),
 																			_1: {
 																				ctor: '::',
-																				_0: A4(_user$project$Extras$putCard, size, 9, model.table, model.selection),
+																				_0: A4(_user$project$Extras$putCard, size, 8, model.table, model.selection),
 																				_1: {
 																					ctor: '::',
-																					_0: A4(_user$project$Extras$putCard, size, 10, model.table, model.selection),
+																					_0: A4(_user$project$Extras$putCard, size, 9, model.table, model.selection),
 																					_1: {
 																						ctor: '::',
-																						_0: A4(_user$project$Extras$putCard, size, 11, model.table, model.selection),
+																						_0: A4(_user$project$Extras$putCard, size, 10, model.table, model.selection),
 																						_1: {
 																							ctor: '::',
-																							_0: A4(_user$project$Extras$extraCard, size, 2, model.table, model.selection),
+																							_0: A4(_user$project$Extras$putCard, size, 11, model.table, model.selection),
 																							_1: {
 																								ctor: '::',
-																								_0: A4(_user$project$Extras$extraCard, size, 5, model.table, model.selection),
+																								_0: A4(_user$project$Extras$extraCard, size, 2, model.table, model.selection),
 																								_1: {
 																									ctor: '::',
-																									_0: A2(
-																										_elm_lang$html$Html$br,
-																										{ctor: '[]'},
-																										{ctor: '[]'}),
+																									_0: A4(_user$project$Extras$extraCard, size, 5, model.table, model.selection),
 																									_1: {
 																										ctor: '::',
 																										_0: A2(
-																											_elm_lang$html$Html$h3,
+																											_elm_lang$html$Html$br,
 																											{ctor: '[]'},
-																											{
-																												ctor: '::',
-																												_0: _elm_lang$html$Html$text('Tamaño'),
-																												_1: {ctor: '[]'}
-																											}),
+																											{ctor: '[]'}),
 																										_1: {
 																											ctor: '::',
 																											_0: A2(
-																												_elm_lang$html$Html$select,
+																												_elm_lang$html$Html$h3,
 																												{ctor: '[]'},
 																												{
 																													ctor: '::',
-																													_0: A2(
-																														_elm_lang$html$Html$option,
-																														{
-																															ctor: '::',
-																															_0: _elm_lang$html$Html_Events$onClick(
-																																_user$project$Generic$Resize(140)),
-																															_1: {ctor: '[]'}
-																														},
-																														{
-																															ctor: '::',
-																															_0: _elm_lang$html$Html$text('pequeño'),
-																															_1: {ctor: '[]'}
-																														}),
-																													_1: {
+																													_0: _elm_lang$html$Html$text('Tamaño'),
+																													_1: {ctor: '[]'}
+																												}),
+																											_1: {
+																												ctor: '::',
+																												_0: A2(
+																													_elm_lang$html$Html$select,
+																													{ctor: '[]'},
+																													{
 																														ctor: '::',
 																														_0: A2(
 																															_elm_lang$html$Html$option,
 																															{
 																																ctor: '::',
 																																_0: _elm_lang$html$Html_Events$onClick(
-																																	_user$project$Generic$Resize(170)),
+																																	_user$project$Generic$Resize(140)),
 																																_1: {ctor: '[]'}
 																															},
 																															{
 																																ctor: '::',
-																																_0: _elm_lang$html$Html$text('normal'),
+																																_0: _elm_lang$html$Html$text('pequeño'),
 																																_1: {ctor: '[]'}
 																															}),
 																														_1: {
@@ -371,33 +568,49 @@ var _user$project$Extras$gamePage = function (model) {
 																																{
 																																	ctor: '::',
 																																	_0: _elm_lang$html$Html_Events$onClick(
-																																		_user$project$Generic$Resize(200)),
+																																		_user$project$Generic$Resize(170)),
 																																	_1: {ctor: '[]'}
 																																},
 																																{
 																																	ctor: '::',
-																																	_0: _elm_lang$html$Html$text('grande'),
+																																	_0: _elm_lang$html$Html$text('normal'),
 																																	_1: {ctor: '[]'}
 																																}),
-																															_1: {ctor: '[]'}
+																															_1: {
+																																ctor: '::',
+																																_0: A2(
+																																	_elm_lang$html$Html$option,
+																																	{
+																																		ctor: '::',
+																																		_0: _elm_lang$html$Html_Events$onClick(
+																																			_user$project$Generic$Resize(200)),
+																																		_1: {ctor: '[]'}
+																																	},
+																																	{
+																																		ctor: '::',
+																																		_0: _elm_lang$html$Html$text('grande'),
+																																		_1: {ctor: '[]'}
+																																	}),
+																																_1: {ctor: '[]'}
+																															}
 																														}
-																													}
-																												}),
-																											_1: {
-																												ctor: '::',
-																												_0: A2(
-																													_elm_lang$html$Html$button,
-																													{
-																														ctor: '::',
-																														_0: _elm_lang$html$Html_Events$onClick(_user$project$Generic$Reset),
-																														_1: {ctor: '[]'}
-																													},
-																													{
-																														ctor: '::',
-																														_0: _elm_lang$html$Html$text('Reset'),
-																														_1: {ctor: '[]'}
 																													}),
-																												_1: {ctor: '[]'}
+																												_1: {
+																													ctor: '::',
+																													_0: A2(
+																														_elm_lang$html$Html$button,
+																														{
+																															ctor: '::',
+																															_0: _elm_lang$html$Html_Events$onClick(_user$project$Generic$Reset),
+																															_1: {ctor: '[]'}
+																														},
+																														{
+																															ctor: '::',
+																															_0: _elm_lang$html$Html$text('Reset'),
+																															_1: {ctor: '[]'}
+																														}),
+																													_1: {ctor: '[]'}
+																												}
 																											}
 																										}
 																									}
