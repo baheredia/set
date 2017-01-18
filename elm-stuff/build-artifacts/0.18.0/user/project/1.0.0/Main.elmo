@@ -480,7 +480,8 @@ var _user$project$Main$update = F2(
 								A2(_user$project$Extras$dealCards, _p2, model.table)),
 							table: _elm_lang$core$Tuple$second(
 								A2(_user$project$Extras$dealCards, _p2, model.table)),
-							time: 0
+							time: 0,
+							timeToAddCards: 15
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -547,9 +548,9 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Tick':
-				return (_elm_lang$core$Native_Utils.eq(model.timeToAddCards, 1) && (_elm_lang$core$Native_Utils.cmp(
+				return (_elm_lang$core$Native_Utils.cmp(model.score, 24) > -1) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : ((_elm_lang$core$Native_Utils.eq(model.timeToAddCards, 1) && ((_elm_lang$core$Native_Utils.cmp(
 					_elm_lang$core$List$length(model.table),
-					15) < 1)) ? {
+					15) < 1) && (!_elm_lang$core$List$isEmpty(model.deck)))) ? {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
@@ -620,7 +621,7 @@ var _user$project$Main$update = F2(
 						model,
 						{time: model.time + 1, timeToAddCards: model.timeToAddCards - 1}),
 					_1: _elm_lang$core$Platform_Cmd$none
-				};
+				});
 			default:
 				return {
 					ctor: '_Tuple2',
@@ -632,7 +633,8 @@ var _user$project$Main$update = F2(
 							selection: _user$project$Main$init_selection,
 							score: 0,
 							mode: _user$project$Extras$Start,
-							time: 0
+							time: 0,
+							timeToAddCards: 15
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};

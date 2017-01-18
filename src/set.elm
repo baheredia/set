@@ -57,6 +57,7 @@ update msg model =
                    deck = Tuple.first <| dealCards shuffled_deck model.table
                    ,table = Tuple.second <| dealCards shuffled_deck model.table
                    ,time = 0
+                   ,timeToAddCards = 15
              }
             ,Cmd.none)
             
@@ -124,10 +125,14 @@ update msg model =
             ({ model | size = n}, Cmd.none)
 
         Tick _ ->
-            if
-                model.timeToAddCards == 1
-                && List.length model.table <= 15
-            then ({ model |
+            if model.score >= 24
+            then (model, Cmd.none)
+            else
+                if
+                    model.timeToAddCards == 1
+                    && List.length model.table <= 15
+                    && not (List.isEmpty model.deck)
+                then ({ model |
                         deck =
                             Tuple.first
                                 <| dealCards model.deck
@@ -139,14 +144,14 @@ update msg model =
                         ,selection = model.selection ++ [False,False,False]
                         ,time = model.time + 1
                         ,timeToAddCards = 15
-                  }
-                 , Cmd.none)
-            else
-                ({ model |
+                      }
+                     , Cmd.none)
+                else
+                    ({ model |
                        time = model.time + 1
                        ,timeToAddCards = model.timeToAddCards - 1
-                 }
-            , Cmd.none)
+                     }
+                    , Cmd.none)
                 
         Reset -> ({ model |
                         deck = []
@@ -155,6 +160,7 @@ update msg model =
                         ,score = 0
                         ,mode = Start
                         , time = 0
+                        , timeToAddCards = 15
                   }
                  ,Cmd.none)
 
