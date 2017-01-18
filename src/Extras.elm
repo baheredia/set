@@ -1,226 +1,17 @@
+-- In this module appear the functions for displaying the things on the web
+
 module Extras exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Time exposing (..)
+import Dynamics exposing (..)
+import Generic exposing (..)
 
 
--- Types for the model
-
-type alias Card = (Int, Int, Int, Int)
-
-type alias CardInTable = Maybe Card
-
-type alias Deck = List Card
-
-type alias Table = List CardInTable
-
-type Mode
-    = Start
-    | Game
-    
-type alias Model =
-    {deck : Deck
-    ,table : Table
-    ,selection : List Bool
-    ,score : Int
-    ,mode : Mode
-    ,size : Int
-    ,time : Time
-    ,timeToAddCards : Int
-    ,timeAtStart : Time
-    ,timeAt23 : Time
-    }
-
--- Types for messaging
-
-type Msg = Shuffle Deck
-    | PutDeck Deck
-    | Select Natural
---    | ExtraCard
-    | Resize Int
-    | Tick Time
-    | Reset
-      
--------------------------------------------------
--- THIS PARTS IS ABOUT GENERIC FUNCTIONS
--- This types are just because I like them
-type One = Z
-
-type alias Natural = List One
-
--- conversion from Int -> Natural
-conversion : Int -> Natural
-conversion n =
-    if n <= 0
-    then []
-    else Z::(conversion (n-1))
-
--- to flatten Lists
-flatten : List (List a) -> List a
-flatten xs =
-    case xs of
-        [] -> []
-        x::xs ->
-          case x of
-              [] -> flatten xs
-              (y::ys) -> y :: (flatten (ys::xs))
-
--- this is for switching an element in a list of booelans               
-switchElement : Natural -> List Bool -> List Bool
-switchElement n bs =
-    case bs of
-        [] -> []
-        (x::xs) ->
-            case n of
-                [] -> (not x)::xs
-                (z::zs) -> x::(switchElement zs xs)
-
--- This filters a list from another list of booleans
-filteredBy : List Bool -> List a -> List a
-filteredBy bls xs =
-    case bls of
-        [] -> []
-        (b::bs) ->
-            case xs of
-                [] -> []
-                (y::ys) -> if b
-                           then (y::(filteredBy bs ys))
-                           else filteredBy bs ys
-
--- This is takes the element in the position indicated from a list if
--- it exists
-takeElementInPosition : Natural -> List a -> Maybe a
-takeElementInPosition n xs =
-    case n of
-        [] -> case xs of
-                 [] -> Nothing
-                 (x::xs) -> Just x
-        (n::ns) -> case xs of
-                     [] -> Nothing
-                     (x::xs) -> takeElementInPosition ns xs
-
--- This just counts the numbers of Trues (this is going to be used to know
--- how many selected cards are
-howManyTrue : List Bool -> Int
-howManyTrue = List.length << (List.filter identity)
 
 --------------------------------------------
--- NOW FUNCTIONS USEFULL JUST FOR THE UPDATE
-
--- 1. Putting cards on the table
-initialDeck : Bool -> Deck
-initialDeck b =
-    let
-        produceOptions xs =
-            let st e = [(1,e),(2,e),(3,e)] in
-            flatten (List.map st xs)
-    in
-        let arrangeParenthesis (n1,(n2,(n3,n4))) = (n1,n2,n3,n4)
-        in
-            case b of
-                True ->
-                    let twist (n1,n2,n3,n4) = (n1,n2,n4,n3)
-                    in
-                        List.map (twist << arrangeParenthesis)
-                            <| produceOptions
-                            <| produceOptions
-                            <| produceOptions [1]
-                False ->
-                    List.map arrangeParenthesis
-                        <| produceOptions
-                        <| produceOptions
-                        <| produceOptions [1,2,3]
-
-
-
--- this is in normal circustances to take a set from the table
-takeSetOut : Table -> List Bool -> Table
-takeSetOut cards bs =
-    case cards of
-        [] -> []
-        (x::xs) ->
-            case bs of
-                [] -> cards
-                (b::bbs) ->
-                    case b of
-                        True -> Nothing :: (takeSetOut xs bbs)
-                        False -> x::(takeSetOut xs bbs)
-
--- this is for dealing new cards to the table
-dealCards : Deck -> Table -> (Deck, Table)
-dealCards ondeck ontable =
-    case ondeck of
-        [] -> ([], ontable)
-        (c::cs) ->
-            case ontable of
-                [] -> (ondeck, [])
-                (t::ts) ->
-                    case t of
-                        Nothing ->
-                            ( Tuple.first (dealCards cs ts)
-                            , (Just c)::(Tuple.second (dealCards cs ts))
-                              )
-                        _ -> (Tuple.first (dealCards ondeck ts)
-                             ,t::(Tuple.second (dealCards ondeck ts))
-                             )
-                           
--- 2. To see if it is a set
--- this checks if all the elements in a list are equal
-allEquals : List a -> Bool
-allEquals xs =
-    case xs of
-        [] -> True
-        (y::ys) ->
-            case ys of
-                [] -> True
-                (z::zs) -> if y == z
-                           then allEquals ys
-                           else False
-
--- this checks if all element in a list are different
-allDifferent : List a -> Bool
-allDifferent xs =
-    case xs of
-        [] -> True
-        (y::ys) ->
-            case ys of
-                [] -> True
-                (z::zs) -> if y == z
-                           then False
-                           else (allDifferent (y::zs)) && (allDifferent (z::zs))
-
--- this takes three cards and says if it is a set
-isSet : CardInTable -> CardInTable -> CardInTable -> Bool
-isSet cardx cardy cardz =
-    case cardx of
-        Nothing -> False
-        Just (x1,x2,x3,x4) ->
-            case cardy of
-                Nothing -> False
-                Just (y1,y2,y3,y4) ->
-                    case cardz of
-                        Nothing -> False
-                        Just (z1,z2,z3,z4) ->
-                            (allEquals [x1,y1,z1] || allDifferent [x1,y1,z1])
-                            && (allEquals [x2,y2,z2] || allDifferent [x2,y2,z2])
-                            && (allEquals [x3,y3,z3] || allDifferent [x3,y3,z3])
-                            && (allEquals [x4,y4,z4] || allDifferent [x4,y4,z4])
-
--- this just takes a deck and see if the three first cards forma a set,
-isListSet : Table -> Bool
-isListSet w1 =
-    case w1 of
-        [] -> False
-        (w::w2) ->
-            case w2 of
-                [] -> False
-                (q::w3) ->
-                    case w3 of
-                        [] -> False
-                        (r::_) -> isSet w q r
-
 -----------------------------------------------
 -- This part is for displaying things on the web
 
@@ -299,4 +90,73 @@ addMoreCards table deck =
 -}
 
     
-              
+initialPage : Html Msg              
+initialPage =
+    div []
+        [ h1 [] [text "Bienvenido a Set, ¿Listo para jugar?"]
+        , button
+              [onClick (Shuffle (initialDeck False))]
+              [text "¡Empieza!"]
+        , button
+              [onClick (Shuffle (initialDeck True))]
+              [text "Sólo quiero un color"]
+        ]
+
+gamePage : Model -> Html Msg
+gamePage model =
+    let size = model.size in
+    div []
+        [ putCard size 0 model.table model.selection
+        , putCard size 1 model.table model.selection
+        , putCard size 2 model.table model.selection
+        , putCard size 3 model.table model.selection
+        , extraCard size 0 model.table model.selection
+        , extraCard size 3 model.table model.selection
+        , div [style [("background-color", "pink")
+                     ,("display", "inline-flex")
+                     ,("width","90px")
+                     ,("height","40px")
+                     ,("align-items","center")
+                     ,("justify-content","center")
+                     ,("position","relative")
+                     ,("left","40px")
+                     ]
+              ]
+              [text ("Puntos:\n " ++ toString model.score)]
+        , div [style [("background-color", "blue")
+                     ,("display", "inline-flex")
+                     ,("width","80px")
+                     ,("height","40px")
+                     ,("align-items","center")
+                     ,("justify-content","center")
+                     ,("position","relative")
+                     ,("left","40px")
+                     ,("color","white")
+                     ]
+              ]
+              [text (toString model.time)]
+        , br [] []
+        , putCard size 4 model.table model.selection
+        , putCard size 5 model.table model.selection
+        , putCard size 6 model.table model.selection
+        , putCard size 7 model.table model.selection
+        , extraCard size 1 model.table model.selection
+        , extraCard size 4 model.table model.selection
+        --, addMoreCards model.table model.deck
+        , br [] []
+        , putCard size 8 model.table model.selection
+        , putCard size 9 model.table model.selection
+        , putCard size 10 model.table model.selection
+        , putCard size 11 model.table model.selection
+        , extraCard size 2 model.table model.selection
+        , extraCard size 5 model.table model.selection
+        , br [] []
+        , h3 [] [text "Tamaño"]
+        , select []
+            [ option [onClick (Resize 140)] [text "pequeño"]
+            , option [onClick (Resize 170)] [text "normal"]
+            , option [onClick (Resize 200)] [text "grande"]
+            ]
+        , button [onClick Reset] [text "Reset"]
+        ]
+

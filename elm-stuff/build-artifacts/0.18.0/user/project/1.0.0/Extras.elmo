@@ -1,3 +1,52 @@
+var _user$project$Extras$initialPage = A2(
+	_elm_lang$html$Html$div,
+	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$h1,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Bienvenido a Set, ¿Listo para jugar?'),
+				_1: {ctor: '[]'}
+			}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$button,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(
+						_user$project$Generic$Shuffle(
+							_user$project$Dynamics$initialDeck(false))),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('¡Empieza!'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							_user$project$Generic$Shuffle(
+								_user$project$Dynamics$initialDeck(true))),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Sólo quiero un color'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		}
+	});
 var _user$project$Extras$whichBorder = function (b) {
 	var _p0 = b;
 	if (_p0.ctor === 'Nothing') {
@@ -42,497 +91,6 @@ var _user$project$Extras$source = function (wd) {
 				'.png'));
 	}
 };
-var _user$project$Extras$allDifferent = function (xs) {
-	var _p4 = xs;
-	if (_p4.ctor === '[]') {
-		return true;
-	} else {
-		var _p8 = _p4._0;
-		var _p5 = _p4._1;
-		if (_p5.ctor === '[]') {
-			return true;
-		} else {
-			var _p7 = _p5._1;
-			var _p6 = _p5._0;
-			return _elm_lang$core$Native_Utils.eq(_p8, _p6) ? false : (_user$project$Extras$allDifferent(
-				{ctor: '::', _0: _p8, _1: _p7}) && _user$project$Extras$allDifferent(
-				{ctor: '::', _0: _p6, _1: _p7}));
-		}
-	}
-};
-var _user$project$Extras$allEquals = function (xs) {
-	allEquals:
-	while (true) {
-		var _p9 = xs;
-		if (_p9.ctor === '[]') {
-			return true;
-		} else {
-			var _p11 = _p9._1;
-			var _p10 = _p11;
-			if (_p10.ctor === '[]') {
-				return true;
-			} else {
-				if (_elm_lang$core$Native_Utils.eq(_p9._0, _p10._0)) {
-					var _v8 = _p11;
-					xs = _v8;
-					continue allEquals;
-				} else {
-					return false;
-				}
-			}
-		}
-	}
-};
-var _user$project$Extras$isSet = F3(
-	function (cardx, cardy, cardz) {
-		var _p12 = cardx;
-		if (_p12.ctor === 'Nothing') {
-			return false;
-		} else {
-			var _p26 = _p12._0._3;
-			var _p25 = _p12._0._2;
-			var _p24 = _p12._0._1;
-			var _p23 = _p12._0._0;
-			var _p13 = cardy;
-			if (_p13.ctor === 'Nothing') {
-				return false;
-			} else {
-				var _p22 = _p13._0._3;
-				var _p21 = _p13._0._2;
-				var _p20 = _p13._0._1;
-				var _p19 = _p13._0._0;
-				var _p14 = cardz;
-				if (_p14.ctor === 'Nothing') {
-					return false;
-				} else {
-					var _p18 = _p14._0._3;
-					var _p17 = _p14._0._2;
-					var _p16 = _p14._0._1;
-					var _p15 = _p14._0._0;
-					return (_user$project$Extras$allEquals(
-						{
-							ctor: '::',
-							_0: _p23,
-							_1: {
-								ctor: '::',
-								_0: _p19,
-								_1: {
-									ctor: '::',
-									_0: _p15,
-									_1: {ctor: '[]'}
-								}
-							}
-						}) || _user$project$Extras$allDifferent(
-						{
-							ctor: '::',
-							_0: _p23,
-							_1: {
-								ctor: '::',
-								_0: _p19,
-								_1: {
-									ctor: '::',
-									_0: _p15,
-									_1: {ctor: '[]'}
-								}
-							}
-						})) && ((_user$project$Extras$allEquals(
-						{
-							ctor: '::',
-							_0: _p24,
-							_1: {
-								ctor: '::',
-								_0: _p20,
-								_1: {
-									ctor: '::',
-									_0: _p16,
-									_1: {ctor: '[]'}
-								}
-							}
-						}) || _user$project$Extras$allDifferent(
-						{
-							ctor: '::',
-							_0: _p24,
-							_1: {
-								ctor: '::',
-								_0: _p20,
-								_1: {
-									ctor: '::',
-									_0: _p16,
-									_1: {ctor: '[]'}
-								}
-							}
-						})) && ((_user$project$Extras$allEquals(
-						{
-							ctor: '::',
-							_0: _p25,
-							_1: {
-								ctor: '::',
-								_0: _p21,
-								_1: {
-									ctor: '::',
-									_0: _p17,
-									_1: {ctor: '[]'}
-								}
-							}
-						}) || _user$project$Extras$allDifferent(
-						{
-							ctor: '::',
-							_0: _p25,
-							_1: {
-								ctor: '::',
-								_0: _p21,
-								_1: {
-									ctor: '::',
-									_0: _p17,
-									_1: {ctor: '[]'}
-								}
-							}
-						})) && (_user$project$Extras$allEquals(
-						{
-							ctor: '::',
-							_0: _p26,
-							_1: {
-								ctor: '::',
-								_0: _p22,
-								_1: {
-									ctor: '::',
-									_0: _p18,
-									_1: {ctor: '[]'}
-								}
-							}
-						}) || _user$project$Extras$allDifferent(
-						{
-							ctor: '::',
-							_0: _p26,
-							_1: {
-								ctor: '::',
-								_0: _p22,
-								_1: {
-									ctor: '::',
-									_0: _p18,
-									_1: {ctor: '[]'}
-								}
-							}
-						}))));
-				}
-			}
-		}
-	});
-var _user$project$Extras$isListSet = function (w1) {
-	var _p27 = w1;
-	if (_p27.ctor === '[]') {
-		return false;
-	} else {
-		var _p28 = _p27._1;
-		if (_p28.ctor === '[]') {
-			return false;
-		} else {
-			var _p29 = _p28._1;
-			if (_p29.ctor === '[]') {
-				return false;
-			} else {
-				return A3(_user$project$Extras$isSet, _p27._0, _p28._0, _p29._0);
-			}
-		}
-	}
-};
-var _user$project$Extras$dealCards = F2(
-	function (ondeck, ontable) {
-		var _p30 = ondeck;
-		if (_p30.ctor === '[]') {
-			return {
-				ctor: '_Tuple2',
-				_0: {ctor: '[]'},
-				_1: ontable
-			};
-		} else {
-			var _p35 = _p30._1;
-			var _p31 = ontable;
-			if (_p31.ctor === '[]') {
-				return {
-					ctor: '_Tuple2',
-					_0: ondeck,
-					_1: {ctor: '[]'}
-				};
-			} else {
-				var _p34 = _p31._1;
-				var _p33 = _p31._0;
-				var _p32 = _p33;
-				if (_p32.ctor === 'Nothing') {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Tuple$first(
-							A2(_user$project$Extras$dealCards, _p35, _p34)),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$core$Maybe$Just(_p30._0),
-							_1: _elm_lang$core$Tuple$second(
-								A2(_user$project$Extras$dealCards, _p35, _p34))
-						}
-					};
-				} else {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Tuple$first(
-							A2(_user$project$Extras$dealCards, ondeck, _p34)),
-						_1: {
-							ctor: '::',
-							_0: _p33,
-							_1: _elm_lang$core$Tuple$second(
-								A2(_user$project$Extras$dealCards, ondeck, _p34))
-						}
-					};
-				}
-			}
-		}
-	});
-var _user$project$Extras$takeSetOut = F2(
-	function (cards, bs) {
-		var _p36 = cards;
-		if (_p36.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			var _p40 = _p36._1;
-			var _p37 = bs;
-			if (_p37.ctor === '[]') {
-				return cards;
-			} else {
-				var _p39 = _p37._1;
-				var _p38 = _p37._0;
-				if (_p38 === true) {
-					return {
-						ctor: '::',
-						_0: _elm_lang$core$Maybe$Nothing,
-						_1: A2(_user$project$Extras$takeSetOut, _p40, _p39)
-					};
-				} else {
-					return {
-						ctor: '::',
-						_0: _p36._0,
-						_1: A2(_user$project$Extras$takeSetOut, _p40, _p39)
-					};
-				}
-			}
-		}
-	});
-var _user$project$Extras$howManyTrue = function (_p41) {
-	return _elm_lang$core$List$length(
-		A2(_elm_lang$core$List$filter, _elm_lang$core$Basics$identity, _p41));
-};
-var _user$project$Extras$takeElementInPosition = F2(
-	function (n, xs) {
-		takeElementInPosition:
-		while (true) {
-			var _p42 = n;
-			if (_p42.ctor === '[]') {
-				var _p43 = xs;
-				if (_p43.ctor === '[]') {
-					return _elm_lang$core$Maybe$Nothing;
-				} else {
-					return _elm_lang$core$Maybe$Just(_p43._0);
-				}
-			} else {
-				var _p44 = xs;
-				if (_p44.ctor === '[]') {
-					return _elm_lang$core$Maybe$Nothing;
-				} else {
-					var _v24 = _p42._1,
-						_v25 = _p44._1;
-					n = _v24;
-					xs = _v25;
-					continue takeElementInPosition;
-				}
-			}
-		}
-	});
-var _user$project$Extras$filteredBy = F2(
-	function (bls, xs) {
-		filteredBy:
-		while (true) {
-			var _p45 = bls;
-			if (_p45.ctor === '[]') {
-				return {ctor: '[]'};
-			} else {
-				var _p48 = _p45._1;
-				var _p46 = xs;
-				if (_p46.ctor === '[]') {
-					return {ctor: '[]'};
-				} else {
-					var _p47 = _p46._1;
-					if (_p45._0) {
-						return {
-							ctor: '::',
-							_0: _p46._0,
-							_1: A2(_user$project$Extras$filteredBy, _p48, _p47)
-						};
-					} else {
-						var _v28 = _p48,
-							_v29 = _p47;
-						bls = _v28;
-						xs = _v29;
-						continue filteredBy;
-					}
-				}
-			}
-		}
-	});
-var _user$project$Extras$switchElement = F2(
-	function (n, bs) {
-		var _p49 = bs;
-		if (_p49.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			var _p52 = _p49._1;
-			var _p51 = _p49._0;
-			var _p50 = n;
-			if (_p50.ctor === '[]') {
-				return {ctor: '::', _0: !_p51, _1: _p52};
-			} else {
-				return {
-					ctor: '::',
-					_0: _p51,
-					_1: A2(_user$project$Extras$switchElement, _p50._1, _p52)
-				};
-			}
-		}
-	});
-var _user$project$Extras$flatten = function (xs) {
-	flatten:
-	while (true) {
-		var _p53 = xs;
-		if (_p53.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			var _p55 = _p53._1;
-			var _p54 = _p53._0;
-			if (_p54.ctor === '[]') {
-				var _v34 = _p55;
-				xs = _v34;
-				continue flatten;
-			} else {
-				return {
-					ctor: '::',
-					_0: _p54._0,
-					_1: _user$project$Extras$flatten(
-						{ctor: '::', _0: _p54._1, _1: _p55})
-				};
-			}
-		}
-	}
-};
-var _user$project$Extras$initialDeck = function (b) {
-	var produceOptions = function (xs) {
-		var st = function (e) {
-			return {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 1, _1: e},
-				_1: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 2, _1: e},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 3, _1: e},
-						_1: {ctor: '[]'}
-					}
-				}
-			};
-		};
-		return _user$project$Extras$flatten(
-			A2(_elm_lang$core$List$map, st, xs));
-	};
-	var arrangeParenthesis = function (_p56) {
-		var _p57 = _p56;
-		return {ctor: '_Tuple4', _0: _p57._0, _1: _p57._1._0, _2: _p57._1._1._0, _3: _p57._1._1._1};
-	};
-	var _p58 = b;
-	if (_p58 === true) {
-		var twist = function (_p59) {
-			var _p60 = _p59;
-			return {ctor: '_Tuple4', _0: _p60._0, _1: _p60._1, _2: _p60._3, _3: _p60._2};
-		};
-		return A2(
-			_elm_lang$core$List$map,
-			function (_p61) {
-				return twist(
-					arrangeParenthesis(_p61));
-			},
-			produceOptions(
-				produceOptions(
-					produceOptions(
-						{
-							ctor: '::',
-							_0: 1,
-							_1: {ctor: '[]'}
-						}))));
-	} else {
-		return A2(
-			_elm_lang$core$List$map,
-			arrangeParenthesis,
-			produceOptions(
-				produceOptions(
-					produceOptions(
-						{
-							ctor: '::',
-							_0: 1,
-							_1: {
-								ctor: '::',
-								_0: 2,
-								_1: {
-									ctor: '::',
-									_0: 3,
-									_1: {ctor: '[]'}
-								}
-							}
-						}))));
-	}
-};
-var _user$project$Extras$Model = function (a) {
-	return function (b) {
-		return function (c) {
-			return function (d) {
-				return function (e) {
-					return function (f) {
-						return function (g) {
-							return function (h) {
-								return function (i) {
-									return function (j) {
-										return {deck: a, table: b, selection: c, score: d, mode: e, size: f, time: g, timeToAddCards: h, timeAtStart: i, timeAt23: j};
-									};
-								};
-							};
-						};
-					};
-				};
-			};
-		};
-	};
-};
-var _user$project$Extras$Game = {ctor: 'Game'};
-var _user$project$Extras$Start = {ctor: 'Start'};
-var _user$project$Extras$Reset = {ctor: 'Reset'};
-var _user$project$Extras$Tick = function (a) {
-	return {ctor: 'Tick', _0: a};
-};
-var _user$project$Extras$Resize = function (a) {
-	return {ctor: 'Resize', _0: a};
-};
-var _user$project$Extras$Select = function (a) {
-	return {ctor: 'Select', _0: a};
-};
-var _user$project$Extras$PutDeck = function (a) {
-	return {ctor: 'PutDeck', _0: a};
-};
-var _user$project$Extras$Shuffle = function (a) {
-	return {ctor: 'Shuffle', _0: a};
-};
-var _user$project$Extras$Z = {ctor: 'Z'};
-var _user$project$Extras$conversion = function (n) {
-	return (_elm_lang$core$Native_Utils.cmp(n, 0) < 1) ? {ctor: '[]'} : {
-		ctor: '::',
-		_0: _user$project$Extras$Z,
-		_1: _user$project$Extras$conversion(n - 1)
-	};
-};
 var _user$project$Extras$putCard = F4(
 	function (size, x, table, selection) {
 		var ancho = size;
@@ -543,8 +101,8 @@ var _user$project$Extras$putCard = F4(
 				_0: _elm_lang$html$Html_Attributes$src(
 					_user$project$Extras$source(
 						A2(
-							_user$project$Extras$takeElementInPosition,
-							_user$project$Extras$conversion(x),
+							_user$project$Generic$takeElementInPosition,
+							_user$project$Generic$conversion(x),
 							table))),
 				_1: {
 					ctor: '::',
@@ -559,8 +117,8 @@ var _user$project$Extras$putCard = F4(
 									_0: 'border',
 									_1: _user$project$Extras$whichBorder(
 										A2(
-											_user$project$Extras$takeElementInPosition,
-											_user$project$Extras$conversion(x),
+											_user$project$Generic$takeElementInPosition,
+											_user$project$Generic$conversion(x),
 											selection))
 								},
 								_1: {ctor: '[]'}
@@ -568,8 +126,8 @@ var _user$project$Extras$putCard = F4(
 						_1: {
 							ctor: '::',
 							_0: _elm_lang$html$Html_Events$onClick(
-								_user$project$Extras$Select(
-									_user$project$Extras$conversion(x))),
+								_user$project$Generic$Select(
+									_user$project$Generic$conversion(x))),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -588,3 +146,289 @@ var _user$project$Extras$extraCard = F4(
 			{ctor: '[]'},
 			{ctor: '[]'}));
 	});
+var _user$project$Extras$gamePage = function (model) {
+	var size = model.size;
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A4(_user$project$Extras$putCard, size, 0, model.table, model.selection),
+			_1: {
+				ctor: '::',
+				_0: A4(_user$project$Extras$putCard, size, 1, model.table, model.selection),
+				_1: {
+					ctor: '::',
+					_0: A4(_user$project$Extras$putCard, size, 2, model.table, model.selection),
+					_1: {
+						ctor: '::',
+						_0: A4(_user$project$Extras$putCard, size, 3, model.table, model.selection),
+						_1: {
+							ctor: '::',
+							_0: A4(_user$project$Extras$extraCard, size, 0, model.table, model.selection),
+							_1: {
+								ctor: '::',
+								_0: A4(_user$project$Extras$extraCard, size, 3, model.table, model.selection),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$style(
+												{
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'pink'},
+													_1: {
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'width', _1: '90px'},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'left', _1: '40px'},
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'Puntos:\n ',
+													_elm_lang$core$Basics$toString(model.score))),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$div,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$style(
+													{
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'blue'},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'left', _1: '40px'},
+																					_1: {
+																						ctor: '::',
+																						_0: {ctor: '_Tuple2', _0: 'color', _1: 'white'},
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(
+													_elm_lang$core$Basics$toString(model.time)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$br,
+												{ctor: '[]'},
+												{ctor: '[]'}),
+											_1: {
+												ctor: '::',
+												_0: A4(_user$project$Extras$putCard, size, 4, model.table, model.selection),
+												_1: {
+													ctor: '::',
+													_0: A4(_user$project$Extras$putCard, size, 5, model.table, model.selection),
+													_1: {
+														ctor: '::',
+														_0: A4(_user$project$Extras$putCard, size, 6, model.table, model.selection),
+														_1: {
+															ctor: '::',
+															_0: A4(_user$project$Extras$putCard, size, 7, model.table, model.selection),
+															_1: {
+																ctor: '::',
+																_0: A4(_user$project$Extras$extraCard, size, 1, model.table, model.selection),
+																_1: {
+																	ctor: '::',
+																	_0: A4(_user$project$Extras$extraCard, size, 4, model.table, model.selection),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$br,
+																			{ctor: '[]'},
+																			{ctor: '[]'}),
+																		_1: {
+																			ctor: '::',
+																			_0: A4(_user$project$Extras$putCard, size, 8, model.table, model.selection),
+																			_1: {
+																				ctor: '::',
+																				_0: A4(_user$project$Extras$putCard, size, 9, model.table, model.selection),
+																				_1: {
+																					ctor: '::',
+																					_0: A4(_user$project$Extras$putCard, size, 10, model.table, model.selection),
+																					_1: {
+																						ctor: '::',
+																						_0: A4(_user$project$Extras$putCard, size, 11, model.table, model.selection),
+																						_1: {
+																							ctor: '::',
+																							_0: A4(_user$project$Extras$extraCard, size, 2, model.table, model.selection),
+																							_1: {
+																								ctor: '::',
+																								_0: A4(_user$project$Extras$extraCard, size, 5, model.table, model.selection),
+																								_1: {
+																									ctor: '::',
+																									_0: A2(
+																										_elm_lang$html$Html$br,
+																										{ctor: '[]'},
+																										{ctor: '[]'}),
+																									_1: {
+																										ctor: '::',
+																										_0: A2(
+																											_elm_lang$html$Html$h3,
+																											{ctor: '[]'},
+																											{
+																												ctor: '::',
+																												_0: _elm_lang$html$Html$text('Tamaño'),
+																												_1: {ctor: '[]'}
+																											}),
+																										_1: {
+																											ctor: '::',
+																											_0: A2(
+																												_elm_lang$html$Html$select,
+																												{ctor: '[]'},
+																												{
+																													ctor: '::',
+																													_0: A2(
+																														_elm_lang$html$Html$option,
+																														{
+																															ctor: '::',
+																															_0: _elm_lang$html$Html_Events$onClick(
+																																_user$project$Generic$Resize(140)),
+																															_1: {ctor: '[]'}
+																														},
+																														{
+																															ctor: '::',
+																															_0: _elm_lang$html$Html$text('pequeño'),
+																															_1: {ctor: '[]'}
+																														}),
+																													_1: {
+																														ctor: '::',
+																														_0: A2(
+																															_elm_lang$html$Html$option,
+																															{
+																																ctor: '::',
+																																_0: _elm_lang$html$Html_Events$onClick(
+																																	_user$project$Generic$Resize(170)),
+																																_1: {ctor: '[]'}
+																															},
+																															{
+																																ctor: '::',
+																																_0: _elm_lang$html$Html$text('normal'),
+																																_1: {ctor: '[]'}
+																															}),
+																														_1: {
+																															ctor: '::',
+																															_0: A2(
+																																_elm_lang$html$Html$option,
+																																{
+																																	ctor: '::',
+																																	_0: _elm_lang$html$Html_Events$onClick(
+																																		_user$project$Generic$Resize(200)),
+																																	_1: {ctor: '[]'}
+																																},
+																																{
+																																	ctor: '::',
+																																	_0: _elm_lang$html$Html$text('grande'),
+																																	_1: {ctor: '[]'}
+																																}),
+																															_1: {ctor: '[]'}
+																														}
+																													}
+																												}),
+																											_1: {
+																												ctor: '::',
+																												_0: A2(
+																													_elm_lang$html$Html$button,
+																													{
+																														ctor: '::',
+																														_0: _elm_lang$html$Html_Events$onClick(_user$project$Generic$Reset),
+																														_1: {ctor: '[]'}
+																													},
+																													{
+																														ctor: '::',
+																														_0: _elm_lang$html$Html$text('Reset'),
+																														_1: {ctor: '[]'}
+																													}),
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+};
