@@ -3,6 +3,7 @@ module Extras exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Time exposing (..)
 
 
 -- Types for the model
@@ -26,6 +27,10 @@ type alias Model =
     ,score : Int
     ,mode : Mode
     ,size : Int
+    ,time : Time
+    ,timeToAddCards : Int
+    ,timeAtStart : Time
+    ,timeAt23 : Time
     }
 
 -- Types for messaging
@@ -33,8 +38,9 @@ type alias Model =
 type Msg = Shuffle Deck
     | PutDeck Deck
     | Select Natural
-    | ExtraCard
+--    | ExtraCard
     | Resize Int
+    | Tick Time
     | Reset
       
 -------------------------------------------------
@@ -272,7 +278,7 @@ extraCard size n table selection =
         else span [] []
 
 -- This is the button to add cards
-addMoreCards : Table -> Deck -> Html Msg
+{-addMoreCards : Table -> Deck -> Html Msg
 addMoreCards table deck =
     let sty op1 op2 =
             style [("background-color", op1)
@@ -290,7 +296,7 @@ addMoreCards table deck =
     else div [onClick ExtraCard
              ,sty "yellow" "pointer"
              ] [text "Más"]
-
+-}
 
     
               

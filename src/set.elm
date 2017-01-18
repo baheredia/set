@@ -1,6 +1,7 @@
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Time exposing (..)
 import Random.List
 import Random
 
@@ -35,6 +36,10 @@ init =  ({ deck = []
          , score = 0
          , mode = Start
          , size = 140
+         , time = 0
+         , timeToAddCards = 15
+         , timeAtStart = 0
+         , timeAt23 = 0
          }
         , Cmd.none)
 
@@ -51,6 +56,7 @@ update msg model =
             ({ model |
                    deck = Tuple.first <| dealCards shuffled_deck model.table
                    ,table = Tuple.second <| dealCards shuffled_deck model.table
+                   ,time = 0
              }
             ,Cmd.none)
             
@@ -75,6 +81,7 @@ update msg model =
                                  <| takeSetOut model.table switchedSelection
                          ,selection = init_selection
                          ,score = model.score + 1
+                         ,timeToAddCards = 15
                          }                         
                         , Cmd.none)
                     else
@@ -87,6 +94,7 @@ update msg model =
                                    filteredBy (List.map not switchedSelection)
                                        <| switchedSelection
                                ,score = model.score + 1
+                               ,timeToAddCards = 15
                          }
                         , Cmd.none)
                 else
@@ -97,7 +105,7 @@ update msg model =
             else
                 (model, Cmd.none)
                     
-        ExtraCard ->
+{-        ExtraCard ->
             ({ model |
                    deck =
                        Tuple.first
@@ -111,16 +119,42 @@ update msg model =
              }
             , Cmd.none
             )
-
+-}
         Resize n ->
             ({ model | size = n}, Cmd.none)
+
+        Tick _ ->
+            if
+                model.timeToAddCards == 1
+                && List.length model.table <= 15
+            then ({ model |
+                        deck =
+                            Tuple.first
+                                <| dealCards model.deck
+                                <| model.table ++ [Nothing,Nothing,Nothing]
+                        ,table =
+                            Tuple.second
+                                <| dealCards model.deck
+                                <| model.table ++ [Nothing,Nothing,Nothing]
+                        ,selection = model.selection ++ [False,False,False]
+                        ,time = model.time + 1
+                        ,timeToAddCards = 15
+                  }
+                 , Cmd.none)
+            else
+                ({ model |
+                       time = model.time + 1
+                       ,timeToAddCards = model.timeToAddCards - 1
+                 }
+            , Cmd.none)
                 
-        Reset -> ({deck = []
-                  ,table = init_table
-                  ,selection = init_selection
-                  ,score = 0
-                  ,mode = Start
-                  ,size = model.size
+        Reset -> ({ model |
+                        deck = []
+                        ,table = init_table
+                        ,selection = init_selection
+                        ,score = 0
+                        ,mode = Start
+                        , time = 0
                   }
                  ,Cmd.none)
 
@@ -129,7 +163,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Sub.none
+  Time.every second Tick
 
 -- VIEW
 
@@ -156,14 +190,27 @@ view model =
                 , extraCard size 3 model.table model.selection
                 , div [style [("background-color", "pink")
                              ,("display", "inline-flex")
+                             ,("width","90px")
+                             ,("height","40px")
+                             ,("align-items","center")
+                             ,("justify-content","center")
+                             ,("position","relative")
+                             ,("left","40px")
+                             ]
+                      ]
+                      [text ("Puntos:\n " ++ toString model.score)]
+                , div [style [("background-color", "blue")
+                             ,("display", "inline-flex")
                              ,("width","80px")
                              ,("height","40px")
                              ,("align-items","center")
                              ,("justify-content","center")
                              ,("position","relative")
-                             ,("left","40px")]
+                             ,("left","40px")
+                             ,("color","white")
+                             ]
                       ]
-                      [text ("Puntos:\n " ++ toString model.score)]
+                      [text (toString model.time)]
                 , br [] []
                 , putCard size 4 model.table model.selection
                 , putCard size 5 model.table model.selection
@@ -171,7 +218,7 @@ view model =
                 , putCard size 7 model.table model.selection
                 , extraCard size 1 model.table model.selection
                 , extraCard size 4 model.table model.selection
-                , addMoreCards model.table model.deck
+--                , addMoreCards model.table model.deck
                 , br [] []
                 , putCard size 8 model.table model.selection
                 , putCard size 9 model.table model.selection

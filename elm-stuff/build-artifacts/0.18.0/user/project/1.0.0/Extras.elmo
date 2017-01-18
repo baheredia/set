@@ -486,90 +486,36 @@ var _user$project$Extras$initialDeck = function (b) {
 						}))));
 	}
 };
-var _user$project$Extras$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {deck: a, table: b, selection: c, score: d, mode: e, size: f};
-	});
+var _user$project$Extras$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return {deck: a, table: b, selection: c, score: d, mode: e, size: f, time: g, timeToAddCards: h, timeAtStart: i, timeAt23: j};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
 var _user$project$Extras$Game = {ctor: 'Game'};
 var _user$project$Extras$Start = {ctor: 'Start'};
 var _user$project$Extras$Reset = {ctor: 'Reset'};
+var _user$project$Extras$Tick = function (a) {
+	return {ctor: 'Tick', _0: a};
+};
 var _user$project$Extras$Resize = function (a) {
 	return {ctor: 'Resize', _0: a};
 };
-var _user$project$Extras$ExtraCard = {ctor: 'ExtraCard'};
-var _user$project$Extras$addMoreCards = F2(
-	function (table, deck) {
-		var sty = F2(
-			function (op1, op2) {
-				return _elm_lang$html$Html_Attributes$style(
-					{
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'background-color', _1: op1},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'cursor', _1: op2},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
-								_1: {
-									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
-									_1: {
-										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
-										_1: {
-											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
-											_1: {
-												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: 'left', _1: '20px'},
-												_1: {
-													ctor: '::',
-													_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
-													_1: {
-														ctor: '::',
-														_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
-														_1: {ctor: '[]'}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					});
-			});
-		return ((_elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$List$length(table),
-			15) > 0) || _elm_lang$core$List$isEmpty(deck)) ? A2(
-			_elm_lang$html$Html$div,
-			{
-				ctor: '::',
-				_0: A2(sty, 'grey', 'default'),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text('.'),
-				_1: {ctor: '[]'}
-			}) : A2(
-			_elm_lang$html$Html$div,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Events$onClick(_user$project$Extras$ExtraCard),
-				_1: {
-					ctor: '::',
-					_0: A2(sty, 'yellow', 'pointer'),
-					_1: {ctor: '[]'}
-				}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text('Más'),
-				_1: {ctor: '[]'}
-			});
-	});
 var _user$project$Extras$Select = function (a) {
 	return {ctor: 'Select', _0: a};
 };

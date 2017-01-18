@@ -88,7 +88,7 @@ var _user$project$Main$view = function (model) {
 															_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
 															_1: {
 																ctor: '::',
-																_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
+																_0: {ctor: '_Tuple2', _0: 'width', _1: '90px'},
 																_1: {
 																	ctor: '::',
 																	_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
@@ -127,30 +127,79 @@ var _user$project$Main$view = function (model) {
 										_1: {
 											ctor: '::',
 											_0: A2(
-												_elm_lang$html$Html$br,
-												{ctor: '[]'},
-												{ctor: '[]'}),
-											_1: {
-												ctor: '::',
-												_0: A4(_user$project$Extras$putCard, size, 4, model.table, model.selection),
-												_1: {
+												_elm_lang$html$Html$div,
+												{
 													ctor: '::',
-													_0: A4(_user$project$Extras$putCard, size, 5, model.table, model.selection),
-													_1: {
-														ctor: '::',
-														_0: A4(_user$project$Extras$putCard, size, 6, model.table, model.selection),
-														_1: {
+													_0: _elm_lang$html$Html_Attributes$style(
+														{
 															ctor: '::',
-															_0: A4(_user$project$Extras$putCard, size, 7, model.table, model.selection),
+															_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'blue'},
 															_1: {
 																ctor: '::',
-																_0: A4(_user$project$Extras$extraCard, size, 1, model.table, model.selection),
+																_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
 																_1: {
 																	ctor: '::',
-																	_0: A4(_user$project$Extras$extraCard, size, 4, model.table, model.selection),
+																	_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
 																	_1: {
 																		ctor: '::',
-																		_0: A2(_user$project$Extras$addMoreCards, model.table, model.deck),
+																		_0: {ctor: '_Tuple2', _0: 'height', _1: '40px'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'position', _1: 'relative'},
+																					_1: {
+																						ctor: '::',
+																						_0: {ctor: '_Tuple2', _0: 'left', _1: '40px'},
+																						_1: {
+																							ctor: '::',
+																							_0: {ctor: '_Tuple2', _0: 'color', _1: 'white'},
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text(
+														_elm_lang$core$Basics$toString(model.time)),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$br,
+													{ctor: '[]'},
+													{ctor: '[]'}),
+												_1: {
+													ctor: '::',
+													_0: A4(_user$project$Extras$putCard, size, 4, model.table, model.selection),
+													_1: {
+														ctor: '::',
+														_0: A4(_user$project$Extras$putCard, size, 5, model.table, model.selection),
+														_1: {
+															ctor: '::',
+															_0: A4(_user$project$Extras$putCard, size, 6, model.table, model.selection),
+															_1: {
+																ctor: '::',
+																_0: A4(_user$project$Extras$putCard, size, 7, model.table, model.selection),
+																_1: {
+																	ctor: '::',
+																	_0: A4(_user$project$Extras$extraCard, size, 1, model.table, model.selection),
+																	_1: {
+																		ctor: '::',
+																		_0: A4(_user$project$Extras$extraCard, size, 4, model.table, model.selection),
 																		_1: {
 																			ctor: '::',
 																			_0: A2(
@@ -289,7 +338,7 @@ var _user$project$Main$view = function (model) {
 	}
 };
 var _user$project$Main$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$none;
+	return A2(_elm_lang$core$Time$every, _elm_lang$core$Time$second, _user$project$Extras$Tick);
 };
 var _user$project$Main$init_selection = {
 	ctor: '::',
@@ -397,7 +446,11 @@ var _user$project$Main$init = {
 		selection: _user$project$Main$init_selection,
 		score: 0,
 		mode: _user$project$Extras$Start,
-		size: 140
+		size: 140,
+		time: 0,
+		timeToAddCards: 15,
+		timeAtStart: 0,
+		timeAt23: 0
 	},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
@@ -426,7 +479,8 @@ var _user$project$Main$update = F2(
 							deck: _elm_lang$core$Tuple$first(
 								A2(_user$project$Extras$dealCards, _p2, model.table)),
 							table: _elm_lang$core$Tuple$second(
-								A2(_user$project$Extras$dealCards, _p2, model.table))
+								A2(_user$project$Extras$dealCards, _p2, model.table)),
+							time: 0
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -455,7 +509,8 @@ var _user$project$Main$update = F2(
 									model.deck,
 									A2(_user$project$Extras$takeSetOut, model.table, switchedSelection))),
 							selection: _user$project$Main$init_selection,
-							score: model.score + 1
+							score: model.score + 1,
+							timeToAddCards: 15
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				} : {
@@ -472,7 +527,8 @@ var _user$project$Main$update = F2(
 								_user$project$Extras$filteredBy,
 								A2(_elm_lang$core$List$map, _elm_lang$core$Basics$not, switchedSelection),
 								switchedSelection),
-							score: model.score + 1
+							score: model.score + 1,
+							timeToAddCards: 15
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				}) : {
@@ -482,8 +538,18 @@ var _user$project$Main$update = F2(
 						{selection: switchedSelection}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				}) : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			case 'ExtraCard':
+			case 'Resize':
 				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{size: _p1._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Tick':
+				return (_elm_lang$core$Native_Utils.eq(model.timeToAddCards, 1) && (_elm_lang$core$Native_Utils.cmp(
+					_elm_lang$core$List$length(model.table),
+					15) < 1)) ? {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
@@ -543,29 +609,31 @@ var _user$project$Main$update = F2(
 											_1: {ctor: '[]'}
 										}
 									}
-								})
+								}),
+							time: model.time + 1,
+							timeToAddCards: 15
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Resize':
-				return {
+				} : {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{size: _p1._0}),
+						{time: model.time + 1, timeToAddCards: model.timeToAddCards - 1}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
 				return {
 					ctor: '_Tuple2',
-					_0: {
-						deck: {ctor: '[]'},
-						table: _user$project$Main$init_table,
-						selection: _user$project$Main$init_selection,
-						score: 0,
-						mode: _user$project$Extras$Start,
-						size: model.size
-					},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							deck: {ctor: '[]'},
+							table: _user$project$Main$init_table,
+							selection: _user$project$Main$init_selection,
+							score: 0,
+							mode: _user$project$Extras$Start,
+							time: 0
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
