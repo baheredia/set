@@ -100,10 +100,7 @@ var _user$project$Extras$putCard = F4(
 				ctor: '::',
 				_0: _elm_lang$html$Html_Attributes$src(
 					_user$project$Extras$source(
-						A2(
-							_user$project$Generic$takeElementInPosition,
-							_user$project$Generic$conversion(x),
-							table))),
+						A2(_user$project$Generic$takeElementInPosition, x, table))),
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$width(ancho),
@@ -116,18 +113,14 @@ var _user$project$Extras$putCard = F4(
 									ctor: '_Tuple2',
 									_0: 'border',
 									_1: _user$project$Extras$whichBorder(
-										A2(
-											_user$project$Generic$takeElementInPosition,
-											_user$project$Generic$conversion(x),
-											selection))
+										A2(_user$project$Generic$takeElementInPosition, x, selection))
 								},
 								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',
 							_0: _elm_lang$html$Html_Events$onClick(
-								_user$project$Generic$Select(
-									_user$project$Generic$conversion(x))),
+								_user$project$Generic$Select(x)),
 							_1: {ctor: '[]'}
 						}
 					}

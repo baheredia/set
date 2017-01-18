@@ -48,14 +48,14 @@ putCard size x table selection =
     let ancho = size in
     img [ src
           <| source
-          <| takeElementInPosition (conversion x) table
+          <| takeElementInPosition x table
         , width ancho
         , style [ ("border"
                   , whichBorder
-                       <| takeElementInPosition (conversion x) selection
+                       <| takeElementInPosition x selection
                   )
                 ]
-        , onClick (Select (conversion x))
+        , onClick (Select x)
         ] []
 
 -- This is for the cases in which you have extra cards

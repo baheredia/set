@@ -36,7 +36,7 @@ var _user$project$Main$update = F2(
 							table: _elm_lang$core$Tuple$second(
 								A2(_user$project$Dynamics$dealCards, _p2, model.table)),
 							time: 0,
-							timeToAddCards: 15
+							timeToAddCards: _user$project$Dynamics$time_to_pass
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -88,7 +88,7 @@ var _user$project$Main$init = {
 		mode: _user$project$Generic$Start,
 		size: 140,
 		time: 0,
-		timeToAddCards: 15,
+		timeToAddCards: _user$project$Dynamics$time_to_pass,
 		timeAtStart: 0,
 		timeAt23: 0
 	},

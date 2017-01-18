@@ -38,25 +38,15 @@ type alias Model =
 
 type Msg = Shuffle Deck
     | PutDeck Deck
-    | Select Natural
---    | ExtraCard
+    --| Select Natural
+    | Select Int
+    --| ExtraCard
     | Resize Int
     | Tick Time
     | Reset
       
 -------------------------------------------------
 -- THIS PARTS IS ABOUT GENERIC FUNCTIONS
--- This types are just because I like them
-type One = Z
-
-type alias Natural = List One
-
--- conversion from Int -> Natural
-conversion : Int -> Natural
-conversion n =
-    if n <= 0
-    then []
-    else Z::(conversion (n-1))
 
 -- to flatten Lists
 flatten : List (List a) -> List a
@@ -68,15 +58,24 @@ flatten xs =
               [] -> flatten xs
               (y::ys) -> y :: (flatten (ys::xs))
 
--- this is for switching an element in a list of booelans               
-switchElement : Natural -> List Bool -> List Bool
+-- This switch the in position n of a boolean list
+switchElement : Int -> List Bool -> List Bool
 switchElement n bs =
-    case bs of
-        [] -> []
-        (x::xs) ->
-            case n of
-                [] -> (not x)::xs
-                (z::zs) -> x::(switchElement zs xs)
+    let end = List.drop (n-1) bs in
+    let listMaybe l =
+            case l of
+                Nothing -> []
+                Just a -> a
+    in
+        let
+            notMaybe m =
+                case m of
+                    Nothing -> False
+                    Just b -> not b
+        in
+            List.take (n-1) bs
+            ++ (notMaybe <| List.head end) :: (listMaybe <| List.tail end)
+
 
 -- This filters a list from another list of booleans
 filteredBy : List Bool -> List a -> List a
@@ -92,12 +91,7 @@ filteredBy bls xs =
 
 -- This is takes the element in the position indicated from a list if
 -- it exists
-takeElementInPosition : Natural -> List a -> Maybe a
+
+takeElementInPosition : Int -> List a -> Maybe a
 takeElementInPosition n xs =
-    case n of
-        [] -> case xs of
-                 [] -> Nothing
-                 (x::xs) -> Just x
-        (n::ns) -> case xs of
-                     [] -> Nothing
-                     (x::xs) -> takeElementInPosition ns xs
+    List.head <| List.drop (n-1) xs

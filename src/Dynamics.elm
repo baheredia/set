@@ -4,6 +4,10 @@ module Dynamics exposing (..)
 import Generic exposing (..)
 
 -- NOW FUNCTIONS USEFULL JUST FOR THE UPDATE
+-- Time to add new cards
+
+time_to_pass : Int  -- This you can change
+time_to_pass = 20
 
 init_table : Table
 init_table = [Nothing, Nothing, Nothing, Nothing
@@ -130,7 +134,7 @@ isListSet w1 =
                         (r::_) -> isSet w q r
 
 -- Functions appearing in the UPDATE
-makeSelection : Natural -> Model -> Model
+makeSelection : Int -> Model -> Model
 makeSelection n model =
     let switchedSelection = switchElement n model.selection in
     if  -- you can still select a third card
@@ -168,7 +172,7 @@ replaceSet model selectedPosition =
             <| takeSetOut model.table selectedPosition
     , selection = init_selection
     , score = model.score + 1
-    , timeToAddCards = 15
+    , timeToAddCards = time_to_pass
     }                         
 
 -- This takes a set out of the table without replacing the cards
@@ -182,7 +186,7 @@ takeOutSet model selectedPosition =
         filteredBy (List.map not selectedPosition)
             <| selectedPosition
     , score = model.score + 1
-    , timeToAddCards = 15
+    , timeToAddCards = time_to_pass
     }
 
 
@@ -217,5 +221,5 @@ addExtraCards model =
             <| model.table ++ [Nothing,Nothing,Nothing]
     , selection = model.selection ++ [False,False,False]
     , time = model.time + 1
-    , timeToAddCards = 15
+    , timeToAddCards = time_to_pass
     }

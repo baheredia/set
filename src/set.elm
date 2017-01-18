@@ -29,7 +29,7 @@ init =  ({ deck = []
          , mode = Start
          , size = 140
          , time = 0
-         , timeToAddCards = 15
+         , timeToAddCards = time_to_pass
          , timeAtStart = 0
          , timeAt23 = 0
          }
@@ -49,7 +49,7 @@ update msg model =
                    deck = Tuple.first <| dealCards shuffled_deck model.table
                    ,table = Tuple.second <| dealCards shuffled_deck model.table
                    ,time = 0
-                   ,timeToAddCards = 15
+                   ,timeToAddCards = time_to_pass
              }
             ,Cmd.none)
             
