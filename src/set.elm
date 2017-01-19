@@ -82,7 +82,9 @@ update msg model =
 
         Tick _ ->
             (tick model, Cmd.none)
-                
+
+        Help ->
+            ({ model | mode = Instructions }, Cmd.none)
         Reset -> ({ model |
                         deck = []
                         ,table = init_table
@@ -109,11 +111,8 @@ view model =
     case model.mode of
         Start ->
             initialPage
-        Game ->
+        Instructions ->
+            instructionPage
+        _ ->
             gamePage model
-        Training ->
-            gamePage model
-        OneColorTraining ->
-            gamePage model
-        OneColorGame ->
-            gamePage model
+        

@@ -90,16 +90,12 @@ addMoreCards mode table deck =
                      ] [text "Más"]
     in
         case mode of
-            Start ->
-                div [] []
-            Game ->
-                div [] []
             Training ->
                 button
-            OneColorGame ->
-                div [] []
             OneColorTraining ->
                 button
+            _ ->
+                div [] []
 
     
 initialPage : Html Msg              
@@ -112,8 +108,7 @@ initialPage =
         , buttonsToStart Training
         , buttonsToStart OneColorTraining
         , h3 [] [text "Si no sabes jugar"]
-        , button [] [text "Instrucciones"]
-        , span [] [text "(aún no las he puesto)"]
+        , button [onClick Help] [text "Instrucciones"]
         ]
 
 buttonsToStart : Mode -> Html Msg
@@ -132,8 +127,6 @@ buttonsToStart mode =
                   ]
     in
         case mode of
-            Start ->
-                div [] []
             Game ->
                 div [ sty "lightsteelblue"
                     , onClick <| Shuffle Game
@@ -170,6 +163,8 @@ buttonsToStart mode =
                       , br [] []
                       , text "con un único color"
                       ]
+            _ ->
+                div [] []
                     
 
 gamePage : Model -> Html Msg
@@ -246,14 +241,187 @@ clock mode time color =
                      ]
     in
         case mode of
-            Start ->
-                div [] []
             Game ->
                 div [sty] [text (toString time)]
-            Training ->
-                div [] []
             OneColorGame ->
                 div [sty] [text (toString time)]
-            OneColorTraining ->
+            _ ->
                 div [] []
 
+instructionPage : Html Msg
+instructionPage =
+    let size = 120 in
+    div [style [("margin-left","5%")
+               , ("margin-top","2%")
+               , ("width", "800px")
+               ]
+        ]
+        [h1 [] [text "Cómo jugar a set"]
+        , p []
+            [text ("En el juego, habrá doce cartas sobre la mesa, "
+                   ++ "cada una de estas cartas tiene cuatro atributos: "
+                   ++ "color, número, relleno y forma.")
+            , ul []
+                [ li [] [text "Color: Rojo, Azul o Verde"]
+                , li [] [text "Número: Uno, Dos o Tres"]
+                , li [] [text "Relleno: Vacío, Rallado o Lleno"]
+                , li [] [text "Forma: Círculo, Rombo o Gusano"]
+                ]
+            ]
+        , p []
+            [ img [ style [("float","left")]
+                  , src "img/c1111.png"
+                  , width size] []
+            , br [] []
+            , div [] [text "Color: Rojo"]
+            , br [] []
+            , div [] [text "Número: Uno"]
+            , br [] []
+            , div [] [text "Relleno: Blanco"]
+            , br [] []
+            , div [] [text "Forma: Rombo"]
+            ]
+        , br [] []
+        , p []
+            [text ("El objetivo del juego es encontrar tres cartas que "
+                   ++ "para cada atributo sean todas iguales o todas "
+                   ++ "diferentes, es decir verifican las cuatro condiciones:")
+            , ul []
+                [li [] [text ("Todas tienen el mismo color o todas tienen un "
+                              ++ "color diferente")]
+                ,li [] [text ("Todas tienen el mismo número o todas tienen "
+                              ++ "un numero diferente")]
+                , li [] [text ("Todas tienen el mismo relleno o todas tienen "
+                               ++ "un relleno diferente")]
+                , li [] [text ("Todas tienen la misma forma o todas tienen "
+                               ++ "una forma diferente")]
+                ]
+            , text "Veamos algunos ejemplos:"
+            ]
+        , p []
+            [ img [ style [("float","left")]
+                  , src "img/c1321.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c2311.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c3331.png"
+                  , width size] []
+            , br [] []
+            , div [] [text "Todas tienen un color diferente"]
+            , br [] []
+            , div [] [text "Todas tienen un número diferente"]
+            , br [] []
+            , div [] [text "Todas tienen el mismo relleno"]
+            , br [] []
+            , div [] [text "Todas tienen la misma forma"]
+            ]
+        , br [] []
+        , p []
+            [ img [ style [("float","left")]
+                  , src "img/c3221.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c2322.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c1123.png"
+                  , width size] []
+            , br [] []
+            , div [] [text "Todas tienen el mismo color"]
+            , br [] []
+            , div [] [text "Todas tienen un número diferente"]
+            , br [] []
+            , div [] [text "Todas tienen un relleno diferente"]
+            , br [] []
+            , div [] [text "Todas tienen una forma diferente"]
+            ]
+        , br [] []
+        , p []
+            [ img [ style [("float","left")]
+                  , src "img/c1311.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c2123.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c3232.png"
+                  , width size] []
+            , br [] []
+            , div [] [text "Todas tienen un color diferente"]
+            , br [] []
+            , div [] [text "Todas tienen un número diferente"]
+            , br [] []
+            , div [] [text "Todas tienen un relleno diferente"]
+            , br [] []
+            , div [] [text "Todas tienen una forma diferente"]
+            ]
+        , br [] []
+        , p [] [text "Los siguientes no forman sets"]
+        , p []
+            [ img [ style [("float","left")]
+                  , src "img/c1211.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c1222.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c1223.png"
+                  , width size] []
+            , br [] []
+            , div [style [("color","red")]]
+                [text "Falla el color"]
+            , br [] []
+            , div [] [text "Todas tienen el mismo número"]
+            , br [] []
+            , div [] [text "Todas tienen el mismo relleno"]
+            , br [] []
+            , div [] [text "Todas tienen una forma diferente"]
+            ]
+        , br [] [] 
+        , p []
+            [ img [ style [("float","left")]
+                  , src "img/c2221.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c3312.png"
+                  , width size] []
+            , img [ style [("float","left")]
+                  , src "img/c3133.png"
+                  , width size] []
+            , br [] []
+            , div [] [text "Todas tienen un color diferente"]
+            , br [] []
+            , div [ style [("color","red")]]
+                [text "Falla el número"]
+            , br [] []
+            , div [] [text "Todas tienen un relleno diferente"]
+            , br [] []
+            , div [] [text "Todas tienen una forma diferente"]
+            ]
+        , br [] []
+        , p []
+            [text ("Hay dos modalidades de juego: contrarreloj "
+                   ++ "en la que tienes que conseguir 24 sets en "
+                   ++ "el menor tiempo posible, y entrenamiento "
+                   ++ "donde puedes buscar sets a tu ritmo sin prisas.")]
+        , p []
+            [text ("En modo contrarreloj si pasas mucho tiempo sin "
+                   ++ "seleccionar un set se añadirán tres cartas "
+                   ++ "automáticamente, hasta un máximo de 18. En "
+                   ++ "modo entrenamiento hay un botón para echar más cartas.")
+            ]
+        , p []
+            [text ("Si no ves ningún set más y no salen más cartas, mala "
+                   ++ "suerte. Tendrás que empezar de nuevo.")
+            ]
+        , p []
+            [text ("También puedes jugar con una baraja de un único color "
+                  ++ "para practicar si estás empezando. En modo contrarreloj "
+                  ++ "hay que conseguir 9 sets, pero cuidado porque no siempre "
+                  ++ "es posible")
+            ]
+        , p [] [ button [onClick Reset] [text "Volver"]
+                 ]
+        ]

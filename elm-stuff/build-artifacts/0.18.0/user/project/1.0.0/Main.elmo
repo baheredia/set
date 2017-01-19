@@ -3,12 +3,8 @@ var _user$project$Main$view = function (model) {
 	switch (_p0.ctor) {
 		case 'Start':
 			return _user$project$Extras$initialPage;
-		case 'Game':
-			return _user$project$Extras$gamePage(model);
-		case 'Training':
-			return _user$project$Extras$gamePage(model);
-		case 'OneColorTraining':
-			return _user$project$Extras$gamePage(model);
+		case 'Instructions':
+			return _user$project$Extras$instructionPage;
 		default:
 			return _user$project$Extras$gamePage(model);
 	}
@@ -96,6 +92,14 @@ var _user$project$Main$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: _user$project$Dynamics$tick(model),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Help':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{mode: _user$project$Generic$Instructions}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:

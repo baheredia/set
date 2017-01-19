@@ -20,6 +20,7 @@ type Mode
     | Training
     | OneColorTraining
     | OneColorGame
+    | Instructions
     
 type alias Model =
     {deck : Deck
@@ -41,6 +42,7 @@ type Msg = Shuffle Mode
     | ExtraCard
     | Resize Int
     | Tick Time
+    | Help
     | Reset
       
 -------------------------------------------------

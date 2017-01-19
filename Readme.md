@@ -9,7 +9,6 @@ List of things I want to do with it, in no particular order:
 
 
 * Put an Against the machine (with difficulty) (it will give you a fixed amount of time to find a set before the point is taken for the machine). I will need to think how to do this.
-* Put the rules of the game in the start page.
 * The options for size don't work on mobile phones (at least in mine)
 
 I think that is all.
@@ -33,3 +32,4 @@ screen. (Now there is an option for choosing the size)
 * Separate the different modes of play. Normal, With Clock, And One color normal, and with clock.
 * For that I really need to clean the code.
 * Add best time in current plays
+* Put the rules of the game in the start page.
