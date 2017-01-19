@@ -194,7 +194,7 @@ gamePage model =
                      ]
               ]
               [text ("Puntos:\n " ++ toString model.score)]
-        , clock model.mode model.time
+        , clock model.mode model.time "blue"
         , br [] []
         , putCard size 4 model.table model.selection
         , putCard size 5 model.table model.selection
@@ -211,6 +211,7 @@ gamePage model =
         , extraCard size 2 model.table model.selection
         , extraCard size 5 model.table model.selection
         , br [] []
+        , showBestTime model.mode model.bestTime
         , h3 [] [text "Tamaño"]
         , select []
             [ option [onClick (Resize 140)] [text "pequeño"]
@@ -222,9 +223,18 @@ gamePage model =
         , button [onClick Reset] [text "Volver"]
         ]
 
-clock : Mode -> Int -> Html Msg
-clock mode time =
-    let sty = style [("background-color", "blue")
+showBestTime : Mode -> Int -> Html Msg
+showBestTime mode best =
+    case mode of
+        Game -> div [] [ text "Mejor tiempo:"
+                       , clock mode best "olive"]
+        OneColorGame -> div [] [ text "Mejor tiempo:"
+                               , clock mode best "olive"]
+        _ -> div [] []
+        
+clock : Mode -> Int -> String -> Html Msg
+clock mode time color =
+    let sty = style [("background-color", color)
                     ,("display", "inline-flex")
                     ,("width","80px")
                     ,("height","40px")
@@ -246,3 +256,4 @@ clock mode time =
                 div [sty] [text (toString time)]
             OneColorTraining ->
                 div [] []
+

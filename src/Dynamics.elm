@@ -163,18 +163,36 @@ howManyTrue = List.length << (List.filter identity)
 -- This function replace a selected set in the table selected with new cards
 replaceSet : Model -> List Bool -> Model
 replaceSet model selectedPosition =
-    { model | deck =
-                Tuple.first
+    let
+        scoreToStop mode =
+            case mode of
+                Game -> 24
+                OneColorGame -> 9
+                _ -> 0
+    in
+        let
+            newBestTime mode time best score =
+                if score == (scoreToStop mode) - 1
+                then
+                    if (best > time) || (best == 0)
+                    then time
+                    else best
+                else best
+        in
+            { model | deck =
+                  Tuple.first
+                      <| dealCards model.deck
+                      <| takeSetOut model.table selectedPosition
+            , table =
+                Tuple.second
                     <| dealCards model.deck
                     <| takeSetOut model.table selectedPosition
-    , table =
-        Tuple.second
-            <| dealCards model.deck
-            <| takeSetOut model.table selectedPosition
-    , selection = init_selection
-    , score = model.score + 1
-    , timeToAddCards = time_to_pass
-    }                         
+            , selection = init_selection
+            , score = model.score + 1
+            , timeToAddCards = time_to_pass
+            , bestTime =
+                newBestTime model.mode model.time model.bestTime model.score
+            }                         
 
 -- This takes a set out of the table without replacing the cards
 takeOutSet : Model -> List Bool -> Model
@@ -196,11 +214,9 @@ tick : Model -> Model
 tick model =
     let scoreToStop mode =
             case mode of
-                Start -> 0
                 Game -> 24
-                Training -> 0
                 OneColorGame -> 9
-                OneColorTraining -> 0
+                _ -> 0
     in
         if model.score >= scoreToStop model.mode
         then model

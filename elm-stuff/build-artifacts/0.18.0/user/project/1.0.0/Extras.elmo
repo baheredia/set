@@ -1,9 +1,9 @@
-var _user$project$Extras$clock = F2(
-	function (mode, time) {
+var _user$project$Extras$clock = F3(
+	function (mode, time, color) {
 		var sty = _elm_lang$html$Html_Attributes$style(
 			{
 				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'blue'},
+				_0: {ctor: '_Tuple2', _0: 'background-color', _1: color},
 				_1: {
 					ctor: '::',
 					_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
@@ -85,6 +85,43 @@ var _user$project$Extras$clock = F2(
 					{ctor: '[]'});
 		}
 	});
+var _user$project$Extras$showBestTime = F2(
+	function (mode, best) {
+		var _p1 = mode;
+		switch (_p1.ctor) {
+			case 'Game':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Mejor tiempo:'),
+						_1: {
+							ctor: '::',
+							_0: A3(_user$project$Extras$clock, mode, best, 'olive'),
+							_1: {ctor: '[]'}
+						}
+					});
+			case 'OneColorGame':
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Mejor tiempo:'),
+						_1: {
+							ctor: '::',
+							_0: A3(_user$project$Extras$clock, mode, best, 'olive'),
+							_1: {ctor: '[]'}
+						}
+					});
+			default:
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+		}
+	});
 var _user$project$Extras$buttonsToStart = function (mode) {
 	var sty = function (op1) {
 		return _elm_lang$html$Html_Attributes$style(
@@ -126,8 +163,8 @@ var _user$project$Extras$buttonsToStart = function (mode) {
 				}
 			});
 	};
-	var _p1 = mode;
-	switch (_p1.ctor) {
+	var _p2 = mode;
+	switch (_p2.ctor) {
 		case 'Start':
 			return A2(
 				_elm_lang$html$Html$div,
@@ -453,8 +490,8 @@ var _user$project$Extras$addMoreCards = F3(
 					_1: {ctor: '[]'}
 				});
 		}();
-		var _p2 = mode;
-		switch (_p2.ctor) {
+		var _p3 = mode;
+		switch (_p3.ctor) {
 			case 'Start':
 				return A2(
 					_elm_lang$html$Html$div,
@@ -477,12 +514,12 @@ var _user$project$Extras$addMoreCards = F3(
 		}
 	});
 var _user$project$Extras$whichBorder = function (b) {
-	var _p3 = b;
-	if (_p3.ctor === 'Nothing') {
+	var _p4 = b;
+	if (_p4.ctor === 'Nothing') {
 		return 'none';
 	} else {
-		var _p4 = _p3._0;
-		if (_p4 === true) {
+		var _p5 = _p4._0;
+		if (_p5 === true) {
 			return 'dashed';
 		} else {
 			return 'solid white';
@@ -490,25 +527,25 @@ var _user$project$Extras$whichBorder = function (b) {
 	}
 };
 var _user$project$Extras$source = function (wd) {
-	var _p5 = wd;
-	if (_p5.ctor === 'Nothing') {
+	var _p6 = wd;
+	if (_p6.ctor === 'Nothing') {
 		return '';
 	} else {
 		var toNombre = function (xs) {
-			var _p6 = xs;
-			if (_p6.ctor === 'Nothing') {
+			var _p7 = xs;
+			if (_p7.ctor === 'Nothing') {
 				return '';
 			} else {
 				return A2(
 					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Basics$toString(_p6._0._0),
+					_elm_lang$core$Basics$toString(_p7._0._0),
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						_elm_lang$core$Basics$toString(_p6._0._1),
+						_elm_lang$core$Basics$toString(_p7._0._1),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Basics$toString(_p6._0._2),
-							_elm_lang$core$Basics$toString(_p6._0._3))));
+							_elm_lang$core$Basics$toString(_p7._0._2),
+							_elm_lang$core$Basics$toString(_p7._0._3))));
 			}
 		};
 		return A2(
@@ -516,7 +553,7 @@ var _user$project$Extras$source = function (wd) {
 			'img/c',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				toNombre(_p5._0),
+				toNombre(_p6._0),
 				'.png'));
 	}
 };
@@ -657,7 +694,7 @@ var _user$project$Extras$gamePage = function (model) {
 										}),
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Extras$clock, model.mode, model.time),
+										_0: A3(_user$project$Extras$clock, model.mode, model.time, 'blue'),
 										_1: {
 											ctor: '::',
 											_0: A2(
@@ -717,47 +754,35 @@ var _user$project$Extras$gamePage = function (model) {
 																											{ctor: '[]'}),
 																										_1: {
 																											ctor: '::',
-																											_0: A2(
-																												_elm_lang$html$Html$h3,
-																												{ctor: '[]'},
-																												{
-																													ctor: '::',
-																													_0: _elm_lang$html$Html$text('Tamaño'),
-																													_1: {ctor: '[]'}
-																												}),
+																											_0: A2(_user$project$Extras$showBestTime, model.mode, model.bestTime),
 																											_1: {
 																												ctor: '::',
 																												_0: A2(
-																													_elm_lang$html$Html$select,
+																													_elm_lang$html$Html$h3,
 																													{ctor: '[]'},
 																													{
 																														ctor: '::',
-																														_0: A2(
-																															_elm_lang$html$Html$option,
-																															{
-																																ctor: '::',
-																																_0: _elm_lang$html$Html_Events$onClick(
-																																	_user$project$Generic$Resize(140)),
-																																_1: {ctor: '[]'}
-																															},
-																															{
-																																ctor: '::',
-																																_0: _elm_lang$html$Html$text('pequeño'),
-																																_1: {ctor: '[]'}
-																															}),
-																														_1: {
+																														_0: _elm_lang$html$Html$text('Tamaño'),
+																														_1: {ctor: '[]'}
+																													}),
+																												_1: {
+																													ctor: '::',
+																													_0: A2(
+																														_elm_lang$html$Html$select,
+																														{ctor: '[]'},
+																														{
 																															ctor: '::',
 																															_0: A2(
 																																_elm_lang$html$Html$option,
 																																{
 																																	ctor: '::',
 																																	_0: _elm_lang$html$Html_Events$onClick(
-																																		_user$project$Generic$Resize(170)),
+																																		_user$project$Generic$Resize(140)),
 																																	_1: {ctor: '[]'}
 																																},
 																																{
 																																	ctor: '::',
-																																	_0: _elm_lang$html$Html$text('normal'),
+																																	_0: _elm_lang$html$Html$text('pequeño'),
 																																	_1: {ctor: '[]'}
 																																}),
 																															_1: {
@@ -767,32 +792,32 @@ var _user$project$Extras$gamePage = function (model) {
 																																	{
 																																		ctor: '::',
 																																		_0: _elm_lang$html$Html_Events$onClick(
-																																			_user$project$Generic$Resize(200)),
+																																			_user$project$Generic$Resize(170)),
 																																		_1: {ctor: '[]'}
 																																	},
 																																	{
 																																		ctor: '::',
-																																		_0: _elm_lang$html$Html$text('grande'),
+																																		_0: _elm_lang$html$Html$text('normal'),
 																																		_1: {ctor: '[]'}
 																																	}),
-																																_1: {ctor: '[]'}
+																																_1: {
+																																	ctor: '::',
+																																	_0: A2(
+																																		_elm_lang$html$Html$option,
+																																		{
+																																			ctor: '::',
+																																			_0: _elm_lang$html$Html_Events$onClick(
+																																				_user$project$Generic$Resize(200)),
+																																			_1: {ctor: '[]'}
+																																		},
+																																		{
+																																			ctor: '::',
+																																			_0: _elm_lang$html$Html$text('grande'),
+																																			_1: {ctor: '[]'}
+																																		}),
+																																	_1: {ctor: '[]'}
+																																}
 																															}
-																														}
-																													}),
-																												_1: {
-																													ctor: '::',
-																													_0: A2(
-																														_elm_lang$html$Html$button,
-																														{
-																															ctor: '::',
-																															_0: _elm_lang$html$Html_Events$onClick(
-																																_user$project$Generic$Shuffle(model.mode)),
-																															_1: {ctor: '[]'}
-																														},
-																														{
-																															ctor: '::',
-																															_0: _elm_lang$html$Html$text('Barajar de nuevo'),
-																															_1: {ctor: '[]'}
 																														}),
 																													_1: {
 																														ctor: '::',
@@ -800,15 +825,31 @@ var _user$project$Extras$gamePage = function (model) {
 																															_elm_lang$html$Html$button,
 																															{
 																																ctor: '::',
-																																_0: _elm_lang$html$Html_Events$onClick(_user$project$Generic$Reset),
+																																_0: _elm_lang$html$Html_Events$onClick(
+																																	_user$project$Generic$Shuffle(model.mode)),
 																																_1: {ctor: '[]'}
 																															},
 																															{
 																																ctor: '::',
-																																_0: _elm_lang$html$Html$text('Volver'),
+																																_0: _elm_lang$html$Html$text('Barajar de nuevo'),
 																																_1: {ctor: '[]'}
 																															}),
-																														_1: {ctor: '[]'}
+																														_1: {
+																															ctor: '::',
+																															_0: A2(
+																																_elm_lang$html$Html$button,
+																																{
+																																	ctor: '::',
+																																	_0: _elm_lang$html$Html_Events$onClick(_user$project$Generic$Reset),
+																																	_1: {ctor: '[]'}
+																																},
+																																{
+																																	ctor: '::',
+																																	_0: _elm_lang$html$Html$text('Volver'),
+																																	_1: {ctor: '[]'}
+																																}),
+																															_1: {ctor: '[]'}
+																														}
 																													}
 																												}
 																											}
