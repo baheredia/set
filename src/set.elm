@@ -40,30 +40,26 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = 
     case msg of
         Shuffle mode ->
-            case mode of
-                Start -> (model, Cmd.none)
-                         
-                Game -> 
-                    ({ model | mode = Game }
-                    ,Random.generate PutDeck
-                        <| Random.List.shuffle (initialDeck False)
-                    )
-                    
-                Training ->
-                    ({ model | mode = Training }
-                    ,Random.generate PutDeck
-                        <| Random.List.shuffle (initialDeck False)
-                    )
-                    
-                OneColorGame ->
-                    ({ model | mode = OneColorGame }
-                    ,Random.generate PutDeck
-                        <| Random.List.shuffle (initialDeck True)
-                    )
-                OneColorTraining ->
-                    ({ model | mode = OneColorTraining }
-                    ,Random.generate PutDeck
-                        <| Random.List.shuffle (initialDeck True)
+            let start_model new_mode =
+                    { model |
+                        deck = []
+                        , table = init_table
+                        , selection = init_selection
+                        , score = 0
+                        , mode = new_mode
+                        , time = 0
+                        , timeToAddCards = 15
+                    }
+            in
+                let oneColor game_mode =
+                        case game_mode of
+                            OneColorGame -> True
+                            OneColorTraining -> True
+                            _ -> False
+                in
+                    (start_model mode
+                    , Random.generate PutDeck
+                        <| Random.List.shuffle (initialDeck <| oneColor mode)
                     )
 
         PutDeck shuffled_deck ->

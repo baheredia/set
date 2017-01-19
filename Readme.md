@@ -8,11 +8,8 @@ This is the game Set. See:
 List of things I want to do with it, in no particular order:
 
 
-* Separate the different modes of play. Normal, With Clock, And One color normal, and with clock.
-* For that I really need to clean the code.
-* Put an Against the clock (it will have a clock, and you should do it in the less time possible, maybe Time/nSets (since you can have short hands or long hands)
+* Add best time in current plays
 * Put an Against the machine (with difficulty) (it will give you a fixed amount of time to find a set before the point is taken for the machine). I will need to think how to do this.
-* The code needs more cleaning: separate into different modules.
 * Put the rules of the game in the start page.
 * The options for size don't work on mobile phones (at least in mine)
 
@@ -33,3 +30,6 @@ precise.
 * Put everything with relative size so that it can always be seen on any
 screen. (Now there is an option for choosing the size)
 * Automate Set button (so that with the third selection takes the set, or gives you a message of error)
+* The code needs more cleaning: separate into different modules.
+* Separate the different modes of play. Normal, With Clock, And One color normal, and with clock.
+* For that I really need to clean the code.

@@ -85,9 +85,228 @@ var _user$project$Extras$clock = F2(
 					{ctor: '[]'});
 		}
 	});
+var _user$project$Extras$buttonsToStart = function (mode) {
+	var sty = function (op1) {
+		return _elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'background-color', _1: op1},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-flex'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'width', _1: '200px'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'height', _1: '300px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '2%'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'border-style', _1: 'outset'},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+	};
+	var _p1 = mode;
+	switch (_p1.ctor) {
+		case 'Start':
+			return A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{ctor: '[]'});
+		case 'Game':
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: sty('lightsteelblue'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							_user$project$Generic$Shuffle(_user$project$Generic$Game)),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Quiero jugar'),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('con toda la baraja'),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$br,
+									{ctor: '[]'},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('(El reloj para'),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$br,
+											{ctor: '[]'},
+											{ctor: '[]'}),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('con 24 puntos)'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'Training':
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: sty('peachpuff'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							_user$project$Generic$Shuffle(_user$project$Generic$Training)),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Quiero entrenar'),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Con toda la baraja'),
+							_1: {ctor: '[]'}
+						}
+					}
+				});
+		case 'OneColorGame':
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: sty('tomato'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							_user$project$Generic$Shuffle(_user$project$Generic$OneColorGame)),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Quiero entrenar'),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('con un único color'),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$br,
+									{ctor: '[]'},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('(El reloj para'),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$br,
+											{ctor: '[]'},
+											{ctor: '[]'}),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('con 9 puntos)'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		default:
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: sty('lightpink'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							_user$project$Generic$Shuffle(_user$project$Generic$OneColorTraining)),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Quiero entrenar'),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('con un único color'),
+							_1: {ctor: '[]'}
+						}
+					}
+				});
+	}
+};
 var _user$project$Extras$initialPage = A2(
 	_elm_lang$html$Html$div,
-	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '5%'},
+				_1: {ctor: '[]'}
+			}),
+		_1: {ctor: '[]'}
+	},
 	{
 		ctor: '::',
 		_0: A2(
@@ -100,29 +319,10 @@ var _user$project$Extras$initialPage = A2(
 			}),
 		_1: {
 			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$h2,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('Para jugar con reloj (que para con 24 puntos)'),
-					_1: {ctor: '[]'}
-				}),
+			_0: _user$project$Extras$buttonsToStart(_user$project$Generic$Game),
 			_1: {
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$button,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onClick(
-							_user$project$Generic$Shuffle(_user$project$Generic$Game)),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('¡Empieza!'),
-						_1: {ctor: '[]'}
-					}),
+				_0: _user$project$Extras$buttonsToStart(_user$project$Generic$OneColorGame),
 				_1: {
 					ctor: '::',
 					_0: A2(
@@ -135,67 +335,38 @@ var _user$project$Extras$initialPage = A2(
 						}),
 					_1: {
 						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$button,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Events$onClick(
-									_user$project$Generic$Shuffle(_user$project$Generic$Training)),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('Entrenamiento'),
-								_1: {ctor: '[]'}
-							}),
+						_0: _user$project$Extras$buttonsToStart(_user$project$Generic$Training),
 						_1: {
 							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$h2,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('Para jugar con reloj (hasta 9 puntos) pero un solo color'),
-									_1: {ctor: '[]'}
-								}),
+							_0: _user$project$Extras$buttonsToStart(_user$project$Generic$OneColorTraining),
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$button,
+									_elm_lang$html$Html$h3,
+									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onClick(
-											_user$project$Generic$Shuffle(_user$project$Generic$OneColorGame)),
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text('Un solo color'),
+										_0: _elm_lang$html$Html$text('Si no sabes jugar'),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$h2,
+										_elm_lang$html$Html$button,
 										{ctor: '[]'},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('Para entrenar con un único color sin presiones'),
+											_0: _elm_lang$html$Html$text('Instrucciones'),
 											_1: {ctor: '[]'}
 										}),
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_elm_lang$html$Html$button,
+											_elm_lang$html$Html$span,
+											{ctor: '[]'},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onClick(
-													_user$project$Generic$Shuffle(_user$project$Generic$OneColorTraining)),
-												_1: {ctor: '[]'}
-											},
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html$text('Sólo quiero un color'),
+												_0: _elm_lang$html$Html$text('(aún no las he puesto)'),
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
@@ -282,8 +453,8 @@ var _user$project$Extras$addMoreCards = F3(
 					_1: {ctor: '[]'}
 				});
 		}();
-		var _p1 = mode;
-		switch (_p1.ctor) {
+		var _p2 = mode;
+		switch (_p2.ctor) {
 			case 'Start':
 				return A2(
 					_elm_lang$html$Html$div,
@@ -306,12 +477,12 @@ var _user$project$Extras$addMoreCards = F3(
 		}
 	});
 var _user$project$Extras$whichBorder = function (b) {
-	var _p2 = b;
-	if (_p2.ctor === 'Nothing') {
+	var _p3 = b;
+	if (_p3.ctor === 'Nothing') {
 		return 'none';
 	} else {
-		var _p3 = _p2._0;
-		if (_p3 === true) {
+		var _p4 = _p3._0;
+		if (_p4 === true) {
 			return 'dashed';
 		} else {
 			return 'solid white';
@@ -319,25 +490,25 @@ var _user$project$Extras$whichBorder = function (b) {
 	}
 };
 var _user$project$Extras$source = function (wd) {
-	var _p4 = wd;
-	if (_p4.ctor === 'Nothing') {
+	var _p5 = wd;
+	if (_p5.ctor === 'Nothing') {
 		return '';
 	} else {
 		var toNombre = function (xs) {
-			var _p5 = xs;
-			if (_p5.ctor === 'Nothing') {
+			var _p6 = xs;
+			if (_p6.ctor === 'Nothing') {
 				return '';
 			} else {
 				return A2(
 					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Basics$toString(_p5._0._0),
+					_elm_lang$core$Basics$toString(_p6._0._0),
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						_elm_lang$core$Basics$toString(_p5._0._1),
+						_elm_lang$core$Basics$toString(_p6._0._1),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Basics$toString(_p5._0._2),
-							_elm_lang$core$Basics$toString(_p5._0._3))));
+							_elm_lang$core$Basics$toString(_p6._0._2),
+							_elm_lang$core$Basics$toString(_p6._0._3))));
 			}
 		};
 		return A2(
@@ -345,7 +516,7 @@ var _user$project$Extras$source = function (wd) {
 			'img/c',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				toNombre(_p4._0),
+				toNombre(_p5._0),
 				'.png'));
 	}
 };
@@ -401,7 +572,20 @@ var _user$project$Extras$gamePage = function (model) {
 	var size = model.size;
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '1%'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'margin-top', _1: '1%'},
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A4(_user$project$Extras$putCard, size, 0, model.table, model.selection),
@@ -601,15 +785,31 @@ var _user$project$Extras$gamePage = function (model) {
 																														_elm_lang$html$Html$button,
 																														{
 																															ctor: '::',
-																															_0: _elm_lang$html$Html_Events$onClick(_user$project$Generic$Reset),
+																															_0: _elm_lang$html$Html_Events$onClick(
+																																_user$project$Generic$Shuffle(model.mode)),
 																															_1: {ctor: '[]'}
 																														},
 																														{
 																															ctor: '::',
-																															_0: _elm_lang$html$Html$text('Reset'),
+																															_0: _elm_lang$html$Html$text('Barajar de nuevo'),
 																															_1: {ctor: '[]'}
 																														}),
-																													_1: {ctor: '[]'}
+																													_1: {
+																														ctor: '::',
+																														_0: A2(
+																															_elm_lang$html$Html$button,
+																															{
+																																ctor: '::',
+																																_0: _elm_lang$html$Html_Events$onClick(_user$project$Generic$Reset),
+																																_1: {ctor: '[]'}
+																															},
+																															{
+																																ctor: '::',
+																																_0: _elm_lang$html$Html$text('Volver'),
+																																_1: {ctor: '[]'}
+																															}),
+																														_1: {ctor: '[]'}
+																													}
 																												}
 																											}
 																										}

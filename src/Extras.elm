@@ -104,32 +104,79 @@ addMoreCards mode table deck =
     
 initialPage : Html Msg              
 initialPage =
-    div []
+    div [style [("margin-left","5%")]]
         [ h1 [] [text "Bienvenido a Set, ¿Listo para jugar?"]
-        , h2 [] [text "Para jugar con reloj (que para con 24 puntos)"]
-        , button
-              [onClick (Shuffle Game)]
-              [text "¡Empieza!"]
+        , buttonsToStart Game
+        , buttonsToStart OneColorGame
         , h2 [] [text "Para entrenar sin reloj y sin presiones"]
-        , button
-              [onClick (Shuffle Training)]
-              [text "Entrenamiento"]
-        , h2 []
-            [text "Para jugar con reloj (hasta 9 puntos) pero un solo color"]
-        , button
-              [onClick (Shuffle OneColorGame)]
-              [text "Un solo color"]
-        , h2 []
-            [text "Para entrenar con un único color sin presiones"]
-        , button
-              [onClick (Shuffle OneColorTraining)]
-              [text "Sólo quiero un color"]
+        , buttonsToStart Training
+        , buttonsToStart OneColorTraining
+        , h3 [] [text "Si no sabes jugar"]
+        , button [] [text "Instrucciones"]
+        , span [] [text "(aún no las he puesto)"]
         ]
+
+buttonsToStart : Mode -> Html Msg
+buttonsToStart mode =
+    let
+        sty op1 =
+            style [("background-color", op1)
+                  ,("display", "inline-flex")
+                  ,("width", "200px")
+                  ,("height","300px")
+                  ,("align-items", "center")
+                  ,("justify-content","center")
+                  ,("cursor","pointer")
+                  ,("margin-left", "2%")
+                  ,("border-style", "outset")
+                  ]
+    in
+        case mode of
+            Start ->
+                div [] []
+            Game ->
+                div [ sty "lightsteelblue"
+                    , onClick <| Shuffle Game
+                    ] [ text "Quiero jugar"
+                      , br [] []
+                      , text "con toda la baraja"
+                      , br [] []
+                      , text "(El reloj para"
+                      , br [] []
+                      , text "con 24 puntos)"]
+                    
+            Training ->
+                div [ sty "peachpuff"
+                    , onClick <| Shuffle Training
+                    ] [text "Quiero entrenar"
+                      ,br [] []
+                      ,text "Con toda la baraja"
+                      ]
+            OneColorGame ->
+                div [ sty "tomato"
+                    , onClick <| Shuffle OneColorGame
+                    ] [text "Quiero entrenar"
+                      , br [] []
+                      , text "con un único color"
+                      , br [] []
+                      , text "(El reloj para"
+                      , br [] []
+                      , text "con 9 puntos)"
+                      ]
+            OneColorTraining ->
+                div [sty "lightpink"
+                    , onClick <| Shuffle OneColorTraining
+                    ] [text "Quiero entrenar"
+                      , br [] []
+                      , text "con un único color"
+                      ]
+                    
 
 gamePage : Model -> Html Msg
 gamePage model =
     let size = model.size in
-    div []
+    div [style [("margin-left","1%")
+               ,("margin-top","1%")]]
         [ putCard size 0 model.table model.selection
         , putCard size 1 model.table model.selection
         , putCard size 2 model.table model.selection
@@ -170,7 +217,9 @@ gamePage model =
             , option [onClick (Resize 170)] [text "normal"]
             , option [onClick (Resize 200)] [text "grande"]
             ]
-        , button [onClick Reset] [text "Reset"]
+        , button [onClick <| Shuffle model.mode]
+            [text "Barajar de nuevo"]
+        , button [onClick Reset] [text "Volver"]
         ]
 
 clock : Mode -> Int -> Html Msg

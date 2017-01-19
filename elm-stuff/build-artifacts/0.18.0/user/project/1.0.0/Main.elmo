@@ -21,70 +21,52 @@ var _user$project$Main$update = F2(
 		var _p1 = msg;
 		switch (_p1.ctor) {
 			case 'Shuffle':
-				var _p2 = _p1._0;
-				switch (_p2.ctor) {
-					case 'Start':
-						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-					case 'Game':
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								model,
-								{mode: _user$project$Generic$Game}),
-							_1: A2(
-								_elm_lang$core$Random$generate,
-								_user$project$Generic$PutDeck,
-								_elm_community$random_extra$Random_List$shuffle(
-									_user$project$Dynamics$initialDeck(false)))
-						};
-					case 'Training':
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								model,
-								{mode: _user$project$Generic$Training}),
-							_1: A2(
-								_elm_lang$core$Random$generate,
-								_user$project$Generic$PutDeck,
-								_elm_community$random_extra$Random_List$shuffle(
-									_user$project$Dynamics$initialDeck(false)))
-						};
-					case 'OneColorGame':
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								model,
-								{mode: _user$project$Generic$OneColorGame}),
-							_1: A2(
-								_elm_lang$core$Random$generate,
-								_user$project$Generic$PutDeck,
-								_elm_community$random_extra$Random_List$shuffle(
-									_user$project$Dynamics$initialDeck(true)))
-						};
-					default:
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								model,
-								{mode: _user$project$Generic$OneColorTraining}),
-							_1: A2(
-								_elm_lang$core$Random$generate,
-								_user$project$Generic$PutDeck,
-								_elm_community$random_extra$Random_List$shuffle(
-									_user$project$Dynamics$initialDeck(true)))
-						};
-				}
-			case 'PutDeck':
 				var _p3 = _p1._0;
+				var start_model = function (new_mode) {
+					return _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							deck: {ctor: '[]'},
+							table: _user$project$Dynamics$init_table,
+							selection: _user$project$Dynamics$init_selection,
+							score: 0,
+							mode: new_mode,
+							time: 0,
+							timeToAddCards: 15
+						});
+				};
+				var oneColor = function (game_mode) {
+					var _p2 = game_mode;
+					switch (_p2.ctor) {
+						case 'OneColorGame':
+							return true;
+						case 'OneColorTraining':
+							return true;
+						default:
+							return false;
+					}
+				};
+				return {
+					ctor: '_Tuple2',
+					_0: start_model(_p3),
+					_1: A2(
+						_elm_lang$core$Random$generate,
+						_user$project$Generic$PutDeck,
+						_elm_community$random_extra$Random_List$shuffle(
+							_user$project$Dynamics$initialDeck(
+								oneColor(_p3))))
+				};
+			case 'PutDeck':
+				var _p4 = _p1._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							deck: _elm_lang$core$Tuple$first(
-								A2(_user$project$Dynamics$dealCards, _p3, model.table)),
+								A2(_user$project$Dynamics$dealCards, _p4, model.table)),
 							table: _elm_lang$core$Tuple$second(
-								A2(_user$project$Dynamics$dealCards, _p3, model.table)),
+								A2(_user$project$Dynamics$dealCards, _p4, model.table)),
 							time: 0,
 							timeToAddCards: _user$project$Dynamics$time_to_pass
 						}),
