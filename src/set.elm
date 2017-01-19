@@ -93,6 +93,7 @@ update msg model =
                         ,mode = Start
                         , time = 0
                         , timeToAddCards = 15
+                        , bestTime = 0
                   }
                  ,Cmd.none)
 
