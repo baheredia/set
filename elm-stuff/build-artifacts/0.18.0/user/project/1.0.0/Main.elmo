@@ -114,7 +114,8 @@ var _user$project$Main$update = F2(
 							score: 0,
 							mode: _user$project$Generic$Start,
 							time: 0,
-							timeToAddCards: 15
+							timeToAddCards: 15,
+							bestTime: 0
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};

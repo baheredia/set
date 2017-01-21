@@ -3,6 +3,10 @@
 This is the game Set. See:
 [https://en.wikipedia.org/wiki/Set_(game)]
 
+## To play ##
+
+Download the file set.html (in the src directory) and the directory src/img. To play open set.html in any browser.
+
 ## Things to do ##
 
 List of things I want to do with it, in no particular order:
